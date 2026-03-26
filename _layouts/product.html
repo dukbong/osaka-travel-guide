@@ -2,9 +2,15 @@
 layout: default
 ---
 {% assign all_products = site.data.products.products %}
-{% assign pid = page.product_id | plus: 0 %}
-{% assign matched = all_products | where: "id", pid %}
-{% assign product = matched[0] %}
+{% assign pid_str = page.product_id | append: "" %}
+{% assign product = nil %}
+{% for p in all_products %}
+  {% assign p_id_str = p.id | append: "" %}
+  {% if p_id_str == pid_str %}
+    {% assign product = p %}
+    {% break %}
+  {% endif %}
+{% endfor %}
 
 <article class="product-detail">
   <!-- Image Gallery -->
