@@ -2848,3 +2848,31 @@ ul, ol {
     display: block;
   }
 }
+
+// Affiliate Disclosure Banner
+.affiliate-notice {
+  background: #1c1917;
+  border-bottom: 1px solid $border-color;
+  padding: 0.5rem 1rem;
+  font-size: 0.7rem;
+  color: $text-muted;
+  text-align: center;
+  line-height: 1.5;
+
+  a {
+    color: $accent;
+    text-decoration: underline;
+    &:hover { color: lighten($accent, 10%); }
+  }
+}
+.affiliate-notice-inner {
+  max-width: $max-width;
+  margin: 0 auto;
+}
+
+.footer-disclosure {
+  font-size: 0.7rem;
+  color: $text-muted;
+  line-height: 1.6;
+  margin-bottom: 0.5rem;
+}

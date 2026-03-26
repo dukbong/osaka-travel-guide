@@ -76,6 +76,13 @@
     </div>
   </header>
 
+  <!-- Affiliate Disclosure Banner -->
+  <div class="affiliate-notice">
+    <div class="affiliate-notice-inner">
+      이 사이트는 WAUG 제휴 링크를 포함하고 있으며, 링크를 통한 구매 시 소정의 수수료를 받을 수 있습니다. 가격 및 상품 정보는 변동될 수 있으므로, 정확한 정보는 <a href="https://www.waug.com" target="_blank" rel="noopener">WAUG 공식 사이트</a>에서 확인해주세요.
+    </div>
+  </div>
+
   <!-- Main Content -->
   <main class="site-main">
     {{ content }}
@@ -131,7 +138,8 @@
         </div>
       </div>
       <div class="footer-bottom">
-        <p>&copy; {{ 'now' | date: '%Y' }} 오사카 트래블 가이드. 본 사이트의 상품 링크는 제휴 링크를 포함할 수 있습니다.</p>
+        <p class="footer-disclosure">본 사이트는 WAUG 마케팅 파트너로서, 링크를 통한 구매 시 제휴 수수료를 받을 수 있습니다. 이는 이용자에게 추가 비용을 발생시키지 않습니다. 표시된 가격과 상품 정보는 작성 시점 기준이며, 실제 가격 및 이용 조건은 WAUG 공식 사이트에서 반드시 확인하시기 바랍니다.</p>
+        <p>&copy; {{ 'now' | date: '%Y' }} 오사카 트래블 가이드.</p>
       </div>
     </div>
   </footer>
