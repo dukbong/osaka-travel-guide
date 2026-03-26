@@ -1,8 +1,14 @@
 ---
 layout: default
 ---
-{% assign product = page %}
 {% assign all_products = site.data.products.products %}
+{% assign product = nil %}
+{% for p in all_products %}
+  {% if p.id == page.product_id %}
+    {% assign product = p %}
+    {% break %}
+  {% endif %}
+{% endfor %}
 
 <article class="product-detail">
   <!-- Image Gallery -->
@@ -88,16 +94,16 @@ layout: default
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
       </a>
       <div class="product-sub-actions">
-        <button class="btn-wishlist-detail" data-product-id="{{ product.productId }}" aria-label="위시리스트에 추가">
+        <button class="btn-wishlist-detail" data-product-id="{{ product.id }}" aria-label="위시리스트에 추가">
           <svg class="heart-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
           <span>위시리스트</span>
         </button>
-        <button class="btn-add-planner-detail" data-product-id="{{ product.productId }}" aria-label="일정에 추가">
+        <button class="btn-add-planner-detail" data-product-id="{{ product.id }}" aria-label="일정에 추가">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><line x1="12" y1="14" x2="12" y2="18"/><line x1="10" y1="16" x2="14" y2="16"/></svg>
           <span>일정에 추가</span>
         </button>
         <label class="btn-compare-detail">
-          <input type="checkbox" class="compare-checkbox" data-product-id="{{ product.productId }}">
+          <input type="checkbox" class="compare-checkbox" data-product-id="{{ product.id }}">
           <span>비교하기</span>
         </label>
       </div>
@@ -111,7 +117,7 @@ layout: default
   <div class="product-grid product-grid-4">
     {% assign count = 0 %}
     {% for p in all_products %}
-      {% if p.category == product.category and p.id != product.productId and count < 4 %}
+      {% if p.category == product.category and p.id != product.id and count < 4 %}
         {% assign count = count | plus: 1 %}
         {% include product-card.html product=p %}
       {% endif %}

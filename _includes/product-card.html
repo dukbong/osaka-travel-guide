@@ -4,7 +4,8 @@
     <div class="product-card-image">
       <img src="{{ p.image }}" alt="{{ p.name }}" loading="lazy" decoding="async">
       {% if p.discountRate and p.discountRate > 0 %}
-      <span class="card-discount-badge">{{ p.discountText }}</span>
+      {% assign discount_pct = p.discountRate | times: 100 | round %}
+      <span class="card-discount-badge">{{ discount_pct }}%</span>
       {% endif %}
       {% if p.isNew %}
       <span class="card-new-badge">NEW</span>
