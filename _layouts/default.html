@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0a0a0a">
+  <title>{% if page.title %}{{ page.title }} | {% endif %}{{ site.title }}</title>
+  <meta name="description" content="{% if page.description %}{{ page.description }}{% else %}{{ site.description }}{% endif %}">
+  <link rel="canonical" href="{{ page.url | absolute_url }}">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="{% if page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %}">
+  <meta property="og:description" content="{% if page.description %}{{ page.description }}{% else %}{{ site.description }}{% endif %}">
+  <meta property="og:url" content="{{ page.url | absolute_url }}">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="ko_KR">
+  {% if page.image %}<meta property="og:image" content="{{ page.image }}">{% endif %}
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
+
+  {% include seo-head.html %}
+  {% seo %}
+</head>
+<body>
+  <!-- Navigation -->
+  <header class="site-header">
+    <nav class="nav-container">
+      <a href="{{ '/' | relative_url }}" class="nav-logo">
+        <span class="logo-icon">🏯</span>
+        <span class="logo-text">오사카 가이드</span>
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="{{ '/' | relative_url }}" {% if page.url == '/index.html' or page.url == '/' %}class="active"{% endif %}>홈</a></li>
+        <li><a href="{{ '/all-products/' | relative_url }}" {% if page.url contains 'all-products' %}class="active"{% endif %}>카테고리</a></li>
+        <li><a href="{{ '/planner/' | relative_url }}" {% if page.url contains 'planner' %}class="active"{% endif %}>일정플래너</a></li>
+        <li>
+          <a href="{{ '/wishlist/' | relative_url }}" class="nav-wishlist" {% if page.url contains 'wishlist' %}class="active"{% endif %}>
+            위시리스트
+            <span class="wishlist-count" id="navWishlistCount" style="display:none;">0</span>
+          </a>
+        </li>
+      </ul>
+
+      <button class="hamburger" id="hamburger" aria-label="메뉴 열기">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </nav>
+
+    <!-- Mobile menu -->
+    <div class="mobile-menu" id="mobileMenu">
+      <ul class="mobile-nav-links">
+        <li><a href="{{ '/' | relative_url }}">홈</a></li>
+        <li><a href="{{ '/all-products/' | relative_url }}">카테고리</a></li>
+        <li><a href="{{ '/planner/' | relative_url }}">일정플래너</a></li>
+        <li><a href="{{ '/wishlist/' | relative_url }}">위시리스트</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="site-main">
+    {{ content }}
+  </main>
+
+  <!-- Compare Panel -->
+  <div class="compare-panel" id="comparePanel">
+    <div class="compare-header">
+      <h3>상품 비교 (<span id="compareCount">0</span>/3)</h3>
+      <button class="compare-close" id="compareClose">닫기</button>
+    </div>
+    <div class="compare-items" id="compareItems"></div>
+    <button class="btn-compare-action" id="compareAction" disabled>비교하기</button>
+  </div>
+
+  <!-- Compare Modal -->
+  <div class="compare-modal" id="compareModal">
+    <div class="compare-modal-content">
+      <div class="compare-modal-header">
+        <h2>상품 비교</h2>
+        <button class="compare-modal-close" id="compareModalClose">&times;</button>
+      </div>
+      <div class="compare-table-wrap" id="compareTableWrap"></div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="footer-container">
+      <div class="footer-grid">
+        <div class="footer-about">
+          <h3>오사카 트래블 가이드</h3>
+          <p>오사카 여행에 필요한 입장권, 교통패스, eSIM, 투어, 맛집 등 엄선된 100개 상품을 최저가로 비교하고 나만의 일정을 만들어보세요.</p>
+        </div>
+        <div class="footer-links">
+          <h4>카테고리</h4>
+          <ul>
+            <li><a href="{{ '/all-products/' | relative_url }}?cat=입장권/티켓">입장권/티켓</a></li>
+            <li><a href="{{ '/all-products/' | relative_url }}?cat=이동/교통">이동/교통</a></li>
+            <li><a href="{{ '/all-products/' | relative_url }}?cat=eSIM%20%26%20WiFi">eSIM & WiFi</a></li>
+            <li><a href="{{ '/all-products/' | relative_url }}?cat=투어">투어</a></li>
+            <li><a href="{{ '/all-products/' | relative_url }}?cat=액티비티%26클래스">액티비티&클래스</a></li>
+            <li><a href="{{ '/all-products/' | relative_url }}?cat=레스토랑%26다이닝">레스토랑&다이닝</a></li>
+          </ul>
+        </div>
+        <div class="footer-links">
+          <h4>바로가기</h4>
+          <ul>
+            <li><a href="{{ '/planner/' | relative_url }}">일정 플래너</a></li>
+            <li><a href="{{ '/wishlist/' | relative_url }}">위시리스트</a></li>
+            <li><a href="{{ '/all-products/' | relative_url }}">전체 상품</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; {{ 'now' | date: '%Y' }} 오사카 트래블 가이드. 본 사이트의 상품 링크는 제휴 링크를 포함할 수 있습니다.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="{{ '/assets/js/app.js' | relative_url }}"></script>
+  <script src="{{ '/assets/js/gallery.js' | relative_url }}"></script>
+</body>
+</html>

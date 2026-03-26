@@ -1,0 +1,60 @@
+# Site settings
+title: "오사카 트래블 가이드 - 여행 필수 상품 100선"
+description: "오사카 여행 준비의 모든 것. 입장권, 교통패스, eSIM, 투어, 맛집 등 오사카 여행 필수 상품 100개를 엄선하여 최저가로 비교하고 나만의 일정을 만들어보세요."
+url: "https://dukbong.github.io"
+baseurl: "/osaka-travel-guide"
+lang: ko
+locale: ko_KR
+
+# Theme
+theme: minima
+
+# Build settings
+markdown: kramdown
+kramdown:
+  input: GFM
+  hard_wrap: false
+
+# Plugins
+plugins:
+  - jekyll-seo-tag
+  - jekyll-sitemap
+
+# Permalinks
+permalink: /blog/:slug/
+
+# Collections
+collections:
+  products:
+    output: true
+    permalink: /products/:slug/
+
+# Defaults
+defaults:
+  - scope:
+      path: ""
+      type: "products"
+    values:
+      layout: "product"
+  - scope:
+      path: "_posts"
+      type: "posts"
+    values:
+      layout: "post"
+  - scope:
+      path: "pages"
+    values:
+      layout: "default"
+
+# Exclude
+exclude:
+  - scripts
+  - data
+  - node_modules
+  - Gemfile
+  - Gemfile.lock
+  - README.md
+  - vendor
+
+# Timezone
+timezone: Asia/Seoul

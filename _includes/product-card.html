@@ -1,0 +1,60 @@
+{% assign p = include.product %}
+<div class="product-card" data-product-id="{{ p.id }}" data-category="{{ p.category }}" data-price="{{ p.salePrice }}" data-rating="{{ p.rating }}" data-score="{{ p.score }}">
+  <a href="{{ site.baseurl }}/products/{{ p.slug }}/" class="product-card-link">
+    <div class="product-card-image">
+      <img src="{{ p.image }}" alt="{{ p.name }}" loading="lazy" decoding="async">
+      {% if p.discountRate and p.discountRate > 0 %}
+      <span class="card-discount-badge">{{ p.discountText }}</span>
+      {% endif %}
+      {% if p.isNew %}
+      <span class="card-new-badge">NEW</span>
+      {% endif %}
+    </div>
+  </a>
+
+  <div class="product-card-body">
+    <span class="card-category">{{ p.category }}</span>
+    <a href="{{ site.baseurl }}/products/{{ p.slug }}/" class="product-card-link">
+      <h3 class="card-title" title="{{ p.name }}">{{ p.name }}</h3>
+    </a>
+
+    <div class="card-rating">
+      <span class="card-stars">★</span>
+      <span class="card-rating-value">{{ p.rating }}</span>
+      <span class="card-review-count">({{ p.reviewCount | default: 0 }})</span>
+    </div>
+
+    <div class="card-price">
+      {% if p.originalPrice != p.salePrice %}
+      <span class="card-original-price">{{ p.originalPrice | divided_by: 1 }}원</span>
+      {% endif %}
+      <span class="card-sale-price">{{ p.salePrice | divided_by: 1 }}원</span>
+    </div>
+
+    {% if p.badges.size > 0 %}
+    <div class="card-badges">
+      {% for badge in p.badges %}
+      <span class="card-badge">{{ badge }}</span>
+      {% endfor %}
+    </div>
+    {% endif %}
+    {% if p.isMinPriceGuarantee %}
+    <span class="card-badge badge-guarantee">최저가 보장</span>
+    {% endif %}
+  </div>
+
+  <div class="product-card-actions">
+    <button class="btn-wishlist" data-product-id="{{ p.id }}" aria-label="위시리스트에 추가" title="위시리스트">
+      <svg class="heart-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+    </button>
+    <button class="btn-add-planner" data-product-id="{{ p.id }}" aria-label="일정에 추가" title="일정에 추가">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><line x1="12" y1="14" x2="12" y2="18"/><line x1="10" y1="16" x2="14" y2="16"/></svg>
+    </button>
+    <label class="btn-compare" title="비교하기">
+      <input type="checkbox" class="compare-checkbox" data-product-id="{{ p.id }}">
+      <span class="compare-icon">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+      </span>
+    </label>
+  </div>
+</div>

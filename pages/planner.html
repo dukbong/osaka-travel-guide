@@ -1,0 +1,259 @@
+---
+layout: default
+title: "일정 플래너"
+description: "오사카 3일 여행 일정을 직접 만들어보세요. 원하는 상품을 날짜별로 배치하고 총 비용을 확인할 수 있습니다."
+permalink: /planner/
+---
+
+<div class="planner-page">
+  <div class="planner-header">
+    <h1>오사카 일정 플래너</h1>
+    <div class="planner-actions">
+      <button class="btn-secondary" id="plannerClear">초기화</button>
+      <button class="btn-secondary" id="plannerSave">저장하기</button>
+    </div>
+  </div>
+
+  <div class="planner-layout">
+    <div>
+      <div class="planner-days" id="plannerDays">
+        <div class="planner-day" data-day="1" id="day1">
+          <div class="planner-day-header">
+            <h3>Day 1</h3>
+            <span class="day-cost" id="day1Cost">0원</span>
+          </div>
+          <div class="planner-day-items" id="day1Items"></div>
+        </div>
+        <div class="planner-day" data-day="2" id="day2">
+          <div class="planner-day-header">
+            <h3>Day 2</h3>
+            <span class="day-cost" id="day2Cost">0원</span>
+          </div>
+          <div class="planner-day-items" id="day2Items"></div>
+        </div>
+        <div class="planner-day" data-day="3" id="day3">
+          <div class="planner-day-header">
+            <h3>Day 3</h3>
+            <span class="day-cost" id="day3Cost">0원</span>
+          </div>
+          <div class="planner-day-items" id="day3Items"></div>
+        </div>
+      </div>
+
+      <div class="planner-total">
+        <div class="total-label">총 예상 비용</div>
+        <div class="total-amount" id="plannerTotal">0원</div>
+      </div>
+
+      <div class="planner-export">
+        <button class="btn-cta btn-cta-primary" id="plannerExport">선택 상품 예약하기</button>
+      </div>
+    </div>
+
+    <div class="planner-sidebar">
+      <input type="text" class="planner-search" id="plannerSearch" placeholder="상품 검색...">
+      <div class="planner-product-list" id="plannerProductList"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+window.PRODUCTS = {{ site.data.products.products | jsonify }};
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  var products = window.PRODUCTS;
+  var plannerData = JSON.parse(localStorage.getItem('osakaPlanner') || '{"1":[],"2":[],"3":[]}');
+  var searchInput = document.getElementById('plannerSearch');
+  var productList = document.getElementById('plannerProductList');
+
+  function getProduct(id) {
+    return products.find(function(p) { return p.id === id; });
+  }
+
+  function savePlanner() {
+    localStorage.setItem('osakaPlanner', JSON.stringify(plannerData));
+  }
+
+  function renderProductList(query) {
+    var q = (query || '').toLowerCase();
+    var filtered = products.filter(function(p) {
+      return !q || p.name.toLowerCase().indexOf(q) !== -1 || p.category.toLowerCase().indexOf(q) !== -1;
+    }).slice(0, 30);
+
+    productList.textContent = '';
+    filtered.forEach(function(p) {
+      var div = document.createElement('div');
+      div.className = 'planner-product-mini';
+
+      var img = document.createElement('img');
+      img.src = p.image;
+      img.alt = '';
+      img.loading = 'lazy';
+      div.appendChild(img);
+
+      var info = document.createElement('div');
+      info.className = 'mini-info';
+      var nameDiv = document.createElement('div');
+      nameDiv.className = 'mini-name';
+      nameDiv.textContent = p.name;
+      info.appendChild(nameDiv);
+      var priceDiv = document.createElement('div');
+      priceDiv.className = 'mini-price';
+      priceDiv.textContent = p.salePrice.toLocaleString() + '\uc6d0';
+      info.appendChild(priceDiv);
+      div.appendChild(info);
+
+      var addBtn = document.createElement('button');
+      addBtn.className = 'mini-add';
+      addBtn.dataset.id = p.id;
+      addBtn.textContent = '+';
+      addBtn.addEventListener('click', function() {
+        addToDay(p.id, '1');
+      });
+      div.appendChild(addBtn);
+
+      productList.appendChild(div);
+    });
+  }
+
+  function addToDay(productId, day) {
+    if (!plannerData[day]) plannerData[day] = [];
+    plannerData[day].push(productId);
+    savePlanner();
+    renderDays();
+  }
+
+  function removeFromDay(productId, day, index) {
+    if (plannerData[day]) {
+      plannerData[day].splice(index, 1);
+      savePlanner();
+      renderDays();
+    }
+  }
+
+  function renderDays() {
+    var total = 0;
+    ['1','2','3'].forEach(function(day) {
+      var container = document.getElementById('day' + day + 'Items');
+      var costEl = document.getElementById('day' + day + 'Cost');
+      container.textContent = '';
+      var dayCost = 0;
+
+      (plannerData[day] || []).forEach(function(pid, idx) {
+        var p = getProduct(pid);
+        if (!p) return;
+        dayCost += p.salePrice;
+
+        var item = document.createElement('div');
+        item.className = 'planner-item';
+        item.draggable = true;
+        item.dataset.productId = pid;
+        item.dataset.index = idx;
+
+        var img = document.createElement('img');
+        img.src = p.image;
+        img.alt = '';
+        item.appendChild(img);
+
+        var info = document.createElement('div');
+        info.className = 'planner-item-info';
+        var nameEl = document.createElement('div');
+        nameEl.className = 'planner-item-name';
+        nameEl.textContent = p.name;
+        info.appendChild(nameEl);
+        var priceEl = document.createElement('div');
+        priceEl.className = 'planner-item-price';
+        priceEl.textContent = p.salePrice.toLocaleString() + '\uc6d0';
+        info.appendChild(priceEl);
+        item.appendChild(info);
+
+        var removeBtn = document.createElement('button');
+        removeBtn.className = 'planner-item-remove';
+        removeBtn.title = '\uc81c\uac70';
+        removeBtn.textContent = '\u00d7';
+        removeBtn.addEventListener('click', function() {
+          removeFromDay(pid, day, idx);
+        });
+        item.appendChild(removeBtn);
+
+        item.addEventListener('dragstart', function(e) {
+          e.dataTransfer.setData('text/plain', JSON.stringify({pid: pid, fromDay: day, fromIndex: idx}));
+        });
+
+        container.appendChild(item);
+      });
+
+      costEl.textContent = dayCost.toLocaleString() + '\uc6d0';
+      total += dayCost;
+    });
+
+    document.getElementById('plannerTotal').textContent = total.toLocaleString() + '\uc6d0';
+  }
+
+  // Drop zones
+  document.querySelectorAll('.planner-day').forEach(function(dayEl) {
+    var day = dayEl.dataset.day;
+
+    dayEl.addEventListener('dragover', function(e) {
+      e.preventDefault();
+      dayEl.classList.add('drag-over');
+    });
+
+    dayEl.addEventListener('dragleave', function() {
+      dayEl.classList.remove('drag-over');
+    });
+
+    dayEl.addEventListener('drop', function(e) {
+      e.preventDefault();
+      dayEl.classList.remove('drag-over');
+      try {
+        var data = JSON.parse(e.dataTransfer.getData('text/plain'));
+        if (data.fromDay && data.fromIndex !== undefined) {
+          plannerData[data.fromDay].splice(data.fromIndex, 1);
+        }
+        if (!plannerData[day]) plannerData[day] = [];
+        plannerData[day].push(data.pid);
+        savePlanner();
+        renderDays();
+      } catch(err) {}
+    });
+  });
+
+  searchInput.addEventListener('input', function() {
+    renderProductList(this.value);
+  });
+
+  document.getElementById('plannerClear').addEventListener('click', function() {
+    if (confirm('\uc77c\uc815\uc744 \ucd08\uae30\ud654\ud558\uc2dc\uaca0\uc2b5\ub2c8\uae4c?')) {
+      plannerData = {'1':[],'2':[],'3':[]};
+      savePlanner();
+      renderDays();
+    }
+  });
+
+  document.getElementById('plannerSave').addEventListener('click', function() {
+    savePlanner();
+    alert('\uc77c\uc815\uc774 \uc800\uc7a5\ub418\uc5c8\uc2b5\ub2c8\ub2e4!');
+  });
+
+  document.getElementById('plannerExport').addEventListener('click', function() {
+    var allIds = [].concat(plannerData['1'] || [], plannerData['2'] || [], plannerData['3'] || []);
+    var unique = allIds.filter(function(v, i, a) { return a.indexOf(v) === i; });
+    if (unique.length === 0) {
+      alert('\uc77c\uc815\uc5d0 \uc0c1\ud488\uc744 \ucd94\uac00\ud574\uc8fc\uc138\uc694.');
+      return;
+    }
+    unique.forEach(function(pid) {
+      var p = getProduct(pid);
+      if (p && p.affiliateUrl) {
+        window.open(p.affiliateUrl, '_blank', 'noopener');
+      }
+    });
+  });
+
+  renderProductList('');
+  renderDays();
+});
+</script>

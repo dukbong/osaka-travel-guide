@@ -1,0 +1,86 @@
+---
+layout: default
+---
+
+<article class="blog-post">
+  <div class="post-layout">
+    <!-- Table of Contents Sidebar -->
+    <aside class="post-toc" id="postToc">
+      <div class="toc-sticky">
+        <h3 class="toc-title">목차</h3>
+        <nav class="toc-nav" id="tocNav">
+          <!-- Populated by JS -->
+        </nav>
+      </div>
+    </aside>
+
+    <!-- Article Body -->
+    <div class="post-content-wrap">
+      <header class="post-header">
+        <div class="post-meta">
+          {% if page.category %}<span class="post-category">{{ page.category }}</span>{% endif %}
+          <time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%Y년 %m월 %d일" }}</time>
+        </div>
+        <h1 class="post-title">{{ page.title }}</h1>
+        {% if page.description %}
+        <p class="post-excerpt">{{ page.description }}</p>
+        {% endif %}
+      </header>
+
+      <div class="post-body prose">
+        {{ content }}
+      </div>
+    </div>
+  </div>
+</article>
+
+<!-- JSON-LD Article Schema -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "{{ page.title | escape }}",
+  {% if page.image %}"image": "{{ page.image }}",{% endif %}
+  "datePublished": "{{ page.date | date_to_xmlschema }}",
+  "dateModified": "{{ page.last_modified_at | default: page.date | date_to_xmlschema }}",
+  "author": {
+    "@type": "Organization",
+    "name": "오사카 트래블 가이드"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "오사카 트래블 가이드",
+    "url": "{{ site.url }}{{ site.baseurl }}"
+  },
+  "description": "{{ page.description | default: page.excerpt | strip_html | escape | truncate: 160 }}",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "{{ page.url | absolute_url }}"
+  }
+}
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const article = document.querySelector('.post-body');
+  const tocNav = document.getElementById('tocNav');
+  if (!article || !tocNav) return;
+  const headings = article.querySelectorAll('h2, h3');
+  if (headings.length === 0) {
+    document.getElementById('postToc').style.display = 'none';
+    return;
+  }
+  const ul = document.createElement('ul');
+  headings.forEach(function(h, i) {
+    if (!h.id) h.id = 'heading-' + i;
+    const li = document.createElement('li');
+    li.className = h.tagName === 'H3' ? 'toc-h3' : 'toc-h2';
+    const a = document.createElement('a');
+    a.href = '#' + h.id;
+    a.textContent = h.textContent;
+    li.appendChild(a);
+    ul.appendChild(li);
+  });
+  tocNav.appendChild(ul);
+});
+</script>

@@ -1,0 +1,34 @@
+{% if page.layout == 'product' %}
+<!-- Article JSON-LD is in product layout -->
+{% elsif page.url == '/' or page.url == '/index.html' or page.url contains 'all-products' %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "name": "오사카 여행 필수 상품 100선",
+  "description": "{{ site.description | escape }}",
+  "url": "{{ page.url | absolute_url }}",
+  "numberOfItems": {{ site.data.products.products.size }},
+  "itemListElement": [
+    {% for p in site.data.products.products limit:10 %}
+    {
+      "@type": "ListItem",
+      "position": {{ forloop.index }},
+      "url": "{{ site.url }}{{ site.baseurl }}/products/{{ p.slug }}/",
+      "name": "{{ p.name | escape }}"
+    }{% unless forloop.last %},{% endunless %}
+    {% endfor %}
+  ]
+}
+</script>
+{% else %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "{{ site.title | escape }}",
+  "url": "{{ site.url }}{{ site.baseurl }}/",
+  "description": "{{ site.description | escape }}"
+}
+</script>
+{% endif %}

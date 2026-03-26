@@ -1,0 +1,144 @@
+---
+layout: default
+---
+{% assign product = page %}
+{% assign all_products = site.data.products.products %}
+
+<article class="product-detail">
+  <!-- Image Gallery -->
+  <section class="product-gallery">
+    <div class="gallery-main">
+      <img src="{{ product.image }}" alt="{{ product.name }}" class="gallery-main-img" id="galleryMainImg" loading="eager">
+    </div>
+    {% if product.images.size > 0 %}
+    <div class="gallery-dots" id="galleryDots">
+      <button class="gallery-dot active" data-img="{{ product.image }}"></button>
+      {% for img in product.images %}
+      <button class="gallery-dot" data-img="{{ img }}"></button>
+      {% endfor %}
+    </div>
+    <div class="gallery-thumbs" id="galleryThumbs">
+      <button class="gallery-thumb active" data-img="{{ product.image }}">
+        <img src="{{ product.image }}" alt="" loading="lazy">
+      </button>
+      {% for img in product.images %}
+      <button class="gallery-thumb" data-img="{{ img }}">
+        <img src="{{ img }}" alt="" loading="lazy">
+      </button>
+      {% endfor %}
+    </div>
+    {% endif %}
+  </section>
+
+  <!-- Product Info -->
+  <section class="product-info">
+    <!-- Category & Badges -->
+    <div class="product-meta-row">
+      <span class="product-category-badge">{{ product.category }}</span>
+      {% for badge in product.badges %}
+      <span class="product-badge">{{ badge }}</span>
+      {% endfor %}
+      {% if product.isMinPriceGuarantee %}
+      <span class="product-badge badge-guarantee">최저가 보장</span>
+      {% endif %}
+      {% if product.isNew %}
+      <span class="product-badge badge-new">NEW</span>
+      {% endif %}
+    </div>
+
+    <h1 class="product-title">{{ product.name }}</h1>
+
+    <!-- Rating -->
+    <div class="product-rating">
+      <div class="stars" aria-label="평점 {{ product.rating }}점">
+        {% assign full_stars = product.rating | floor %}
+        {% assign has_half = product.rating | minus: full_stars %}
+        {% for i in (1..5) %}
+          {% if i <= full_stars %}
+          <span class="star star-full">★</span>
+          {% elsif has_half > 0.2 and i == full_stars | plus: 1 %}
+          <span class="star star-half">★</span>
+          {% else %}
+          <span class="star star-empty">★</span>
+          {% endif %}
+        {% endfor %}
+      </div>
+      <span class="rating-value">{{ product.rating }}</span>
+      <span class="review-count">({{ product.reviewCount | default: 0 }}건의 리뷰)</span>
+      <span class="purchase-count">{{ product.purchaseCount | default: 0 | divided_by: 1000 }}K+ 구매</span>
+    </div>
+
+    <!-- Price -->
+    <div class="product-price-section">
+      {% if product.discountRate and product.discountRate > 0 %}
+      <span class="discount-badge">{{ product.discountText }}</span>
+      {% endif %}
+      <div class="price-row">
+        {% if product.originalPrice != product.salePrice %}
+        <span class="original-price">{{ product.originalPrice | divided_by: 1 }}원</span>
+        {% endif %}
+        <span class="sale-price">{{ product.salePrice | divided_by: 1 }}원</span>
+      </div>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="product-actions">
+      <a href="{{ product.affiliateUrl }}" target="_blank" rel="noopener noreferrer" class="btn-cta btn-cta-primary">
+        WAUG에서 예약하기
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+      </a>
+      <div class="product-sub-actions">
+        <button class="btn-wishlist-detail" data-product-id="{{ product.productId }}" aria-label="위시리스트에 추가">
+          <svg class="heart-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          <span>위시리스트</span>
+        </button>
+        <button class="btn-add-planner-detail" data-product-id="{{ product.productId }}" aria-label="일정에 추가">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><line x1="12" y1="14" x2="12" y2="18"/><line x1="10" y1="16" x2="14" y2="16"/></svg>
+          <span>일정에 추가</span>
+        </button>
+        <label class="btn-compare-detail">
+          <input type="checkbox" class="compare-checkbox" data-product-id="{{ product.productId }}">
+          <span>비교하기</span>
+        </label>
+      </div>
+    </div>
+  </section>
+</article>
+
+<!-- Related Products -->
+<section class="related-products">
+  <h2 class="section-title">같은 카테고리 추천 상품</h2>
+  <div class="product-grid product-grid-4">
+    {% assign count = 0 %}
+    {% for p in all_products %}
+      {% if p.category == product.category and p.id != product.productId and count < 4 %}
+        {% assign count = count | plus: 1 %}
+        {% include product-card.html product=p %}
+      {% endif %}
+    {% endfor %}
+  </div>
+</section>
+
+<!-- JSON-LD Article Schema -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "{{ product.name | escape }}",
+  "image": "{{ product.image }}",
+  "author": {
+    "@type": "Organization",
+    "name": "오사카 트래블 가이드"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "오사카 트래블 가이드",
+    "url": "{{ site.url }}{{ site.baseurl }}"
+  },
+  "description": "{{ product.name | escape }} - {{ product.category }} 카테고리. {{ product.salePrice }}원부터. 평점 {{ product.rating }}점.",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "{{ page.url | absolute_url }}"
+  }
+}
+</script>

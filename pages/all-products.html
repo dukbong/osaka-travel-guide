@@ -1,0 +1,235 @@
+---
+layout: default
+title: "전체 상품"
+description: "오사카 여행 필수 상품 100개를 카테고리별로 둘러보세요. 입장권, 교통패스, eSIM, 투어, 맛집 등."
+permalink: /all-products/
+---
+
+<section class="hero" style="padding-bottom:1rem;">
+  <h1>전체 상품</h1>
+  <p>오사카 여행 필수 상품 {{ site.data.products.products.size }}개를 둘러보세요.</p>
+</section>
+
+<!-- Category Tabs -->
+<div class="category-filter" id="categoryFilter">
+  <button class="category-tab active" data-category="all">전체 ({{ site.data.products.products.size }})</button>
+  {% for cat in site.data.products.categories %}
+  <button class="category-tab" data-category="{{ cat.name }}">{{ cat.name }} ({{ cat.count }})</button>
+  {% endfor %}
+</div>
+
+<!-- Sort Bar -->
+<div class="sort-bar">
+  <span class="sort-info" id="sortInfo">전체 {{ site.data.products.products.size }}개 상품</span>
+  <div class="sort-options">
+    <button class="sort-btn active" data-sort="score">인기순</button>
+    <button class="sort-btn" data-sort="price">가격순</button>
+    <button class="sort-btn" data-sort="rating">평점순</button>
+  </div>
+</div>
+
+<!-- Product Grid -->
+<div class="product-grid" id="productGrid">
+  {% for product in site.data.products.products %}
+    {% include product-card.html product=product %}
+  {% endfor %}
+</div>
+
+<script>
+window.PRODUCTS = {{ site.data.products.products | jsonify }};
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  var products = window.PRODUCTS;
+  var grid = document.getElementById('productGrid');
+  var tabs = document.querySelectorAll('.category-tab');
+  var sortBtns = document.querySelectorAll('.sort-btn');
+  var sortInfo = document.getElementById('sortInfo');
+  var currentCategory = 'all';
+  var currentSort = 'score';
+  var baseUrl = '{{ site.baseurl }}';
+
+  // Check URL params for category
+  var params = new URLSearchParams(window.location.search);
+  var catParam = params.get('cat');
+  if (catParam) {
+    currentCategory = catParam;
+    tabs.forEach(function(t) {
+      t.classList.remove('active');
+      if (t.dataset.category === catParam) t.classList.add('active');
+    });
+  }
+
+  function buildCard(p) {
+    var card = document.createElement('div');
+    card.className = 'product-card';
+    card.dataset.productId = p.id;
+
+    var imgLink = document.createElement('a');
+    imgLink.className = 'product-card-link';
+    imgLink.href = baseUrl + '/products/' + p.slug + '/';
+    var imgWrap = document.createElement('div');
+    imgWrap.className = 'product-card-image';
+    var img = document.createElement('img');
+    img.src = p.image;
+    img.alt = p.name;
+    img.loading = 'lazy';
+    img.decoding = 'async';
+    imgWrap.appendChild(img);
+    if (p.discountRate && p.discountRate > 0) {
+      var db = document.createElement('span');
+      db.className = 'card-discount-badge';
+      db.textContent = p.discountText;
+      imgWrap.appendChild(db);
+    }
+    if (p.isNew) {
+      var nb = document.createElement('span');
+      nb.className = 'card-new-badge';
+      nb.textContent = 'NEW';
+      imgWrap.appendChild(nb);
+    }
+    imgLink.appendChild(imgWrap);
+    card.appendChild(imgLink);
+
+    var body = document.createElement('div');
+    body.className = 'product-card-body';
+    var catSpan = document.createElement('span');
+    catSpan.className = 'card-category';
+    catSpan.textContent = p.category;
+    body.appendChild(catSpan);
+
+    var titleLink = document.createElement('a');
+    titleLink.className = 'product-card-link';
+    titleLink.href = baseUrl + '/products/' + p.slug + '/';
+    var title = document.createElement('h3');
+    title.className = 'card-title';
+    title.title = p.name;
+    title.textContent = p.name;
+    titleLink.appendChild(title);
+    body.appendChild(titleLink);
+
+    var ratingDiv = document.createElement('div');
+    ratingDiv.className = 'card-rating';
+    var starSpan = document.createElement('span');
+    starSpan.className = 'card-stars';
+    starSpan.textContent = '\u2605';
+    ratingDiv.appendChild(starSpan);
+    ratingDiv.appendChild(document.createTextNode(' '));
+    var rv = document.createElement('span');
+    rv.className = 'card-rating-value';
+    rv.textContent = String(p.rating);
+    ratingDiv.appendChild(rv);
+    ratingDiv.appendChild(document.createTextNode(' '));
+    var rc = document.createElement('span');
+    rc.className = 'card-review-count';
+    rc.textContent = '(' + (p.reviewCount || 0) + ')';
+    ratingDiv.appendChild(rc);
+    body.appendChild(ratingDiv);
+
+    var priceDiv = document.createElement('div');
+    priceDiv.className = 'card-price';
+    if (p.originalPrice !== p.salePrice) {
+      var op = document.createElement('span');
+      op.className = 'card-original-price';
+      op.textContent = p.originalPrice.toLocaleString() + '\uc6d0';
+      priceDiv.appendChild(op);
+    }
+    var sp = document.createElement('span');
+    sp.className = 'card-sale-price';
+    sp.textContent = p.salePrice.toLocaleString() + '\uc6d0';
+    priceDiv.appendChild(sp);
+    body.appendChild(priceDiv);
+
+    if (p.isMinPriceGuarantee) {
+      var gb = document.createElement('span');
+      gb.className = 'card-badge badge-guarantee';
+      gb.textContent = '\ucd5c\uc800\uac00 \ubcf4\uc7a5';
+      body.appendChild(gb);
+    }
+    card.appendChild(body);
+
+    // Actions with static SVG (no user data in innerHTML)
+    var actions = document.createElement('div');
+    actions.className = 'product-card-actions';
+
+    var wishBtn = document.createElement('button');
+    wishBtn.className = 'btn-wishlist';
+    wishBtn.dataset.productId = p.id;
+    wishBtn.setAttribute('aria-label', '\uc704\uc2dc\ub9ac\uc2a4\ud2b8');
+    wishBtn.title = '\uc704\uc2dc\ub9ac\uc2a4\ud2b8';
+    wishBtn.innerHTML = '<svg class="heart-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>';
+    actions.appendChild(wishBtn);
+
+    var planBtn = document.createElement('button');
+    planBtn.className = 'btn-add-planner';
+    planBtn.dataset.productId = p.id;
+    planBtn.setAttribute('aria-label', '\uc77c\uc815\uc5d0 \ucd94\uac00');
+    planBtn.title = '\uc77c\uc815\uc5d0 \ucd94\uac00';
+    planBtn.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><line x1="12" y1="14" x2="12" y2="18"/><line x1="10" y1="16" x2="14" y2="16"/></svg>';
+    actions.appendChild(planBtn);
+
+    var cmpLabel = document.createElement('label');
+    cmpLabel.className = 'btn-compare';
+    cmpLabel.title = '\ube44\uad50\ud558\uae30';
+    var cmpInput = document.createElement('input');
+    cmpInput.type = 'checkbox';
+    cmpInput.className = 'compare-checkbox';
+    cmpInput.dataset.productId = p.id;
+    cmpLabel.appendChild(cmpInput);
+    var cmpIcon = document.createElement('span');
+    cmpIcon.className = 'compare-icon';
+    cmpIcon.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>';
+    cmpLabel.appendChild(cmpIcon);
+    actions.appendChild(cmpLabel);
+
+    card.appendChild(actions);
+    return card;
+  }
+
+  function renderGrid(items) {
+    grid.textContent = '';
+    sortInfo.textContent = '\uc804\uccb4 ' + items.length + '\uac1c \uc0c1\ud488';
+    items.forEach(function(p) {
+      grid.appendChild(buildCard(p));
+    });
+    if (window.App) window.App.initWishlistButtons();
+    if (window.App) window.App.initCompareCheckboxes();
+  }
+
+  function filterAndSort() {
+    var filtered = products;
+    if (currentCategory !== 'all') {
+      filtered = products.filter(function(p) { return p.category === currentCategory; });
+    }
+    if (currentSort === 'price') {
+      filtered = filtered.slice().sort(function(a, b) { return a.salePrice - b.salePrice; });
+    } else if (currentSort === 'rating') {
+      filtered = filtered.slice().sort(function(a, b) { return b.rating - a.rating; });
+    } else {
+      filtered = filtered.slice().sort(function(a, b) { return b.score - a.score; });
+    }
+    renderGrid(filtered);
+  }
+
+  tabs.forEach(function(tab) {
+    tab.addEventListener('click', function() {
+      tabs.forEach(function(t) { t.classList.remove('active'); });
+      tab.classList.add('active');
+      currentCategory = tab.dataset.category;
+      filterAndSort();
+    });
+  });
+
+  sortBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      sortBtns.forEach(function(b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+      currentSort = btn.dataset.sort;
+      filterAndSort();
+    });
+  });
+
+  if (catParam) filterAndSort();
+});
+</script>
