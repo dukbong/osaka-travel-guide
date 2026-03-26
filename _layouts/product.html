@@ -113,6 +113,79 @@ layout: default
   </section>
 </article>
 
+<!-- Detail Tabs (server-side rendered for SEO) -->
+<section class="detail-tabs" id="detailTabs">
+  <nav class="tab-nav">
+    <button class="tab-btn active" data-tab="intro">소개</button>
+    {% if product.hasProgram %}<button class="tab-btn" data-tab="program">상세 일정</button>{% endif %}
+    {% if product.taxonomies %}<button class="tab-btn" data-tab="specs">이용 정보</button>{% endif %}
+    {% if product.lat %}<button class="tab-btn" data-tab="location">위치</button>{% endif %}
+  </nav>
+
+  <!-- Tab: 소개 -->
+  <div class="tab-panel active" id="tab-intro">
+    {% if product.intro %}
+    <div class="product-intro">{{ product.intro }}</div>
+    {% else %}
+    <p>상품 소개가 준비 중입니다.</p>
+    {% endif %}
+  </div>
+
+  <!-- Tab: 상세 일정 -->
+  {% if product.hasProgram %}
+  <div class="tab-panel" id="tab-program">
+    <div class="product-program">
+      {% capture prog_file %}programs/{{ product.id }}.html{% endcapture %}
+      {% include {{ prog_file }} %}
+    </div>
+  </div>
+  {% endif %}
+
+  <!-- Tab: 이용 정보 -->
+  {% if product.taxonomies %}
+  <div class="tab-panel" id="tab-specs">
+    <table class="specs-table">
+      <tbody>
+        {% if product.taxonomies.confirm_time %}<tr><td class="spec-label">확인 방법</td><td>{{ product.taxonomies.confirm_time }}</td></tr>{% endif %}
+        {% if product.taxonomies.runtime %}<tr><td class="spec-label">이용 시간</td><td>{{ product.taxonomies.runtime }}</td></tr>{% endif %}
+        {% if product.taxonomies.min_person %}<tr><td class="spec-label">최소 인원</td><td>{{ product.taxonomies.min_person }}</td></tr>{% endif %}
+        {% if product.taxonomies.pickup %}<tr><td class="spec-label">픽업</td><td>{{ product.taxonomies.pickup }}</td></tr>{% endif %}
+        {% if product.taxonomies.ticket_type %}<tr><td class="spec-label">티켓 유형</td><td>{{ product.taxonomies.ticket_type }}</td></tr>{% endif %}
+        {% if product.taxonomies.ticket_vaild_type %}<tr><td class="spec-label">유효 기간</td><td>{{ product.taxonomies.ticket_vaild_type }}</td></tr>{% endif %}
+        {% if product.taxonomies.cancellation %}<tr><td class="spec-label">취소 정책</td><td>{{ product.taxonomies.cancellation }}</td></tr>{% endif %}
+        {% if product.taxonomies.language %}<tr><td class="spec-label">제공 언어</td><td>{{ product.taxonomies.language }}</td></tr>{% endif %}
+      </tbody>
+    </table>
+  </div>
+  {% endif %}
+
+  <!-- Tab: 위치 -->
+  {% if product.lat %}
+  <div class="tab-panel" id="tab-location">
+    <p class="location-address">{{ product.address }}</p>
+    <a href="https://www.google.com/maps/search/?api=1&query={{ product.lat }},{{ product.lng }}" target="_blank" rel="noopener" class="btn-directions">Google Maps에서 보기</a>
+    <div id="miniMap" class="mini-map" data-lat="{{ product.lat }}" data-lng="{{ product.lng }}"></div>
+  </div>
+  {% endif %}
+</section>
+
+<script>
+// Tab switching (JS = interaction only, content is already server-rendered)
+document.addEventListener('DOMContentLoaded', function() {
+  var tabs = document.querySelectorAll('.tab-btn');
+  var panels = document.querySelectorAll('.tab-panel');
+  tabs.forEach(function(tab) {
+    tab.addEventListener('click', function() {
+      tabs.forEach(function(t) { t.classList.remove('active'); });
+      panels.forEach(function(p) { p.classList.remove('active'); });
+      tab.classList.add('active');
+      var panel = document.getElementById('tab-' + tab.dataset.tab);
+      if (panel) panel.classList.add('active');
+    });
+  });
+});
+</script>
+
 <!-- Related Products -->
 <section class="related-products">
   <h2 class="section-title">같은 카테고리 추천 상품</h2>
