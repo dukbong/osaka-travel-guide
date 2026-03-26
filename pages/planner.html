@@ -14,46 +14,44 @@ permalink: /planner/
     </div>
   </div>
 
-  <div class="planner-layout">
-    <div>
-      <div class="planner-days" id="plannerDays">
-        <div class="planner-day" data-day="1" id="day1">
-          <div class="planner-day-header">
-            <h3>Day 1</h3>
-            <span class="day-cost" id="day1Cost">0원</span>
-          </div>
-          <div class="planner-day-items" id="day1Items"></div>
-        </div>
-        <div class="planner-day" data-day="2" id="day2">
-          <div class="planner-day-header">
-            <h3>Day 2</h3>
-            <span class="day-cost" id="day2Cost">0원</span>
-          </div>
-          <div class="planner-day-items" id="day2Items"></div>
-        </div>
-        <div class="planner-day" data-day="3" id="day3">
-          <div class="planner-day-header">
-            <h3>Day 3</h3>
-            <span class="day-cost" id="day3Cost">0원</span>
-          </div>
-          <div class="planner-day-items" id="day3Items"></div>
-        </div>
-      </div>
+  <!-- 상품 검색 (상단) -->
+  <div class="planner-search-section">
+    <input type="text" class="planner-search" id="plannerSearch" placeholder="상품 검색...">
+    <div class="planner-product-list" id="plannerProductList"></div>
+  </div>
 
-      <div class="planner-total">
-        <div class="total-label">총 예상 비용</div>
-        <div class="total-amount" id="plannerTotal">0원</div>
+  <!-- Day 일정 (세로) -->
+  <div class="planner-days-vertical" id="plannerDays">
+    <div class="planner-day" data-day="1" id="day1">
+      <div class="planner-day-header">
+        <h3>Day 1</h3>
+        <span class="day-cost" id="day1Cost">0원</span>
       </div>
-
-      <div class="planner-export">
-        <button class="btn-cta btn-cta-primary" id="plannerExport">선택 상품 예약하기</button>
-      </div>
+      <div class="planner-day-items" id="day1Items"></div>
     </div>
-
-    <div class="planner-sidebar">
-      <input type="text" class="planner-search" id="plannerSearch" placeholder="상품 검색...">
-      <div class="planner-product-list" id="plannerProductList"></div>
+    <div class="planner-day" data-day="2" id="day2">
+      <div class="planner-day-header">
+        <h3>Day 2</h3>
+        <span class="day-cost" id="day2Cost">0원</span>
+      </div>
+      <div class="planner-day-items" id="day2Items"></div>
     </div>
+    <div class="planner-day" data-day="3" id="day3">
+      <div class="planner-day-header">
+        <h3>Day 3</h3>
+        <span class="day-cost" id="day3Cost">0원</span>
+      </div>
+      <div class="planner-day-items" id="day3Items"></div>
+    </div>
+  </div>
+
+  <!-- 총 비용 + 예약 -->
+  <div class="planner-total">
+    <div class="total-label">총 예상 비용</div>
+    <div class="total-amount" id="plannerTotal">0원</div>
+  </div>
+  <div class="planner-export">
+    <button class="btn-cta btn-cta-primary" id="plannerExport">선택 상품 예약하기</button>
   </div>
 </div>
 
@@ -105,14 +103,25 @@ document.addEventListener('DOMContentLoaded', function() {
       info.appendChild(priceDiv);
       div.appendChild(info);
 
+      var addWrap = document.createElement('div');
+      addWrap.className = 'mini-add-wrap';
+      var select = document.createElement('select');
+      select.className = 'mini-day-select';
+      ['1','2','3'].forEach(function(d) {
+        var opt = document.createElement('option');
+        opt.value = d;
+        opt.textContent = 'Day ' + d;
+        select.appendChild(opt);
+      });
+      addWrap.appendChild(select);
       var addBtn = document.createElement('button');
       addBtn.className = 'mini-add';
-      addBtn.dataset.id = p.id;
       addBtn.textContent = '+';
       addBtn.addEventListener('click', function() {
-        addToDay(p.id, '1');
+        addToDay(p.id, select.value);
       });
-      div.appendChild(addBtn);
+      addWrap.appendChild(addBtn);
+      div.appendChild(addWrap);
 
       productList.appendChild(div);
     });
