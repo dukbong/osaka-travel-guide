@@ -38,14 +38,17 @@
 
       <ul class="nav-links">
         <li><a href="{{ '/' | relative_url }}" {% if page.url == '/index.html' or page.url == '/' %}class="active"{% endif %}>홈</a></li>
-        <li><a href="{{ '/all-products/' | relative_url }}" {% if page.url contains 'all-products' %}class="active"{% endif %}>카테고리</a></li>
-        <li><a href="{{ '/planner/' | relative_url }}" {% if page.url contains 'planner' %}class="active"{% endif %}>일정플래너</a></li>
-        <li>
-          <a href="{{ '/wishlist/' | relative_url }}" class="nav-wishlist" {% if page.url contains 'wishlist' %}class="active"{% endif %}>
-            위시리스트
-            <span class="wishlist-count" id="navWishlistCount" style="display:none;">0</span>
+        <li class="nav-dropdown" id="guideDropdown">
+          <a href="#" class="nav-dropdown-toggle" {% if page.url contains 'guides' %}class="active"{% endif %}>
+            가이드 <span class="nav-dropdown-arrow">&#9660;</span>
           </a>
+          <div class="nav-dropdown-menu">
+            {% for guide in site.data.guides.guides %}
+            <a href="{{ '/guides/' | append: guide.slug | append: '/' | relative_url }}">{{ guide.title | truncate: 20, '' }}</a>
+            {% endfor %}
+          </div>
         </li>
+        <li><a href="{{ '/planner/' | relative_url }}" {% if page.url contains 'planner' %}class="active"{% endif %}>일정플래너</a></li>
       </ul>
 
       <button class="hamburger" id="hamburger" aria-label="메뉴 열기">
@@ -59,9 +62,16 @@
     <div class="mobile-menu" id="mobileMenu">
       <ul class="mobile-nav-links">
         <li><a href="{{ '/' | relative_url }}">홈</a></li>
-        <li><a href="{{ '/all-products/' | relative_url }}">카테고리</a></li>
+        <li>
+          <a href="#">가이드</a>
+          <ul class="mobile-nav-dropdown">
+            {% for guide in site.data.guides.guides %}
+            <li><a href="{{ '/guides/' | append: guide.slug | append: '/' | relative_url }}">{{ guide.title | truncate: 25, '' }}</a></li>
+            {% endfor %}
+          </ul>
+        </li>
         <li><a href="{{ '/planner/' | relative_url }}">일정플래너</a></li>
-        <li><a href="{{ '/wishlist/' | relative_url }}">위시리스트</a></li>
+        <li><a href="{{ '/all-products/' | relative_url }}">전체 상품</a></li>
       </ul>
     </div>
   </header>
@@ -127,6 +137,22 @@
   </footer>
 
   <!-- Scripts -->
+  <script>
+  (function() {
+    var dropdown = document.getElementById('guideDropdown');
+    if (!dropdown) return;
+    var toggle = dropdown.querySelector('.nav-dropdown-toggle');
+    toggle.addEventListener('click', function(e) {
+      e.preventDefault();
+      dropdown.classList.toggle('open');
+    });
+    document.addEventListener('click', function(e) {
+      if (!dropdown.contains(e.target)) {
+        dropdown.classList.remove('open');
+      }
+    });
+  })();
+  </script>
   <script src="{{ '/assets/js/app.js' | relative_url }}"></script>
   <script src="{{ '/assets/js/gallery.js' | relative_url }}"></script>
   <script>

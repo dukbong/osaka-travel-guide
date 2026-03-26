@@ -1820,3 +1820,1093 @@ ul, ol {
     padding: 1.5rem;
   }
 }
+
+// ===========================================
+// Guide Pages
+// ===========================================
+
+// Hero
+.guide-hero {
+  position: relative;
+  width: 100%;
+  min-height: 400px;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: flex-end;
+  margin-bottom: 2rem;
+}
+
+.guide-hero-overlay {
+  width: 100%;
+  padding: 3rem 2rem;
+  background: linear-gradient(transparent, rgba(10,10,10,0.85) 40%, rgba(10,10,10,0.95));
+}
+
+.guide-hero-title {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: $text-primary;
+  margin-bottom: 0.5rem;
+  max-width: 800px;
+}
+
+.guide-hero-subtitle {
+  font-size: 1.15rem;
+  color: $text-secondary;
+  margin-bottom: 1.5rem;
+  max-width: 600px;
+}
+
+.guide-hero-cta {
+  display: inline-block;
+}
+
+// Section titles
+.section-title {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: $text-primary;
+  margin-bottom: 0.5rem;
+  padding: 0 1rem;
+}
+
+.section-desc {
+  color: $text-secondary;
+  margin-bottom: 1.5rem;
+  padding: 0 1rem;
+}
+
+// Quiz Section
+.quiz-section {
+  max-width: 700px;
+  margin: 0 auto 3rem;
+  padding: 2rem 1rem;
+}
+
+.quiz-container {
+  background: $bg-card;
+  border: 1px solid $border-color;
+  border-radius: $radius-lg;
+  padding: 2rem;
+}
+
+.quiz-progress {
+  margin-bottom: 1.5rem;
+}
+
+.quiz-step-label {
+  display: block;
+  font-size: 0.85rem;
+  color: $text-muted;
+  margin-bottom: 0.5rem;
+}
+
+.quiz-progress-bar {
+  width: 100%;
+  height: 4px;
+  background: $border-color;
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.quiz-progress-fill {
+  height: 100%;
+  background: $accent;
+  border-radius: 2px;
+  transition: width 0.4s ease;
+}
+
+.quiz-question {
+  animation: fadeInUp 0.3s ease;
+}
+
+.quiz-question-enter {
+  animation: fadeInUp 0.3s ease;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.quiz-question-text {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: $text-primary;
+  margin-bottom: 1.25rem;
+}
+
+.quiz-options {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.quiz-option-btn {
+  display: block;
+  width: 100%;
+  padding: 1rem 1.25rem;
+  background: $bg-elevated;
+  border: 2px solid $border-color;
+  border-radius: $radius-md;
+  color: $text-primary;
+  font-size: 1rem;
+  font-family: $font-sans;
+  cursor: pointer;
+  transition: all $transition;
+  text-align: left;
+
+  &:hover {
+    border-color: $accent;
+    background: rgba(249, 115, 22, 0.08);
+  }
+
+  &.selected {
+    border-color: $accent;
+    background: rgba(249, 115, 22, 0.15);
+    color: $accent;
+    font-weight: 600;
+  }
+}
+
+// Quiz Result
+.quiz-result {
+  max-width: 700px;
+  margin: 0 auto 3rem;
+  padding: 0 1rem;
+}
+
+.quiz-result-card {
+  background: $bg-card;
+  border: 1px solid $border-color;
+  border-radius: $radius-lg;
+  padding: 2rem;
+}
+
+.result-summary-text {
+  color: $text-secondary;
+  margin-bottom: 1.5rem;
+  font-size: 1rem;
+}
+
+.result-product-card {
+  display: flex;
+  gap: 1rem;
+  padding: 1.25rem;
+  background: $bg-elevated;
+  border: 1px solid $border-color;
+  border-radius: $radius-md;
+  margin-bottom: 1rem;
+
+  img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: $radius-sm;
+    flex-shrink: 0;
+  }
+}
+
+.result-product-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+
+  h3 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: $text-primary;
+  }
+}
+
+.result-product-desc {
+  font-size: 0.9rem;
+  color: $text-secondary;
+}
+
+.result-product-price {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: $accent;
+}
+
+.result-buy-btn {
+  align-self: flex-start;
+  margin-top: 0.5rem;
+  padding: 0.5rem 1.25rem;
+  font-size: 0.9rem;
+}
+
+.btn-retake {
+  display: block;
+  width: 100%;
+  margin-top: 1rem;
+  padding: 0.75rem;
+  background: transparent;
+  border: 1px solid $border-color;
+  border-radius: $radius-md;
+  color: $text-secondary;
+  font-family: $font-sans;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all $transition;
+
+  &:hover {
+    border-color: $text-secondary;
+    color: $text-primary;
+  }
+}
+
+// Comparison Table
+.comparison-section {
+  max-width: 1100px;
+  margin: 0 auto 3rem;
+  padding: 0 1rem;
+}
+
+.comparison-table-wrap {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  border: 1px solid $border-color;
+  border-radius: $radius-md;
+}
+
+.comparison-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+
+  th, td {
+    padding: 0.75rem 1rem;
+    text-align: left;
+    border-bottom: 1px solid $border-color;
+    white-space: nowrap;
+  }
+
+  thead th {
+    background: $bg-card;
+    color: $text-secondary;
+    font-weight: 600;
+    font-size: 0.85rem;
+    position: sticky;
+    top: 0;
+    z-index: 2;
+  }
+
+  th.sortable {
+    cursor: pointer;
+    user-select: none;
+
+    &:hover {
+      color: $accent;
+    }
+
+    &::after {
+      content: ' \2195';
+      font-size: 0.75rem;
+      opacity: 0.4;
+    }
+
+    &.sort-asc::after {
+      content: ' \2191';
+      opacity: 1;
+      color: $accent;
+    }
+
+    &.sort-desc::after {
+      content: ' \2193';
+      opacity: 1;
+      color: $accent;
+    }
+  }
+
+  th.sticky-col,
+  td.sticky-col {
+    position: sticky;
+    left: 0;
+    z-index: 1;
+    background: $bg-card;
+    min-width: 180px;
+  }
+
+  tbody tr {
+    background: $bg-primary;
+    transition: background $transition;
+
+    &:nth-child(even) {
+      background: rgba(23, 23, 23, 0.5);
+    }
+
+    &:hover {
+      background: rgba(249, 115, 22, 0.05);
+    }
+
+    &.highlighted {
+      background: rgba(249, 115, 22, 0.12);
+      border-left: 3px solid $accent;
+
+      td.sticky-col {
+        background: rgba(249, 115, 22, 0.12);
+      }
+    }
+  }
+
+  td {
+    color: $text-primary;
+  }
+}
+
+.compare-check-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+
+  input[type="checkbox"] {
+    accent-color: $accent;
+    width: 16px;
+    height: 16px;
+  }
+}
+
+.product-name-cell {
+  font-weight: 500;
+  color: $text-primary;
+}
+
+.badge {
+  display: inline-block;
+  padding: 0.2rem 0.6rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  background: rgba(249, 115, 22, 0.15);
+  color: $accent;
+}
+
+.badge-입장권 { background: rgba(34, 197, 94, 0.15); color: $success; }
+.badge-익스프레스 { background: rgba(249, 115, 22, 0.15); color: $accent; }
+.badge-버스 { background: rgba(59, 130, 246, 0.15); color: #3b82f6; }
+.badge-열차 { background: rgba(34, 197, 94, 0.15); color: $success; }
+.badge-픽업 { background: rgba(168, 85, 247, 0.15); color: #a855f7; }
+.badge-esim { background: rgba(249, 115, 22, 0.15); color: $accent; }
+.badge-유심 { background: rgba(34, 197, 94, 0.15); color: $success; }
+.badge-포켓wifi { background: rgba(59, 130, 246, 0.15); color: #3b82f6; }
+.badge-버스투어 { background: rgba(59, 130, 246, 0.15); color: #3b82f6; }
+.badge-프라이빗 { background: rgba(168, 85, 247, 0.15); color: #a855f7; }
+
+.check-yes { color: $success; font-weight: 700; }
+.check-no { color: $text-muted; }
+
+.btn-buy-sm {
+  display: inline-block;
+  padding: 0.35rem 0.9rem;
+  background: $accent;
+  color: #fff;
+  border-radius: $radius-sm;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background $transition;
+
+  &:hover {
+    background: $accent-hover;
+  }
+}
+
+.highlights-cell {
+  white-space: normal;
+  max-width: 200px;
+  font-size: 0.82rem;
+  color: $text-secondary;
+}
+
+// Sticky Compare Bar
+.sticky-compare-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  background: $bg-card;
+  border-top: 1px solid $border-color;
+  box-shadow: 0 -4px 20px rgba(0,0,0,0.5);
+  padding: 0.75rem 1rem;
+}
+
+.sticky-compare-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.sticky-compare-count {
+  color: $text-secondary;
+  font-size: 0.9rem;
+  white-space: nowrap;
+}
+
+.sticky-compare-items {
+  display: flex;
+  gap: 0.5rem;
+  flex: 1;
+  overflow-x: auto;
+}
+
+.sticky-compare-item {
+  padding: 0.3rem 0.7rem;
+  background: $bg-elevated;
+  border: 1px solid $border-color;
+  border-radius: $radius-sm;
+  font-size: 0.8rem;
+  color: $text-primary;
+  white-space: nowrap;
+}
+
+.btn-sticky-compare {
+  padding: 0.5rem 1.25rem;
+  background: $accent;
+  color: #fff;
+  border: none;
+  border-radius: $radius-sm;
+  font-family: $font-sans;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background $transition;
+  white-space: nowrap;
+
+  &:hover:not(:disabled) { background: $accent-hover; }
+  &:disabled { opacity: 0.4; cursor: not-allowed; }
+}
+
+.btn-sticky-clear {
+  padding: 0.5rem 0.75rem;
+  background: transparent;
+  border: 1px solid $border-color;
+  border-radius: $radius-sm;
+  color: $text-secondary;
+  font-family: $font-sans;
+  font-size: 0.85rem;
+  cursor: pointer;
+  white-space: nowrap;
+
+  &:hover { border-color: $text-secondary; color: $text-primary; }
+}
+
+// Compare Modal
+.guide-compare-modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  background: rgba(0,0,0,0.7);
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.guide-compare-modal-content {
+  background: $bg-card;
+  border: 1px solid $border-color;
+  border-radius: $radius-lg;
+  max-width: 900px;
+  width: 100%;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.guide-compare-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid $border-color;
+
+  h2 {
+    font-size: 1.25rem;
+    color: $text-primary;
+  }
+}
+
+.guide-compare-close {
+  background: none;
+  border: none;
+  color: $text-secondary;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0.25rem;
+  line-height: 1;
+
+  &:hover { color: $text-primary; }
+}
+
+.guide-compare-body {
+  padding: 1.5rem;
+}
+
+.guide-compare-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.5rem;
+}
+
+.guide-compare-card {
+  background: $bg-elevated;
+  border: 1px solid $border-color;
+  border-radius: $radius-md;
+  padding: 1.25rem;
+  text-align: center;
+
+  img {
+    width: 100%;
+    height: 140px;
+    object-fit: cover;
+    border-radius: $radius-sm;
+    margin-bottom: 1rem;
+  }
+
+  h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: $text-primary;
+    margin-bottom: 0.5rem;
+  }
+}
+
+.compare-card-desc {
+  font-size: 0.85rem;
+  color: $text-secondary;
+  margin-bottom: 0.75rem;
+}
+
+.compare-card-price {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: $accent;
+  margin-bottom: 0.25rem;
+}
+
+.compare-card-rating {
+  font-size: 0.85rem;
+  color: $text-muted;
+  margin-bottom: 1rem;
+}
+
+.compare-card-buy {
+  display: inline-block;
+  padding: 0.5rem 1.5rem;
+  font-size: 0.9rem;
+}
+
+// Review Accordion
+.reviews-section {
+  max-width: 900px;
+  margin: 0 auto 3rem;
+  padding: 0 1rem;
+}
+
+.review-accordion {
+  background: $bg-card;
+  border: 1px solid $border-color;
+  border-radius: $radius-md;
+  margin-bottom: 0.75rem;
+  overflow: hidden;
+  transition: border-color $transition;
+
+  &[open] {
+    border-color: $accent;
+  }
+}
+
+.review-summary {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.25rem;
+  cursor: pointer;
+  list-style: none;
+  user-select: none;
+
+  &::-webkit-details-marker { display: none; }
+  &::marker { display: none; content: ''; }
+}
+
+.review-summary-left {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.review-thumb {
+  width: 56px;
+  height: 56px;
+  object-fit: cover;
+  border-radius: $radius-sm;
+}
+
+.review-summary-info {
+  h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: $text-primary;
+    margin-bottom: 0.2rem;
+  }
+}
+
+.review-price {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: $accent;
+  margin-right: 0.75rem;
+}
+
+.review-rating {
+  font-size: 0.82rem;
+  color: $text-muted;
+}
+
+.review-toggle-icon {
+  width: 24px;
+  height: 24px;
+  position: relative;
+  flex-shrink: 0;
+
+  &::before, &::after {
+    content: '';
+    position: absolute;
+    background: $text-muted;
+    transition: transform 0.3s ease;
+  }
+
+  &::before {
+    width: 12px;
+    height: 2px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  &::after {
+    width: 2px;
+    height: 12px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+}
+
+.review-accordion[open] .review-toggle-icon::after {
+  transform: translate(-50%, -50%) rotate(90deg);
+  opacity: 0;
+}
+
+.review-body {
+  padding: 0 1.25rem 1.25rem;
+  animation: fadeInUp 0.3s ease;
+}
+
+.review-detail-grid {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 1.5rem;
+}
+
+.review-detail-images {
+  display: flex;
+  gap: 0.5rem;
+
+  img {
+    width: 120px;
+    height: 90px;
+    object-fit: cover;
+    border-radius: $radius-sm;
+  }
+}
+
+.review-detail-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.review-description {
+  color: $text-secondary;
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+.review-discount {
+  font-size: 0.9rem;
+  color: $text-secondary;
+
+  del { color: $text-muted; }
+  strong { color: $accent; }
+}
+
+.review-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  list-style: none;
+
+  li {
+    padding: 0.2rem 0.6rem;
+    background: $bg-primary;
+    border: 1px solid $border-color;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    color: $text-muted;
+  }
+}
+
+.review-cta {
+  align-self: flex-start;
+  margin-top: 0.5rem;
+  padding: 0.5rem 1.5rem;
+  font-size: 0.9rem;
+}
+
+// FAQ Section
+.faq-section {
+  max-width: 800px;
+  margin: 0 auto 3rem;
+  padding: 0 1rem;
+}
+
+.faq-item {
+  background: $bg-card;
+  border: 1px solid $border-color;
+  border-radius: $radius-md;
+  margin-bottom: 0.5rem;
+  overflow: hidden;
+
+  &[open] {
+    border-color: rgba(249, 115, 22, 0.3);
+  }
+}
+
+.faq-question {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.25rem;
+  cursor: pointer;
+  font-weight: 600;
+  color: $text-primary;
+  font-size: 0.95rem;
+  list-style: none;
+
+  &::-webkit-details-marker { display: none; }
+  &::marker { display: none; content: ''; }
+
+  &::after {
+    content: '+';
+    font-size: 1.25rem;
+    color: $text-muted;
+    flex-shrink: 0;
+    transition: transform 0.3s ease;
+  }
+}
+
+.faq-item[open] .faq-question::after {
+  content: '\2212';
+  color: $accent;
+}
+
+.faq-answer {
+  padding: 0 1.25rem 1rem;
+  animation: fadeInUp 0.25s ease;
+
+  p {
+    color: $text-secondary;
+    font-size: 0.9rem;
+    line-height: 1.7;
+  }
+}
+
+// Guide CTA
+.guide-cta {
+  text-align: center;
+  padding: 3rem 1rem;
+  max-width: 600px;
+  margin: 0 auto;
+
+  h2 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: $text-primary;
+    margin-bottom: 0.5rem;
+  }
+
+  p {
+    color: $text-secondary;
+    margin-bottom: 1.5rem;
+  }
+}
+
+.guide-cta-buttons {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.btn-cta-secondary {
+  display: inline-block;
+  padding: 0.75rem 1.75rem;
+  background: transparent;
+  border: 1px solid $border-color;
+  border-radius: $radius-md;
+  color: $text-primary;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all $transition;
+
+  &:hover {
+    border-color: $accent;
+    color: $accent;
+  }
+}
+
+// Guide Hub (index page)
+.guide-hub-hero {
+  text-align: center;
+  padding: 4rem 1rem 2rem;
+  max-width: 700px;
+  margin: 0 auto;
+
+  h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: $text-primary;
+    margin-bottom: 0.75rem;
+  }
+
+  p {
+    font-size: 1.1rem;
+    color: $text-secondary;
+  }
+}
+
+.guide-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.25rem;
+  max-width: 1100px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+
+.guide-card {
+  display: block;
+  background: $bg-card;
+  border: 1px solid $border-color;
+  border-radius: $radius-lg;
+  overflow: hidden;
+  text-decoration: none;
+  transition: all 0.25s ease;
+
+  &:hover {
+    border-color: $accent;
+    transform: translateY(-4px);
+    box-shadow: $shadow-lg;
+  }
+
+  img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+  }
+
+  .guide-card-body {
+    padding: 1.25rem;
+  }
+
+  h2 {
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: $text-primary;
+    margin-bottom: 0.4rem;
+  }
+
+  p {
+    font-size: 0.9rem;
+    color: $text-secondary;
+    line-height: 1.5;
+  }
+}
+
+.all-products-link {
+  text-align: center;
+  padding: 2rem 1rem 3rem;
+
+  a {
+    color: $accent;
+    font-size: 1rem;
+    font-weight: 600;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+// Nav Dropdown
+.nav-dropdown {
+  position: relative;
+}
+
+.nav-dropdown-toggle {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.nav-dropdown-arrow {
+  font-size: 0.65rem;
+  transition: transform 0.2s ease;
+}
+
+.nav-dropdown.open .nav-dropdown-arrow {
+  transform: rotate(180deg);
+}
+
+.nav-dropdown-menu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-top: 0.5rem;
+  background: $bg-card;
+  border: 1px solid $border-color;
+  border-radius: $radius-md;
+  min-width: 180px;
+  box-shadow: $shadow-lg;
+  z-index: 50;
+  overflow: hidden;
+
+  a {
+    display: block;
+    padding: 0.6rem 1rem;
+    color: $text-secondary;
+    text-decoration: none;
+    font-size: 0.88rem;
+    transition: all $transition;
+    white-space: nowrap;
+
+    &:hover {
+      background: rgba(249, 115, 22, 0.08);
+      color: $accent;
+    }
+  }
+}
+
+.nav-dropdown.open .nav-dropdown-menu {
+  display: block;
+}
+
+// Mobile guide styles
+@media (max-width: 768px) {
+  .guide-hero {
+    min-height: 300px;
+  }
+
+  .guide-hero-title {
+    font-size: 1.6rem;
+  }
+
+  .guide-hero-subtitle {
+    font-size: 1rem;
+  }
+
+  .guide-grid {
+    grid-template-columns: 1fr;
+  }
+
+  // Comparison table card layout on mobile
+  .comparison-table-wrap {
+    overflow-x: auto;
+  }
+
+  .comparison-table {
+    font-size: 0.8rem;
+
+    th, td {
+      padding: 0.5rem 0.6rem;
+    }
+
+    th.sticky-col,
+    td.sticky-col {
+      min-width: 140px;
+    }
+  }
+
+  .review-detail-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .review-detail-images {
+    overflow-x: auto;
+
+    img {
+      width: 100px;
+      height: 75px;
+    }
+  }
+
+  .result-product-card {
+    flex-direction: column;
+
+    img {
+      width: 100%;
+      height: 160px;
+    }
+  }
+
+  .sticky-compare-inner {
+    flex-wrap: wrap;
+  }
+
+  .sticky-compare-items {
+    order: 3;
+    width: 100%;
+  }
+
+  .guide-compare-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .quiz-hub-hero h1 {
+    font-size: 1.5rem;
+  }
+}
+
+// Mobile nav dropdown for guide menu
+.mobile-nav-dropdown {
+  list-style: none;
+  padding-left: 1rem;
+
+  li {
+    margin-bottom: 0;
+  }
+
+  a {
+    font-size: 0.9rem;
+    color: $text-secondary;
+    padding: 0.3rem 0;
+    display: block;
+  }
+}

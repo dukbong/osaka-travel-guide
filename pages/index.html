@@ -1,199 +1,38 @@
 ---
 layout: default
-title: "오사카 여행 필수 상품 100선"
-description: "오사카 여행에 필요한 입장권, 교통패스, eSIM, 투어, 맛집 등 100개 상품을 엄선하여 최저가로 비교하세요."
+title: "오사카 여행, 뭐부터 준비하지?"
+description: "상품 비교부터 일정까지, 오사카 여행의 모든 의사결정을 도와드립니다. USJ, 교통패스, 공항이동, 온천, 전망대, WiFi, 교토투어 완벽 가이드."
 permalink: /
 ---
 
 <!-- Hero -->
-<section class="hero">
+<section class="guide-hub-hero">
   <span class="hero-badge">2026 오사카 여행 가이드</span>
-  <h1>오사카 여행 <span class="accent">필수 상품</span> 100선</h1>
-  <p>입장권, 교통패스, eSIM, 투어, 맛집까지 — 오사카 여행의 모든 것을 한곳에서 비교하고 계획하세요.</p>
+  <h1>오사카 여행, <span class="accent">뭐부터</span> 준비하지?</h1>
+  <p>상품 비교부터 일정까지, 오사카 여행의 모든 의사결정을 도와드립니다.</p>
 </section>
 
-<!-- Category Tabs -->
-<div class="category-filter" id="categoryFilter">
-  <button class="category-tab active" data-category="all">전체 ({{ site.data.products.products.size }})</button>
-  {% for cat in site.data.products.categories %}
-  <button class="category-tab" data-category="{{ cat.name }}">{{ cat.name }} ({{ cat.count }})</button>
+<!-- Guide Grid -->
+<div class="guide-grid">
+  {% for guide in site.data.guides.guides %}
+  <a href="{{ '/guides/' | append: guide.slug | append: '/' | relative_url }}" class="guide-card">
+    <img src="{{ guide.heroImage }}" alt="{{ guide.title }}" loading="lazy">
+    <div class="guide-card-body">
+      <h2>{{ guide.title }}</h2>
+      <p>{{ guide.subtitle }}</p>
+    </div>
+  </a>
   {% endfor %}
 </div>
 
-<!-- Sort Bar -->
-<div class="sort-bar">
-  <span class="sort-info" id="sortInfo">전체 {{ site.data.products.products.size }}개 상품</span>
-  <div class="sort-options">
-    <button class="sort-btn active" data-sort="score">인기순</button>
-    <button class="sort-btn" data-sort="price">가격순</button>
-    <button class="sort-btn" data-sort="rating">평점순</button>
-  </div>
-</div>
+<!-- All Products Link -->
+<section class="all-products-link">
+  <a href="{{ '/all-products/' | relative_url }}">전체 상품 {{ site.data.products.products.size }}개 보기 &rarr;</a>
+</section>
 
-<!-- Product Grid (Server-rendered, JS will handle filtering) -->
-<div class="product-grid" id="productGrid">
-  {% for product in site.data.products.products %}
-    {% include product-card.html product=product %}
-  {% endfor %}
-</div>
-
-<!-- CTA Banner -->
+<!-- Quick CTA -->
 <section class="cta-banner">
   <h2>나만의 오사카 일정 만들기</h2>
-  <p>원하는 상품을 골라 일정 플래너에 추가하고, 3일간의 완벽한 여행을 계획해보세요.</p>
+  <p>원하는 상품을 골라 일정 플래너에 추가하고, 완벽한 여행을 계획해보세요.</p>
   <a href="{{ '/planner/' | relative_url }}" class="btn-cta btn-cta-primary">일정 플래너 시작하기</a>
 </section>
-
-<!-- Product Data for JS -->
-<script>
-window.PRODUCTS = {{ site.data.products.products | jsonify }};
-</script>
-
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-  var products = window.PRODUCTS;
-  var grid = document.getElementById('productGrid');
-  var tabs = document.querySelectorAll('.category-tab');
-  var sortBtns = document.querySelectorAll('.sort-btn');
-  var sortInfo = document.getElementById('sortInfo');
-  var currentCategory = 'all';
-  var currentSort = 'score';
-  var baseUrl = '{{ site.baseurl }}';
-
-  // Helper to create text node safely
-  function txt(str) {
-    return document.createTextNode(str);
-  }
-
-  function el(tag, cls, attrs) {
-    var node = document.createElement(tag);
-    if (cls) node.className = cls;
-    if (attrs) {
-      Object.keys(attrs).forEach(function(k) { node.setAttribute(k, attrs[k]); });
-    }
-    return node;
-  }
-
-  function buildCard(p) {
-    var card = el('div', 'product-card');
-    card.dataset.productId = p.id;
-    card.dataset.category = p.category;
-    card.dataset.price = p.salePrice;
-    card.dataset.rating = p.rating;
-    card.dataset.score = p.score;
-
-    // Image link
-    var imgLink = el('a', 'product-card-link', {href: baseUrl + '/products/' + p.slug + '/'});
-    var imgWrap = el('div', 'product-card-image');
-    var img = el('img', null, {src: p.image, alt: p.name, loading: 'lazy', decoding: 'async'});
-    imgWrap.appendChild(img);
-    if (p.isNew) {
-      var nb = el('span', 'card-new-badge');
-      nb.appendChild(txt('NEW'));
-      imgWrap.appendChild(nb);
-    }
-    imgLink.appendChild(imgWrap);
-    card.appendChild(imgLink);
-
-    // Body
-    var body = el('div', 'product-card-body');
-    var catSpan = el('span', 'card-category');
-    catSpan.appendChild(txt(p.category));
-    body.appendChild(catSpan);
-
-    var titleLink = el('a', 'product-card-link', {href: baseUrl + '/products/' + p.slug + '/'});
-    var title = el('h3', 'card-title', {title: p.name});
-    title.appendChild(txt(p.name));
-    titleLink.appendChild(title);
-    body.appendChild(titleLink);
-
-    var rating = el('div', 'card-rating');
-    var starSpan = el('span', 'card-stars');
-    starSpan.appendChild(txt('\u2605'));
-    rating.appendChild(starSpan);
-    rating.appendChild(txt(' '));
-    var rv = el('span', 'card-rating-value');
-    rv.appendChild(txt(String(p.rating)));
-    rating.appendChild(rv);
-    rating.appendChild(txt(' '));
-    var rc = el('span', 'card-review-count');
-    rc.appendChild(txt('(' + (p.reviewCount || 0) + ')'));
-    rating.appendChild(rc);
-    body.appendChild(rating);
-
-    var priceDiv = el('div', 'card-price');
-    var sp = el('span', 'card-sale-price');
-    sp.appendChild(txt(p.salePrice.toLocaleString('ko-KR') + '\uc6d0'));
-    priceDiv.appendChild(sp);
-    body.appendChild(priceDiv);
-
-    card.appendChild(body);
-
-    // Actions
-    var actions = el('div', 'product-card-actions');
-
-    var wishBtn = el('button', 'btn-wishlist', {'data-product-id': p.id, 'aria-label': '\uc704\uc2dc\ub9ac\uc2a4\ud2b8\uc5d0 \ucd94\uac00', title: '\uc704\uc2dc\ub9ac\uc2a4\ud2b8'});
-    wishBtn.innerHTML = '<svg class="heart-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>';
-    actions.appendChild(wishBtn);
-
-    var planBtn = el('button', 'btn-add-planner', {'data-product-id': p.id, 'aria-label': '\uc77c\uc815\uc5d0 \ucd94\uac00', title: '\uc77c\uc815\uc5d0 \ucd94\uac00'});
-    planBtn.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><line x1="12" y1="14" x2="12" y2="18"/><line x1="10" y1="16" x2="14" y2="16"/></svg>';
-    actions.appendChild(planBtn);
-
-    var cmpLabel = el('label', 'btn-compare', {title: '\ube44\uad50\ud558\uae30'});
-    var cmpInput = el('input', null, {type: 'checkbox', 'data-product-id': String(p.id)});
-    cmpInput.className = 'compare-checkbox';
-    cmpLabel.appendChild(cmpInput);
-    var cmpIcon = el('span', 'compare-icon');
-    cmpIcon.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>';
-    cmpLabel.appendChild(cmpIcon);
-    actions.appendChild(cmpLabel);
-
-    card.appendChild(actions);
-    return card;
-  }
-
-  function renderGrid(items) {
-    grid.textContent = '';
-    sortInfo.textContent = '\uc804\uccb4 ' + items.length + '\uac1c \uc0c1\ud488';
-    items.forEach(function(p) {
-      grid.appendChild(buildCard(p));
-    });
-    if (window.App) window.App.initWishlistButtons();
-    if (window.App) window.App.initCompareCheckboxes();
-  }
-
-  function filterAndSort() {
-    var filtered = products;
-    if (currentCategory !== 'all') {
-      filtered = products.filter(function(p) { return p.category === currentCategory; });
-    }
-    if (currentSort === 'price') {
-      filtered = filtered.slice().sort(function(a, b) { return a.salePrice - b.salePrice; });
-    } else if (currentSort === 'rating') {
-      filtered = filtered.slice().sort(function(a, b) { return b.rating - a.rating; });
-    } else {
-      filtered = filtered.slice().sort(function(a, b) { return b.score - a.score; });
-    }
-    renderGrid(filtered);
-  }
-
-  tabs.forEach(function(tab) {
-    tab.addEventListener('click', function() {
-      tabs.forEach(function(t) { t.classList.remove('active'); });
-      tab.classList.add('active');
-      currentCategory = tab.dataset.category;
-      filterAndSort();
-    });
-  });
-
-  sortBtns.forEach(function(btn) {
-    btn.addEventListener('click', function() {
-      sortBtns.forEach(function(b) { b.classList.remove('active'); });
-      btn.classList.add('active');
-      currentSort = btn.dataset.sort;
-      filterAndSort();
-    });
-  });
-});
-</script>

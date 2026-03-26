@@ -1,0 +1,430 @@
+---
+layout: default
+---
+{% assign guide = null %}
+{% for g in site.data.guides.guides %}
+  {% if g.id == page.guide_id %}
+    {% assign guide = g %}
+  {% endif %}
+{% endfor %}
+
+{% assign all_products = site.data.products.products %}
+
+<!-- Hero Section -->
+<section class="guide-hero" style="background-image: url('{{ guide.heroImage }}');">
+  <div class="guide-hero-overlay">
+    <h1 class="guide-hero-title">{{ guide.title }}</h1>
+    <p class="guide-hero-subtitle">{{ guide.subtitle }}</p>
+    <a href="#quiz" class="btn-cta btn-cta-primary guide-hero-cta">나에게 맞는 상품 찾기</a>
+  </div>
+</section>
+
+<!-- Quiz Section -->
+<section class="quiz-section" id="quiz">
+  <h2 class="section-title">나에게 맞는 상품은?</h2>
+  <p class="section-desc">간단한 질문에 답하면 딱 맞는 상품을 추천해드려요.</p>
+  <div class="quiz-container" id="quizContainer"
+       data-guide-id="{{ guide.id }}"
+       data-questions='{{ guide.quiz.questions | jsonify }}'
+       data-recommendations='{{ guide.quiz.recommendations | jsonify }}'>
+    <div class="quiz-progress" id="quizProgress">
+      <span class="quiz-step-label" id="quizStepLabel">질문 1/{{ guide.quiz.questions.size }}</span>
+      <div class="quiz-progress-bar">
+        <div class="quiz-progress-fill" id="quizProgressFill" style="width: {{ 100.0 | divided_by: guide.quiz.questions.size }}%"></div>
+      </div>
+    </div>
+    <div class="quiz-questions" id="quizQuestions">
+      {% for q in guide.quiz.questions %}
+      <div class="quiz-question" data-question-id="{{ q.id }}" {% if forloop.index0 > 0 %}style="display:none"{% endif %}>
+        <h3 class="quiz-question-text">{{ q.text }}</h3>
+        <div class="quiz-options">
+          {% for opt in q.options %}
+          <button class="quiz-option-btn" data-question="{{ q.id }}" data-value="{{ opt }}">{{ opt }}</button>
+          {% endfor %}
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- Result Section (hidden until quiz completed) -->
+<section class="quiz-result" id="result" style="display:none;">
+  <h2 class="section-title">추천 결과</h2>
+  <div class="quiz-result-card" id="resultCard">
+    <div class="result-summary" id="resultSummary"></div>
+    <div class="result-products" id="resultProducts"></div>
+    <button class="btn-retake" id="retakeQuiz">다시 하기</button>
+  </div>
+</section>
+
+<!-- Comparison Table -->
+<section class="comparison-section" id="compare">
+  <h2 class="section-title">전체 상품 비교</h2>
+
+  {% if guide.id == "usj" %}
+  <div class="comparison-table-wrap">
+    <table class="comparison-table" id="comparisonTable">
+      <thead>
+        <tr>
+          <th class="sticky-col">상품</th>
+          <th class="sortable" data-sort="tier">유형</th>
+          <th class="sortable" data-sort="price">가격</th>
+          <th class="sortable" data-sort="attractions">어트랙션</th>
+          <th>닌텐도 확약</th>
+          <th>평점</th>
+          <th>구매</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for gp in guide.products %}
+          {% for p in all_products %}
+            {% if p.id == gp.id %}
+        <tr data-product-id="{{ p.id }}" data-tier="{{ gp.tier }}" data-price="{{ p.salePrice }}" data-attractions="{{ gp.attractions }}">
+          <td class="sticky-col">
+            <label class="compare-check-label"><input type="checkbox" class="sticky-compare-check" data-product-id="{{ p.id }}"> <span class="product-name-cell">{{ gp.label }}</span></label>
+          </td>
+          <td><span class="badge badge-{{ gp.tier | slugify }}">{{ gp.tier }}</span></td>
+          <td data-value="{{ p.salePrice }}">{{ p.salePrice | divided_by: 1 }}원</td>
+          <td data-value="{{ gp.attractions }}">{% if gp.attractions > 0 %}{{ gp.attractions }}개{% else %}-{% endif %}</td>
+          <td>{% if gp.includes_nintendo %}<span class="check-yes">O</span>{% else %}<span class="check-no">X</span>{% endif %}</td>
+          <td>{{ p.rating }}</td>
+          <td><a href="{{ p.affiliateUrl }}" target="_blank" rel="noopener" class="btn-buy-sm">예약</a></td>
+        </tr>
+            {% endif %}
+          {% endfor %}
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  {% elsif guide.id == "transport" %}
+  <div class="comparison-table-wrap">
+    <table class="comparison-table" id="comparisonTable">
+      <thead>
+        <tr>
+          <th class="sticky-col">상품</th>
+          <th class="sortable" data-sort="coverage">커버리지</th>
+          <th class="sortable" data-sort="duration">기간</th>
+          <th>JR 포함</th>
+          <th class="sortable" data-sort="price">가격</th>
+          <th>평점</th>
+          <th>구매</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for gp in guide.products %}
+          {% for p in all_products %}
+            {% if p.id == gp.id %}
+        <tr data-product-id="{{ p.id }}" data-coverage="{{ gp.coverage }}" data-price="{{ p.salePrice }}">
+          <td class="sticky-col">
+            <label class="compare-check-label"><input type="checkbox" class="sticky-compare-check" data-product-id="{{ p.id }}"> <span class="product-name-cell">{{ gp.label }}</span></label>
+          </td>
+          <td>{{ gp.coverage }}</td>
+          <td>{{ gp.duration }}</td>
+          <td>{% if gp.includes_jr %}<span class="check-yes">O</span>{% else %}<span class="check-no">X</span>{% endif %}</td>
+          <td data-value="{{ p.salePrice }}">{{ p.salePrice | divided_by: 1 }}원</td>
+          <td>{{ p.rating }}</td>
+          <td><a href="{{ p.affiliateUrl }}" target="_blank" rel="noopener" class="btn-buy-sm">예약</a></td>
+        </tr>
+            {% endif %}
+          {% endfor %}
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  {% elsif guide.id == "airport" %}
+  <div class="comparison-table-wrap">
+    <table class="comparison-table" id="comparisonTable">
+      <thead>
+        <tr>
+          <th class="sticky-col">상품</th>
+          <th class="sortable" data-sort="type">유형</th>
+          <th>목적지</th>
+          <th class="sortable" data-sort="duration">소요시간</th>
+          <th class="sortable" data-sort="price">가격</th>
+          <th>평점</th>
+          <th>구매</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for gp in guide.products %}
+          {% for p in all_products %}
+            {% if p.id == gp.id %}
+        <tr data-product-id="{{ p.id }}" data-type="{{ gp.type }}" data-price="{{ p.salePrice }}" data-duration="{{ gp.duration_min }}">
+          <td class="sticky-col">
+            <label class="compare-check-label"><input type="checkbox" class="sticky-compare-check" data-product-id="{{ p.id }}"> <span class="product-name-cell">{{ gp.label }}</span></label>
+          </td>
+          <td><span class="badge badge-{{ gp.type | slugify }}">{{ gp.type }}</span></td>
+          <td>{{ gp.destination }}</td>
+          <td data-value="{{ gp.duration_min }}">약 {{ gp.duration_min }}분</td>
+          <td data-value="{{ p.salePrice }}">{{ p.salePrice | divided_by: 1 }}원</td>
+          <td>{{ p.rating }}</td>
+          <td><a href="{{ p.affiliateUrl }}" target="_blank" rel="noopener" class="btn-buy-sm">예약</a></td>
+        </tr>
+            {% endif %}
+          {% endfor %}
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  {% elsif guide.id == "onsen" %}
+  <div class="comparison-table-wrap">
+    <table class="comparison-table" id="comparisonTable">
+      <thead>
+        <tr>
+          <th class="sticky-col">상품</th>
+          <th>위치</th>
+          <th>분위기</th>
+          <th class="sortable" data-sort="travel">이동시간</th>
+          <th class="sortable" data-sort="price">가격</th>
+          <th>평점</th>
+          <th>구매</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for gp in guide.products %}
+          {% for p in all_products %}
+            {% if p.id == gp.id %}
+        <tr data-product-id="{{ p.id }}" data-travel="{{ gp.travel_time_min }}" data-price="{{ p.salePrice }}">
+          <td class="sticky-col">
+            <label class="compare-check-label"><input type="checkbox" class="sticky-compare-check" data-product-id="{{ p.id }}"> <span class="product-name-cell">{{ gp.label }}</span></label>
+          </td>
+          <td>{{ gp.location }}</td>
+          <td>{{ gp.atmosphere }}</td>
+          <td data-value="{{ gp.travel_time_min }}">{{ gp.travel_time_min }}분</td>
+          <td data-value="{{ p.salePrice }}">{{ p.salePrice | divided_by: 1 }}원</td>
+          <td>{{ p.rating }}</td>
+          <td><a href="{{ p.affiliateUrl }}" target="_blank" rel="noopener" class="btn-buy-sm">예약</a></td>
+        </tr>
+            {% endif %}
+          {% endfor %}
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  {% elsif guide.id == "observation" %}
+  <div class="comparison-table-wrap">
+    <table class="comparison-table" id="comparisonTable">
+      <thead>
+        <tr>
+          <th class="sticky-col">상품</th>
+          <th>특징</th>
+          <th class="sortable" data-sort="height">높이</th>
+          <th>추천 시간</th>
+          <th class="sortable" data-sort="price">가격</th>
+          <th>평점</th>
+          <th>구매</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for gp in guide.products %}
+          {% for p in all_products %}
+            {% if p.id == gp.id %}
+        <tr data-product-id="{{ p.id }}" data-height="{{ gp.height }}" data-price="{{ p.salePrice }}">
+          <td class="sticky-col">
+            <label class="compare-check-label"><input type="checkbox" class="sticky-compare-check" data-product-id="{{ p.id }}"> <span class="product-name-cell">{{ gp.label }}</span></label>
+          </td>
+          <td>{{ gp.feature }}</td>
+          <td data-value="{{ gp.height }}">{{ gp.height }}m</td>
+          <td>{{ gp.best_time }}</td>
+          <td data-value="{{ p.salePrice }}">{{ p.salePrice | divided_by: 1 }}원</td>
+          <td>{{ p.rating }}</td>
+          <td><a href="{{ p.affiliateUrl }}" target="_blank" rel="noopener" class="btn-buy-sm">예약</a></td>
+        </tr>
+            {% endif %}
+          {% endfor %}
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  {% elsif guide.id == "connectivity" %}
+  <div class="comparison-table-wrap">
+    <table class="comparison-table" id="comparisonTable">
+      <thead>
+        <tr>
+          <th class="sticky-col">상품</th>
+          <th class="sortable" data-sort="type">유형</th>
+          <th>데이터</th>
+          <th>인원</th>
+          <th class="sortable" data-sort="price">가격</th>
+          <th>평점</th>
+          <th>구매</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for gp in guide.products %}
+          {% for p in all_products %}
+            {% if p.id == gp.id %}
+        <tr data-product-id="{{ p.id }}" data-type="{{ gp.conn_type }}" data-price="{{ p.salePrice }}">
+          <td class="sticky-col">
+            <label class="compare-check-label"><input type="checkbox" class="sticky-compare-check" data-product-id="{{ p.id }}"> <span class="product-name-cell">{{ gp.label }}</span></label>
+          </td>
+          <td><span class="badge badge-{{ gp.conn_type | slugify }}">{{ gp.conn_type }}</span></td>
+          <td>{{ gp.data }}</td>
+          <td>{{ gp.people }}</td>
+          <td data-value="{{ p.salePrice }}">{{ p.salePrice | divided_by: 1 }}원</td>
+          <td>{{ p.rating }}</td>
+          <td><a href="{{ p.affiliateUrl }}" target="_blank" rel="noopener" class="btn-buy-sm">예약</a></td>
+        </tr>
+            {% endif %}
+          {% endfor %}
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  {% elsif guide.id == "kyoto-tours" %}
+  <div class="comparison-table-wrap">
+    <table class="comparison-table" id="comparisonTable">
+      <thead>
+        <tr>
+          <th class="sticky-col">상품</th>
+          <th class="sortable" data-sort="type">유형</th>
+          <th>주요 코스</th>
+          <th class="sortable" data-sort="price">가격</th>
+          <th>평점</th>
+          <th>리뷰</th>
+          <th>구매</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for gp in guide.products %}
+          {% for p in all_products %}
+            {% if p.id == gp.id %}
+        <tr data-product-id="{{ p.id }}" data-type="{{ gp.tour_type }}" data-price="{{ p.salePrice }}">
+          <td class="sticky-col">
+            <label class="compare-check-label"><input type="checkbox" class="sticky-compare-check" data-product-id="{{ p.id }}"> <span class="product-name-cell">{{ gp.label }}</span></label>
+          </td>
+          <td><span class="badge badge-{{ gp.tour_type | slugify }}">{{ gp.tour_type }}</span></td>
+          <td class="highlights-cell">{{ gp.highlights }}</td>
+          <td data-value="{{ p.salePrice }}">{{ p.salePrice | divided_by: 1 }}원</td>
+          <td>{{ p.rating }}</td>
+          <td>{{ p.reviewCount }}</td>
+          <td><a href="{{ p.affiliateUrl }}" target="_blank" rel="noopener" class="btn-buy-sm">예약</a></td>
+        </tr>
+            {% endif %}
+          {% endfor %}
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% endif %}
+</section>
+
+<!-- Sticky Compare Bar -->
+<div class="sticky-compare-bar" id="stickyCompareBar" style="display:none;">
+  <div class="sticky-compare-inner">
+    <span class="sticky-compare-count"><span id="stickyCount">0</span>개 선택됨</span>
+    <div class="sticky-compare-items" id="stickyCompareItems"></div>
+    <button class="btn-sticky-compare" id="stickyCompareBtn" disabled>비교하기</button>
+    <button class="btn-sticky-clear" id="stickyClearBtn">초기화</button>
+  </div>
+</div>
+
+<!-- Detailed Reviews -->
+<section class="reviews-section" id="reviews">
+  <h2 class="section-title">상품 상세 리뷰</h2>
+  {% for gp in guide.products %}
+    {% for p in all_products %}
+      {% if p.id == gp.id %}
+  <details class="review-accordion" data-product-id="{{ p.id }}">
+    <summary class="review-summary">
+      <div class="review-summary-left">
+        <img src="{{ p.image }}" alt="{{ gp.label }}" class="review-thumb" loading="lazy">
+        <div class="review-summary-info">
+          <h3>{{ gp.label }}</h3>
+          <span class="review-price">{{ p.salePrice | divided_by: 1 }}원</span>
+          <span class="review-rating">{{ p.rating }} ({{ p.reviewCount }}개 리뷰)</span>
+        </div>
+      </div>
+      <span class="review-toggle-icon"></span>
+    </summary>
+    <div class="review-body">
+      <div class="review-detail-grid">
+        <div class="review-detail-images">
+          {% for img in p.images limit:3 %}
+          <img src="{{ img }}" alt="{{ gp.label }}" loading="lazy">
+          {% endfor %}
+        </div>
+        <div class="review-detail-info">
+          <p class="review-description">{{ gp.summary }}</p>
+          {% if p.originalPrice > p.salePrice %}
+          <p class="review-discount">정가 <del>{{ p.originalPrice | divided_by: 1 }}원</del> → <strong>{{ p.salePrice | divided_by: 1 }}원</strong> ({{ p.discountText }} 할인)</p>
+          {% endif %}
+          <ul class="review-tags">
+            {% if p.taxonomies.confirm_time %}<li>{{ p.taxonomies.confirm_time }}</li>{% endif %}
+            {% if p.taxonomies.cancellation %}<li>{{ p.taxonomies.cancellation }}</li>{% endif %}
+            {% if p.taxonomies.ticket_type %}<li>{{ p.taxonomies.ticket_type }}</li>{% endif %}
+          </ul>
+          <a href="{{ p.affiliateUrl }}" target="_blank" rel="noopener" class="btn-cta btn-cta-primary review-cta">예약하기</a>
+        </div>
+      </div>
+    </div>
+  </details>
+      {% endif %}
+    {% endfor %}
+  {% endfor %}
+</section>
+
+<!-- FAQ Section -->
+<section class="faq-section" id="faq">
+  <h2 class="section-title">자주 묻는 질문</h2>
+  {% for item in guide.faq %}
+  <details class="faq-item">
+    <summary class="faq-question">{{ item.q }}</summary>
+    <div class="faq-answer">
+      <p>{{ item.a }}</p>
+    </div>
+  </details>
+  {% endfor %}
+</section>
+
+<!-- FAQ JSON-LD Schema -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {% for item in guide.faq %}
+    {
+      "@type": "Question",
+      "name": {{ item.q | jsonify }},
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": {{ item.a | jsonify }}
+      }
+    }{% unless forloop.last %},{% endunless %}
+    {% endfor %}
+  ]
+}
+</script>
+
+<!-- Final CTA -->
+<section class="guide-cta">
+  <h2>아직 고민되시나요?</h2>
+  <p>퀴즈를 다시 해보거나, 일정 플래너에서 직접 비교해보세요.</p>
+  <div class="guide-cta-buttons">
+    <a href="#quiz" class="btn-cta btn-cta-primary">퀴즈 다시 하기</a>
+    <a href="{{ '/planner/' | relative_url }}" class="btn-cta btn-cta-secondary">일정 플래너</a>
+  </div>
+</section>
+
+<!-- Product data for JS -->
+<script>
+window.GUIDE_PRODUCTS = {{ guide.products | jsonify }};
+window.ALL_PRODUCTS = {};
+{% for gp in guide.products %}
+  {% for p in all_products %}
+    {% if p.id == gp.id %}
+window.ALL_PRODUCTS[{{ p.id }}] = { id: {{ p.id }}, name: {{ p.name | jsonify }}, salePrice: {{ p.salePrice }}, image: {{ p.image | jsonify }}, affiliateUrl: {{ p.affiliateUrl | jsonify }}, rating: {{ p.rating }} };
+    {% endif %}
+  {% endfor %}
+{% endfor %}
+</script>
+<script src="{{ '/assets/js/recommender.js' | relative_url }}"></script>
+<script src="{{ '/assets/js/guide-table.js' | relative_url }}"></script>
