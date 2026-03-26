@@ -1768,6 +1768,18 @@ ul, ol {
   border-radius: $radius-sm;
 }
 
+// Product Intro cleanup
+.product-intro {
+  p:empty {
+    display: none;
+  }
+
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+}
+
 // ===========================================
 // Responsive overrides
 // ===========================================

@@ -46,9 +46,6 @@ layout: default
       {% for badge in product.badges %}
       <span class="product-badge">{{ badge }}</span>
       {% endfor %}
-      {% if product.isMinPriceGuarantee %}
-      <span class="product-badge badge-guarantee">최저가 보장</span>
-      {% endif %}
       {% if product.isNew %}
       <span class="product-badge badge-new">NEW</span>
       {% endif %}
@@ -78,14 +75,8 @@ layout: default
 
     <!-- Price -->
     <div class="product-price-section">
-      {% if product.discountRate and product.discountRate > 0 %}
-      <span class="discount-badge">{{ product.discountText }}</span>
-      {% endif %}
       <div class="price-row">
-        {% if product.originalPrice != product.salePrice %}
-        <span class="original-price">{{ product.originalPrice | divided_by: 1 }}원</span>
-        {% endif %}
-        <span class="sale-price">{{ product.salePrice | divided_by: 1 }}원</span>
+        <span class="sale-price" data-price-format="{{ product.salePrice }}">{{ product.salePrice }}원</span>
       </div>
     </div>
 

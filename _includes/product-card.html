@@ -3,10 +3,6 @@
   <a href="{{ site.baseurl }}/products/{{ p.slug }}/" class="product-card-link">
     <div class="product-card-image">
       <img src="{{ p.image }}" alt="{{ p.name }}" loading="lazy" decoding="async">
-      {% if p.discountRate and p.discountRate > 0 %}
-      {% assign discount_pct = p.discountRate | times: 100 | round %}
-      <span class="card-discount-badge">{{ discount_pct }}%</span>
-      {% endif %}
       {% if p.isNew %}
       <span class="card-new-badge">NEW</span>
       {% endif %}
@@ -26,10 +22,7 @@
     </div>
 
     <div class="card-price">
-      {% if p.originalPrice != p.salePrice %}
-      <span class="card-original-price">{{ p.originalPrice | divided_by: 1 }}원</span>
-      {% endif %}
-      <span class="card-sale-price">{{ p.salePrice | divided_by: 1 }}원</span>
+      <span class="card-sale-price" data-price-format="{{ p.salePrice }}">{{ p.salePrice }}원</span>
     </div>
 
     {% if p.badges.size > 0 %}
@@ -38,9 +31,6 @@
       <span class="card-badge">{{ badge }}</span>
       {% endfor %}
     </div>
-    {% endif %}
-    {% if p.isMinPriceGuarantee %}
-    <span class="card-badge badge-guarantee">최저가 보장</span>
     {% endif %}
   </div>
 

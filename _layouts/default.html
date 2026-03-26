@@ -129,5 +129,11 @@
   <!-- Scripts -->
   <script src="{{ '/assets/js/app.js' | relative_url }}"></script>
   <script src="{{ '/assets/js/gallery.js' | relative_url }}"></script>
+  <script>
+  document.querySelectorAll('[data-price-format]').forEach(function(el) {
+    var n = parseInt(el.dataset.priceFormat);
+    if (!isNaN(n)) el.textContent = n.toLocaleString('ko-KR') + '원';
+  });
+  </script>
 </body>
 </html>

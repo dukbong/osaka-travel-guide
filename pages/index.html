@@ -87,11 +87,6 @@ document.addEventListener('DOMContentLoaded', function() {
     var imgWrap = el('div', 'product-card-image');
     var img = el('img', null, {src: p.image, alt: p.name, loading: 'lazy', decoding: 'async'});
     imgWrap.appendChild(img);
-    if (p.discountRate && p.discountRate > 0) {
-      var db = el('span', 'card-discount-badge');
-      db.appendChild(txt(p.discountText));
-      imgWrap.appendChild(db);
-    }
     if (p.isNew) {
       var nb = el('span', 'card-new-badge');
       nb.appendChild(txt('NEW'));
@@ -127,21 +122,11 @@ document.addEventListener('DOMContentLoaded', function() {
     body.appendChild(rating);
 
     var priceDiv = el('div', 'card-price');
-    if (p.originalPrice !== p.salePrice) {
-      var op = el('span', 'card-original-price');
-      op.appendChild(txt(p.originalPrice.toLocaleString() + '\uc6d0'));
-      priceDiv.appendChild(op);
-    }
     var sp = el('span', 'card-sale-price');
-    sp.appendChild(txt(p.salePrice.toLocaleString() + '\uc6d0'));
+    sp.appendChild(txt(p.salePrice.toLocaleString('ko-KR') + '\uc6d0'));
     priceDiv.appendChild(sp);
     body.appendChild(priceDiv);
 
-    if (p.isMinPriceGuarantee) {
-      var gb = el('span', 'card-badge badge-guarantee');
-      gb.appendChild(txt('\ucd5c\uc800\uac00 \ubcf4\uc7a5'));
-      body.appendChild(gb);
-    }
     card.appendChild(body);
 
     // Actions
