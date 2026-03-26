@@ -85,7 +85,7 @@ layout: default
             <label class="compare-check-label"><input type="checkbox" class="sticky-compare-check" data-product-id="{{ p.id }}"> <span class="product-name-cell">{{ gp.label }}</span></label>
           </td>
           <td><span class="badge badge-{{ gp.tier | slugify }}">{{ gp.tier }}</span></td>
-          <td data-value="{{ p.salePrice }}">{{ p.salePrice | divided_by: 1 }}원</td>
+          <td data-value="{{ p.salePrice }}"><span data-price-format="{{ p.salePrice }}">{{ p.salePrice }}원</span></td>
           <td data-value="{{ gp.attractions }}">{% if gp.attractions > 0 %}{{ gp.attractions }}개{% else %}-{% endif %}</td>
           <td>{% if gp.includes_nintendo %}<span class="check-yes">O</span>{% else %}<span class="check-no">X</span>{% endif %}</td>
           <td>{{ p.rating }}</td>
@@ -123,7 +123,7 @@ layout: default
           <td>{{ gp.coverage }}</td>
           <td>{{ gp.duration }}</td>
           <td>{% if gp.includes_jr %}<span class="check-yes">O</span>{% else %}<span class="check-no">X</span>{% endif %}</td>
-          <td data-value="{{ p.salePrice }}">{{ p.salePrice | divided_by: 1 }}원</td>
+          <td data-value="{{ p.salePrice }}"><span data-price-format="{{ p.salePrice }}">{{ p.salePrice }}원</span></td>
           <td>{{ p.rating }}</td>
           <td><a href="{{ p.affiliateUrl }}" target="_blank" rel="noopener" class="btn-buy-sm">예약</a></td>
         </tr>
@@ -159,7 +159,7 @@ layout: default
           <td><span class="badge badge-{{ gp.type | slugify }}">{{ gp.type }}</span></td>
           <td>{{ gp.destination }}</td>
           <td data-value="{{ gp.duration_min }}">약 {{ gp.duration_min }}분</td>
-          <td data-value="{{ p.salePrice }}">{{ p.salePrice | divided_by: 1 }}원</td>
+          <td data-value="{{ p.salePrice }}"><span data-price-format="{{ p.salePrice }}">{{ p.salePrice }}원</span></td>
           <td>{{ p.rating }}</td>
           <td><a href="{{ p.affiliateUrl }}" target="_blank" rel="noopener" class="btn-buy-sm">예약</a></td>
         </tr>
@@ -178,7 +178,6 @@ layout: default
           <th class="sticky-col">상품</th>
           <th>위치</th>
           <th>분위기</th>
-          <th class="sortable" data-sort="travel">이동시간</th>
           <th class="sortable" data-sort="price">가격</th>
           <th>평점</th>
           <th>구매</th>
@@ -188,14 +187,13 @@ layout: default
         {% for gp in guide.products %}
           {% for p in all_products %}
             {% if p.id == gp.id %}
-        <tr data-product-id="{{ p.id }}" data-travel="{{ gp.travel_time_min }}" data-price="{{ p.salePrice }}">
+        <tr data-product-id="{{ p.id }}" data-price="{{ p.salePrice }}">
           <td class="sticky-col">
             <label class="compare-check-label"><input type="checkbox" class="sticky-compare-check" data-product-id="{{ p.id }}"> <span class="product-name-cell">{{ gp.label }}</span></label>
           </td>
           <td>{{ gp.location }}</td>
           <td>{{ gp.atmosphere }}</td>
-          <td data-value="{{ gp.travel_time_min }}">{{ gp.travel_time_min }}분</td>
-          <td data-value="{{ p.salePrice }}">{{ p.salePrice | divided_by: 1 }}원</td>
+          <td data-value="{{ p.salePrice }}"><span data-price-format="{{ p.salePrice }}">{{ p.salePrice }}원</span></td>
           <td>{{ p.rating }}</td>
           <td><a href="{{ p.affiliateUrl }}" target="_blank" rel="noopener" class="btn-buy-sm">예약</a></td>
         </tr>
@@ -231,7 +229,7 @@ layout: default
           <td>{{ gp.feature }}</td>
           <td data-value="{{ gp.height }}">{{ gp.height }}m</td>
           <td>{{ gp.best_time }}</td>
-          <td data-value="{{ p.salePrice }}">{{ p.salePrice | divided_by: 1 }}원</td>
+          <td data-value="{{ p.salePrice }}"><span data-price-format="{{ p.salePrice }}">{{ p.salePrice }}원</span></td>
           <td>{{ p.rating }}</td>
           <td><a href="{{ p.affiliateUrl }}" target="_blank" rel="noopener" class="btn-buy-sm">예약</a></td>
         </tr>
@@ -267,7 +265,7 @@ layout: default
           <td><span class="badge badge-{{ gp.conn_type | slugify }}">{{ gp.conn_type }}</span></td>
           <td>{{ gp.data }}</td>
           <td>{{ gp.people }}</td>
-          <td data-value="{{ p.salePrice }}">{{ p.salePrice | divided_by: 1 }}원</td>
+          <td data-value="{{ p.salePrice }}"><span data-price-format="{{ p.salePrice }}">{{ p.salePrice }}원</span></td>
           <td>{{ p.rating }}</td>
           <td><a href="{{ p.affiliateUrl }}" target="_blank" rel="noopener" class="btn-buy-sm">예약</a></td>
         </tr>
@@ -302,7 +300,7 @@ layout: default
           </td>
           <td><span class="badge badge-{{ gp.tour_type | slugify }}">{{ gp.tour_type }}</span></td>
           <td class="highlights-cell">{{ gp.highlights }}</td>
-          <td data-value="{{ p.salePrice }}">{{ p.salePrice | divided_by: 1 }}원</td>
+          <td data-value="{{ p.salePrice }}"><span data-price-format="{{ p.salePrice }}">{{ p.salePrice }}원</span></td>
           <td>{{ p.rating }}</td>
           <td>{{ p.reviewCount }}</td>
           <td><a href="{{ p.affiliateUrl }}" target="_blank" rel="noopener" class="btn-buy-sm">예약</a></td>
@@ -338,7 +336,7 @@ layout: default
         <img src="{{ p.image }}" alt="{{ gp.label }}" class="review-thumb" loading="lazy">
         <div class="review-summary-info">
           <h3>{{ gp.label }}</h3>
-          <span class="review-price">{{ p.salePrice | divided_by: 1 }}원</span>
+          <span class="review-price"><span data-price-format="{{ p.salePrice }}">{{ p.salePrice }}원</span></span>
           <span class="review-rating">{{ p.rating }} ({{ p.reviewCount }}개 리뷰)</span>
         </div>
       </div>
@@ -354,7 +352,7 @@ layout: default
         <div class="review-detail-info">
           <p class="review-description">{{ gp.summary }}</p>
           {% if p.originalPrice > p.salePrice %}
-          <p class="review-discount">정가 <del>{{ p.originalPrice | divided_by: 1 }}원</del> → <strong>{{ p.salePrice | divided_by: 1 }}원</strong> ({{ p.discountText }} 할인)</p>
+          <p class="review-discount">정가 <del><span data-price-format="{{ p.originalPrice }}">{{ p.originalPrice }}원</span></del> → <strong><span data-price-format="{{ p.salePrice }}">{{ p.salePrice }}원</span></strong> ({{ p.discountText }} 할인)</p>
           {% endif %}
           <ul class="review-tags">
             {% if p.taxonomies.confirm_time %}<li>{{ p.taxonomies.confirm_time }}</li>{% endif %}
