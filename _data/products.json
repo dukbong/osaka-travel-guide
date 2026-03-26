@@ -5076,6 +5076,49 @@
       "benefit": "₩443 적립",
       "viewCnt": 19379,
       "refundType": "NONE"
+    },
+    {
+      "id": 151643,
+      "name": "오사카 오카와 벚꽃 크루즈",
+      "slug": "product-151643",
+      "category": "액티비티&클래스",
+      "image": "https://d2mgzmtdeipcjp.cloudfront.net/files/good/2026/02/19/17714686159327.png",
+      "images": [
+        "https://d2mgzmtdeipcjp.cloudfront.net/files/good/2026/02/19/17714686159327.png",
+        "https://d2mgzmtdeipcjp.cloudfront.net/files/good/2026/02/19/17714685398180.png",
+        "https://d2mgzmtdeipcjp.cloudfront.net/files/good/2026/02/19/17714685397960.png",
+        "https://d2mgzmtdeipcjp.cloudfront.net/files/good/2026/02/19/17714685398619.png"
+      ],
+      "originalPrice": 26356,
+      "salePrice": 26356,
+      "currency": "KRW",
+      "discountRate": 0,
+      "discountText": "",
+      "rating": 0,
+      "reviewCount": 0,
+      "purchaseCount": 0,
+      "badges": [],
+      "isMinPriceGuarantee": false,
+      "isNew": true,
+      "affiliateUrl": "https://www.waug.com/r/0sANpr8p",
+      "score": 0.3,
+      "subTitle": "",
+      "lat": 34.6906335,
+      "lng": 135.5146317,
+      "address": "1 Tenmabashikyōmachi, Chuo Ward, Osaka, 540-0032 일본",
+      "intro": "<p>오사카 도심을 가로지르는 오카와 강을 따라, 봄에만 펼쳐지는 벚꽃 풍경을 수상에서 만날 수 있어요.</p>",
+      "hasProgram": true,
+      "taxonomies": {
+        "confirm_time": "바우처 즉시 제공",
+        "min_person": "1명",
+        "pickup": "불포함",
+        "ticket_type": "모바일 바우처 사용",
+        "ticket_vaild_type": "지정일사용",
+        "cancellation": "취소가능"
+      },
+      "benefit": "₩395 적립",
+      "viewCnt": 974,
+      "refundType": "NONE"
     }
   ]
 }
