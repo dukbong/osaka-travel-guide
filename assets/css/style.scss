@@ -1110,274 +1110,191 @@ ul, ol {
 // ===========================================
 // Planner Page
 // ===========================================
-.planner-page {
-  padding: 2rem 0 3rem;
+// ===========================================
+// Planner V2
+// ===========================================
+.planner-v2 { padding: 1.5rem 0 3rem; }
+
+.planner-v2-header {
+  display: flex; justify-content: space-between; align-items: flex-start;
+  flex-wrap: wrap; gap: 1rem; margin-bottom: 1rem;
+  h1 { font-size: 1.5rem; font-weight: 700; margin: 0; }
+  .planner-v2-desc { font-size: 0.85rem; color: $text-muted; margin-top: 0.25rem; }
+}
+.planner-v2-actions { display: flex; gap: 0.5rem; }
+.pv2-btn {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  padding: 0.5rem 1rem; font-size: 0.8rem; font-weight: 500; border-radius: $radius-sm;
+  transition: all $transition; cursor: pointer; font-family: $font-sans;
+}
+.pv2-btn-ghost {
+  color: $text-muted; background: transparent; border: 1px solid $border-color;
+  &:hover { color: $text-primary; border-color: $border-light; }
+}
+.pv2-btn-primary {
+  color: #fff; background: $accent; border: none; font-weight: 600;
+  &:hover { background: darken($accent, 6%); }
 }
 
-.planner-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 1rem;
-  margin-bottom: 1.5rem;
+// Summary Bar (sticky)
+.planner-v2-summary {
+  position: sticky; top: 56px; z-index: 20;
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 0.6rem 1rem; margin-bottom: 1.25rem;
+  background: rgba($bg-card, 0.92); backdrop-filter: blur(12px);
+  border: 1px solid $border-color; border-radius: $radius-md;
+}
+.pv2-summary-days { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+.pv2-summary-chip {
+  font-size: 0.75rem; color: $text-secondary; padding: 0.2rem 0.6rem;
+  background: $bg-secondary; border-radius: 100px;
+  strong { color: $accent; font-weight: 600; }
+}
+.pv2-summary-total {
+  font-size: 0.85rem; color: $text-primary; font-weight: 500;
+  strong { color: $accent; font-size: 1rem; font-weight: 700; }
+}
 
-  h1 {
-    font-size: 1.5rem;
-    font-weight: 700;
+// Body: 2-column on desktop
+.planner-v2-body {
+  display: grid; grid-template-columns: 1fr; gap: 1.25rem;
+  @media (min-width: 1024px) { grid-template-columns: 1fr 360px; }
+}
+
+// Days Column
+.planner-v2-days { display: flex; flex-direction: column; gap: 1rem; }
+.pv2-day {
+  background: $bg-card; border: 1px solid $border-color; border-radius: $radius-md;
+  transition: border-color 0.2s;
+  &.drag-over { border-color: $accent; background: rgba($accent, 0.03); }
+}
+.pv2-day-head {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 0.75rem 1rem; border-bottom: 1px solid $border-color;
+}
+.pv2-day-badge {
+  font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;
+  color: $accent; background: rgba($accent, 0.1); padding: 0.2rem 0.6rem; border-radius: 100px;
+}
+.pv2-day-cost { font-size: 0.8rem; color: $text-muted; font-weight: 600; }
+.pv2-day-items { padding: 0.5rem; min-height: 60px; }
+.pv2-day-empty {
+  display: flex; align-items: center; justify-content: center; gap: 0.4rem;
+  padding: 1.5rem; color: $text-muted; font-size: 0.8rem;
+  border: 1px dashed $border-color; border-radius: $radius-sm; margin: 0.25rem;
+}
+
+// Day Item Card
+.pv2-item {
+  display: flex; align-items: center; gap: 0.5rem;
+  padding: 0.5rem; margin-bottom: 0.4rem;
+  background: $bg-secondary; border: 1px solid $border-color; border-radius: $radius-sm;
+  cursor: grab; transition: all 0.15s;
+  &:hover { border-color: $border-light; }
+  &.dragging { opacity: 0.4; }
+
+  .pv2-item-drag { cursor: grab; flex-shrink: 0; padding: 0 0.15rem; }
+  img { width: 40px; height: 30px; object-fit: cover; border-radius: 4px; flex-shrink: 0; }
+  .pv2-item-info { flex: 1; min-width: 0; }
+  .pv2-item-name {
+    font-size: 0.73rem; font-weight: 500;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .pv2-item-price { font-size: 0.67rem; color: $accent; font-weight: 600; }
+  .pv2-item-actions { display: flex; align-items: center; gap: 0.3rem; flex-shrink: 0; }
+  .pv2-move-select {
+    background: $bg-card; border: 1px solid $border-color; border-radius: 4px;
+    color: $text-secondary; font-size: 0.65rem; padding: 0.1rem 0.2rem; cursor: pointer;
+  }
+  .pv2-item-remove {
+    font-size: 1rem; color: $text-muted; padding: 0 0.2rem; line-height: 1; cursor: pointer;
+    &:hover { color: #ef4444; }
   }
 }
 
-.planner-actions {
-  display: flex;
-  gap: 0.5rem;
+// Sidebar
+.planner-v2-sidebar {
+  background: $bg-card; border: 1px solid $border-color; border-radius: $radius-md;
+  padding: 1rem; height: fit-content;
+  @media (min-width: 1024px) { position: sticky; top: 110px; max-height: calc(100vh - 130px); display: flex; flex-direction: column; }
 }
-
-.btn-secondary {
-  padding: 0.5rem 1rem;
-  font-size: 0.825rem;
-  font-weight: 500;
-  color: $text-secondary;
-  background: $bg-card;
-  border: 1px solid $border-color;
-  border-radius: $radius-sm;
-  transition: all $transition;
-
-  &:hover {
-    color: $text-primary;
-    border-color: $border-light;
-  }
+.pv2-sidebar-head {
+  h3 { font-size: 0.9rem; font-weight: 600; margin-bottom: 0.6rem; }
 }
-
-// Planner search section (top)
-.planner-search-section {
-  background: $bg-card;
-  border: 1px solid $border-color;
-  border-radius: $radius-md;
-  padding: 1rem;
-  margin-bottom: 1.5rem;
-
-  .planner-product-list {
-    max-height: 280px;
-    overflow-y: auto;
-    margin-top: 0.75rem;
+.pv2-search-wrap {
+  display: flex; align-items: center; gap: 0.5rem;
+  background: $bg-secondary; border: 1px solid $border-color; border-radius: $radius-sm;
+  padding: 0.5rem 0.75rem;
+  svg { flex-shrink: 0; color: $text-muted; }
+  input {
+    flex: 1; background: transparent; border: none; color: $text-primary;
+    font-size: 0.82rem; font-family: $font-sans; outline: none;
+    &::placeholder { color: $text-muted; }
   }
 }
-
-// Planner days (vertical stack)
-.planner-days-vertical {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  margin-bottom: 1.5rem;
+.pv2-cat-filters {
+  display: flex; flex-wrap: wrap; gap: 0.35rem; margin: 0.6rem 0;
 }
-
-.planner-day {
-  background: $bg-card;
-  border: 1px solid $border-color;
-  border-radius: $radius-md;
-  min-height: 120px;
-
-  &.drag-over {
-    border-color: $accent;
-    background: rgba($accent, 0.04);
-  }
+.pv2-cat-chip {
+  font-size: 0.68rem; padding: 0.2rem 0.5rem; border-radius: 100px;
+  color: $text-muted; background: $bg-secondary; border: 1px solid transparent;
+  cursor: pointer; transition: all $transition; font-family: $font-sans;
+  &:hover { color: $text-primary; }
+  &.active { color: $accent; border-color: $accent; background: rgba($accent, 0.08); }
 }
-
-.planner-day-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem;
-  border-bottom: 1px solid $border-color;
-
-  h3 {
-    font-size: 0.95rem;
-    font-weight: 600;
-  }
-
-  .day-cost {
-    font-size: 0.8rem;
-    color: $accent;
-    font-weight: 600;
-  }
-}
-
-.planner-day-items {
-  padding: 0.75rem;
-  min-height: 200px;
-}
-
-.planner-item {
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
-  padding: 0.6rem;
-  background: $bg-secondary;
-  border: 1px solid $border-color;
-  border-radius: $radius-sm;
-  margin-bottom: 0.5rem;
-  cursor: grab;
-  transition: border-color $transition;
-
-  &:hover {
-    border-color: $border-light;
-  }
-
-  img {
-    width: 44px;
-    height: 34px;
-    object-fit: cover;
-    border-radius: 4px;
-    flex-shrink: 0;
-  }
-
-  .planner-item-info {
-    flex: 1;
-    min-width: 0;
-
-    .planner-item-name {
-      font-size: 0.75rem;
-      font-weight: 500;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    .planner-item-price {
-      font-size: 0.7rem;
-      color: $text-muted;
-    }
-  }
-
-  .planner-item-remove {
-    color: $text-muted;
-    font-size: 0.85rem;
-    padding: 0.2rem;
-
-    &:hover { color: $danger; }
-  }
-}
-
-// (planner-sidebar removed - now using planner-search-section)
-
-.planner-search {
-  width: 100%;
-  padding: 0.6rem 0.875rem;
-  background: $bg-secondary;
-  border: 1px solid $border-color;
-  border-radius: $radius-sm;
-  color: $text-primary;
-  font-size: 0.85rem;
-  font-family: $font-sans;
-  margin-bottom: 0.75rem;
-
-  &::placeholder { color: $text-muted; }
-
-  &:focus {
-    outline: none;
-    border-color: $accent;
-  }
-}
-
-.planner-product-list {
-  max-height: 500px;
-  overflow-y: auto;
-
+.pv2-product-list {
+  flex: 1; overflow-y: auto; max-height: 500px;
+  @media (min-width: 1024px) { max-height: none; }
   &::-webkit-scrollbar { width: 4px; }
-  &::-webkit-scrollbar-track { background: transparent; }
   &::-webkit-scrollbar-thumb { background: $border-color; border-radius: 2px; }
 }
+.pv2-no-result { padding: 2rem; text-align: center; color: $text-muted; font-size: 0.8rem; }
 
-.planner-product-mini {
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
-  padding: 0.5rem;
-  border-radius: $radius-sm;
-  cursor: pointer;
-  transition: background $transition;
+// Pick Item (sidebar product row)
+.pv2-pick-item {
+  display: flex; align-items: center; gap: 0.5rem;
+  padding: 0.45rem 0.3rem; border-radius: $radius-sm;
+  transition: background 0.15s;
+  &:hover { background: rgba(255,255,255,0.03); }
+  &.added { background: rgba($accent, 0.08); transition: background 0s; }
 
-  &:hover {
-    background: rgba(255,255,255,0.04);
+  img { width: 40px; height: 30px; object-fit: cover; border-radius: 4px; flex-shrink: 0; }
+  .pv2-pick-info { flex: 1; min-width: 0; }
+  .pv2-pick-name {
+    font-size: 0.73rem; font-weight: 500;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
   }
-
-  img {
-    width: 44px;
-    height: 34px;
-    object-fit: cover;
-    border-radius: 4px;
-    flex-shrink: 0;
+  .pv2-pick-meta { display: flex; gap: 0.5rem; margin-top: 0.1rem; }
+  .pv2-pick-price { font-size: 0.67rem; color: $accent; font-weight: 600; }
+  .pv2-pick-rating { font-size: 0.65rem; color: $text-muted; }
+  .pv2-pick-add { display: flex; align-items: center; gap: 0.25rem; flex-shrink: 0; }
+  .pv2-pick-day {
+    background: $bg-secondary; border: 1px solid $border-color; border-radius: 4px;
+    color: $text-secondary; font-size: 0.63rem; padding: 0.1rem 0.15rem; cursor: pointer;
   }
-
-  .mini-info {
-    flex: 1;
-    min-width: 0;
-
-    .mini-name {
-      font-size: 0.75rem;
-      font-weight: 500;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    .mini-price {
-      font-size: 0.7rem;
-      color: $accent;
-      font-weight: 600;
-    }
-  }
-
-  .mini-add-wrap {
-    display: flex;
-    align-items: center;
-    gap: 0.3rem;
-    flex-shrink: 0;
-  }
-
-  .mini-day-select {
-    background: $bg-secondary;
-    border: 1px solid $border-color;
-    border-radius: 4px;
-    color: $text-primary;
-    font-size: 0.65rem;
-    padding: 0.15rem 0.3rem;
-    cursor: pointer;
-  }
-
-  .mini-add {
-    color: $accent;
-    font-size: 1.1rem;
-    padding: 0.2rem;
+  .pv2-pick-btn {
+    font-size: 0.68rem; font-weight: 600; color: $accent; padding: 0.15rem 0.4rem;
+    border: 1px solid $accent; border-radius: $radius-sm; background: transparent;
+    cursor: pointer; transition: all $transition; font-family: $font-sans;
+    &:hover { background: $accent; color: #fff; }
   }
 }
 
-// Planner total
-.planner-total {
-  margin-top: 0;
-  padding: 1.25rem;
-  background: $bg-card;
-  border: 1px solid $border-color;
-  border-radius: $radius-md;
-  text-align: center;
-
-  .total-label {
-    font-size: 0.8rem;
-    color: $text-muted;
-    margin-bottom: 0.25rem;
-  }
-
-  .total-amount {
-    font-size: 1.5rem;
-    font-weight: 800;
-    color: $accent;
-  }
+// Export CTA
+.planner-v2-export {
+  margin-top: 1.5rem; padding: 1.25rem;
+  background: $bg-card; border: 1px solid $border-color; border-radius: $radius-md;
+}
+.pv2-export-inner {
+  display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;
+  strong { font-size: 0.95rem; display: block; }
+  span { font-size: 0.8rem; color: $text-muted; }
 }
 
-.planner-export {
-  margin-top: 1rem;
-  text-align: center;
+// Mobile
+@media (max-width: 1023px) {
+  .planner-v2-body { grid-template-columns: 1fr; }
+  .planner-v2-sidebar { order: -1; } // sidebar on top on mobile
 }
 
 // ===========================================

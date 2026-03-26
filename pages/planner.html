@@ -5,264 +5,281 @@ description: "오사카 3일 여행 일정을 직접 만들어보세요. 원하�
 permalink: /planner/
 ---
 
-<div class="planner-page">
-  <div class="planner-header">
-    <h1>오사카 일정 플래너</h1>
-    <div class="planner-actions">
-      <button class="btn-secondary" id="plannerClear">초기화</button>
-      <button class="btn-secondary" id="plannerSave">저장하기</button>
+<div class="planner-v2">
+  <!-- Header -->
+  <div class="planner-v2-header">
+    <div>
+      <h1>오사카 일정 플래너</h1>
+      <p class="planner-v2-desc">가이드에서 마음에 든 상품을 날짜별로 배치하고, 총 비용을 한눈에 확인하세요.</p>
+    </div>
+    <div class="planner-v2-actions">
+      <button class="pv2-btn pv2-btn-ghost" id="plannerClear">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"/></svg>
+        초기화
+      </button>
     </div>
   </div>
 
-  <!-- 상품 검색 (상단) -->
-  <div class="planner-search-section">
-    <input type="text" class="planner-search" id="plannerSearch" placeholder="상품 검색...">
-    <div class="planner-product-list" id="plannerProductList"></div>
-  </div>
-
-  <!-- Day 일정 (세로) -->
-  <div class="planner-days-vertical" id="plannerDays">
-    <div class="planner-day" data-day="1" id="day1">
-      <div class="planner-day-header">
-        <h3>Day 1</h3>
-        <span class="day-cost" id="day1Cost">0원</span>
-      </div>
-      <div class="planner-day-items" id="day1Items"></div>
+  <!-- Summary Bar (sticky) -->
+  <div class="planner-v2-summary" id="plannerSummary">
+    <div class="pv2-summary-days">
+      <span class="pv2-summary-chip" data-day="1">Day 1: <strong id="sum1">0원</strong></span>
+      <span class="pv2-summary-chip" data-day="2">Day 2: <strong id="sum2">0원</strong></span>
+      <span class="pv2-summary-chip" data-day="3">Day 3: <strong id="sum3">0원</strong></span>
     </div>
-    <div class="planner-day" data-day="2" id="day2">
-      <div class="planner-day-header">
-        <h3>Day 2</h3>
-        <span class="day-cost" id="day2Cost">0원</span>
-      </div>
-      <div class="planner-day-items" id="day2Items"></div>
-    </div>
-    <div class="planner-day" data-day="3" id="day3">
-      <div class="planner-day-header">
-        <h3>Day 3</h3>
-        <span class="day-cost" id="day3Cost">0원</span>
-      </div>
-      <div class="planner-day-items" id="day3Items"></div>
+    <div class="pv2-summary-total">
+      총 <strong id="plannerTotal">0원</strong>
     </div>
   </div>
 
-  <!-- 총 비용 + 예약 -->
-  <div class="planner-total">
-    <div class="total-label">총 예상 비용</div>
-    <div class="total-amount" id="plannerTotal">0원</div>
+  <!-- Main Layout: Days + Sidebar -->
+  <div class="planner-v2-body">
+    <!-- Days Column -->
+    <div class="planner-v2-days">
+      {% for d in (1..3) %}
+      <div class="pv2-day" data-day="{{ d }}" id="day{{ d }}">
+        <div class="pv2-day-head">
+          <div class="pv2-day-badge">Day {{ d }}</div>
+          <span class="pv2-day-cost" id="day{{ d }}Cost">0원</span>
+        </div>
+        <div class="pv2-day-items" id="day{{ d }}Items">
+          <div class="pv2-day-empty">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" opacity="0.3"><path d="M12 5v14M5 12h14"/></svg>
+            <span>상품을 추가해주세요</span>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+
+    <!-- Sidebar: Product Picker -->
+    <div class="planner-v2-sidebar">
+      <div class="pv2-sidebar-head">
+        <h3>상품 추가</h3>
+        <div class="pv2-search-wrap">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+          <input type="text" id="plannerSearch" placeholder="상품명 또는 카테고리 검색">
+        </div>
+      </div>
+      <!-- Category Quick Filters -->
+      <div class="pv2-cat-filters" id="catFilters">
+        <button class="pv2-cat-chip active" data-cat="all">전체</button>
+        <button class="pv2-cat-chip" data-cat="입장권/티켓">입장권</button>
+        <button class="pv2-cat-chip" data-cat="이동/교통">교통</button>
+        <button class="pv2-cat-chip" data-cat="투어">투어</button>
+        <button class="pv2-cat-chip" data-cat="eSIM & WiFi">WiFi</button>
+        <button class="pv2-cat-chip" data-cat="레스토랑&다이닝">맛집</button>
+        <button class="pv2-cat-chip" data-cat="액티비티&클래스">액티비티</button>
+      </div>
+      <div class="pv2-product-list" id="productList"></div>
+    </div>
   </div>
-  <div class="planner-export">
-    <button class="btn-cta btn-cta-primary" id="plannerExport">선택 상품 예약하기</button>
+
+  <!-- Export CTA -->
+  <div class="planner-v2-export" id="plannerExportSection" style="display:none;">
+    <div class="pv2-export-inner">
+      <div>
+        <strong>일정이 완성되었나요?</strong>
+        <span>선택한 상품을 WAUG에서 바로 예약하세요.</span>
+      </div>
+      <button class="pv2-btn pv2-btn-primary" id="plannerExport">
+        예약하러 가기
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+      </button>
+    </div>
   </div>
 </div>
 
 <script>
-window.PRODUCTS = {{ site.data.products.products | jsonify }};
+window.PRODUCTS = [
+  {% for p in site.data.products.products %}
+  {id:{{ p.id }},name:{{ p.name | jsonify }},image:"{{ p.image }}",salePrice:{{ p.salePrice }},category:{{ p.category | jsonify }},slug:"{{ p.slug }}",affiliateUrl:{{ p.affiliateUrl | jsonify }},rating:{{ p.rating }}}{% unless forloop.last %},{% endunless %}
+  {% endfor %}
+];
 </script>
 
 <script>
-document.addEventListener('DOMContentLoaded', function() {
+(function() {
+  'use strict';
   var products = window.PRODUCTS;
-  var plannerData = JSON.parse(localStorage.getItem('osakaPlanner') || '{"1":[],"2":[],"3":[]}');
-  var searchInput = document.getElementById('plannerSearch');
-  var productList = document.getElementById('plannerProductList');
+  var data = JSON.parse(localStorage.getItem('osakaPlanner') || '{"1":[],"2":[],"3":[]}');
+  var currentCat = 'all';
+  var currentQuery = '';
 
-  function getProduct(id) {
-    return products.find(function(p) { return p.id === id; });
-  }
+  function find(id) { return products.find(function(p) { return p.id === id; }); }
+  function save() { localStorage.setItem('osakaPlanner', JSON.stringify(data)); }
+  function fmt(n) { return n.toLocaleString('ko-KR') + '원'; }
 
-  function savePlanner() {
-    localStorage.setItem('osakaPlanner', JSON.stringify(plannerData));
-  }
-
-  function renderProductList(query) {
-    var q = (query || '').toLowerCase();
-    var filtered = products.filter(function(p) {
-      return !q || p.name.toLowerCase().indexOf(q) !== -1 || p.category.toLowerCase().indexOf(q) !== -1;
-    }).slice(0, 30);
-
-    productList.textContent = '';
-    filtered.forEach(function(p) {
-      var div = document.createElement('div');
-      div.className = 'planner-product-mini';
-
-      var img = document.createElement('img');
-      img.src = p.image;
-      img.alt = '';
-      img.loading = 'lazy';
-      div.appendChild(img);
-
-      var info = document.createElement('div');
-      info.className = 'mini-info';
-      var nameDiv = document.createElement('div');
-      nameDiv.className = 'mini-name';
-      nameDiv.textContent = p.name;
-      info.appendChild(nameDiv);
-      var priceDiv = document.createElement('div');
-      priceDiv.className = 'mini-price';
-      priceDiv.textContent = p.salePrice.toLocaleString() + '\uc6d0';
-      info.appendChild(priceDiv);
-      div.appendChild(info);
-
-      var addWrap = document.createElement('div');
-      addWrap.className = 'mini-add-wrap';
-      var select = document.createElement('select');
-      select.className = 'mini-day-select';
-      ['1','2','3'].forEach(function(d) {
-        var opt = document.createElement('option');
-        opt.value = d;
-        opt.textContent = 'Day ' + d;
-        select.appendChild(opt);
-      });
-      addWrap.appendChild(select);
-      var addBtn = document.createElement('button');
-      addBtn.className = 'mini-add';
-      addBtn.textContent = '+';
-      addBtn.addEventListener('click', function() {
-        addToDay(p.id, select.value);
-      });
-      addWrap.appendChild(addBtn);
-      div.appendChild(addWrap);
-
-      productList.appendChild(div);
-    });
-  }
-
-  function addToDay(productId, day) {
-    if (!plannerData[day]) plannerData[day] = [];
-    plannerData[day].push(productId);
-    savePlanner();
-    renderDays();
-  }
-
-  function removeFromDay(productId, day, index) {
-    if (plannerData[day]) {
-      plannerData[day].splice(index, 1);
-      savePlanner();
-      renderDays();
-    }
-  }
-
+  // ===== Render Days =====
   function renderDays() {
     var total = 0;
     ['1','2','3'].forEach(function(day) {
-      var container = document.getElementById('day' + day + 'Items');
+      var box = document.getElementById('day' + day + 'Items');
       var costEl = document.getElementById('day' + day + 'Cost');
-      container.textContent = '';
-      var dayCost = 0;
+      var sumEl = document.getElementById('sum' + day);
+      box.innerHTML = '';
+      var cost = 0;
+      var items = data[day] || [];
 
-      (plannerData[day] || []).forEach(function(pid, idx) {
-        var p = getProduct(pid);
+      if (items.length === 0) {
+        box.innerHTML = '<div class="pv2-day-empty"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" opacity="0.3"><path d="M12 5v14M5 12h14"/></svg><span>상품을 추가해주세요</span></div>';
+      }
+
+      items.forEach(function(pid, idx) {
+        var p = find(pid);
         if (!p) return;
-        dayCost += p.salePrice;
+        cost += p.salePrice;
 
-        var item = document.createElement('div');
-        item.className = 'planner-item';
-        item.draggable = true;
-        item.dataset.productId = pid;
-        item.dataset.index = idx;
+        var card = document.createElement('div');
+        card.className = 'pv2-item';
+        card.draggable = true;
+        card.dataset.pid = pid;
+        card.dataset.idx = idx;
 
-        var img = document.createElement('img');
-        img.src = p.image;
-        img.alt = '';
-        item.appendChild(img);
+        card.innerHTML =
+          '<div class="pv2-item-drag"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" opacity="0.4"><circle cx="9" cy="5" r="1"/><circle cx="15" cy="5" r="1"/><circle cx="9" cy="12" r="1"/><circle cx="15" cy="12" r="1"/><circle cx="9" cy="19" r="1"/><circle cx="15" cy="19" r="1"/></svg></div>' +
+          '<img src="' + p.image + '" alt="" loading="lazy">' +
+          '<div class="pv2-item-info"><div class="pv2-item-name">' + escHtml(p.name) + '</div><div class="pv2-item-price">' + fmt(p.salePrice) + '</div></div>' +
+          '<div class="pv2-item-actions">' +
+            '<select class="pv2-move-select" title="이동"><option value="1"' + (day==='1'?' selected':'') + '>D1</option><option value="2"' + (day==='2'?' selected':'') + '>D2</option><option value="3"' + (day==='3'?' selected':'') + '>D3</option></select>' +
+            '<button class="pv2-item-remove" title="제거">&times;</button>' +
+          '</div>';
 
-        var info = document.createElement('div');
-        info.className = 'planner-item-info';
-        var nameEl = document.createElement('div');
-        nameEl.className = 'planner-item-name';
-        nameEl.textContent = p.name;
-        info.appendChild(nameEl);
-        var priceEl = document.createElement('div');
-        priceEl.className = 'planner-item-price';
-        priceEl.textContent = p.salePrice.toLocaleString() + '\uc6d0';
-        info.appendChild(priceEl);
-        item.appendChild(info);
-
-        var removeBtn = document.createElement('button');
-        removeBtn.className = 'planner-item-remove';
-        removeBtn.title = '\uc81c\uac70';
-        removeBtn.textContent = '\u00d7';
-        removeBtn.addEventListener('click', function() {
-          removeFromDay(pid, day, idx);
-        });
-        item.appendChild(removeBtn);
-
-        item.addEventListener('dragstart', function(e) {
-          e.dataTransfer.setData('text/plain', JSON.stringify({pid: pid, fromDay: day, fromIndex: idx}));
+        // Move to different day
+        card.querySelector('.pv2-move-select').addEventListener('change', function(e) {
+          var newDay = e.target.value;
+          if (newDay !== day) {
+            data[day].splice(idx, 1);
+            if (!data[newDay]) data[newDay] = [];
+            data[newDay].push(pid);
+            save(); renderDays();
+          }
         });
 
-        container.appendChild(item);
+        // Remove
+        card.querySelector('.pv2-item-remove').addEventListener('click', function() {
+          data[day].splice(idx, 1);
+          save(); renderDays();
+        });
+
+        // Drag
+        card.addEventListener('dragstart', function(e) {
+          e.dataTransfer.setData('text/plain', JSON.stringify({pid:pid, from:day, idx:idx}));
+          card.classList.add('dragging');
+        });
+        card.addEventListener('dragend', function() { card.classList.remove('dragging'); });
+
+        box.appendChild(card);
       });
 
-      costEl.textContent = dayCost.toLocaleString() + '\uc6d0';
-      total += dayCost;
+      costEl.textContent = fmt(cost);
+      sumEl.textContent = fmt(cost);
+      total += cost;
     });
 
-    document.getElementById('plannerTotal').textContent = total.toLocaleString() + '\uc6d0';
+    document.getElementById('plannerTotal').textContent = fmt(total);
+
+    // Show/hide export
+    var hasItems = (data['1'].length + data['2'].length + data['3'].length) > 0;
+    document.getElementById('plannerExportSection').style.display = hasItems ? '' : 'none';
   }
 
-  // Drop zones
-  document.querySelectorAll('.planner-day').forEach(function(dayEl) {
-    var day = dayEl.dataset.day;
+  function escHtml(s) {
+    var d = document.createElement('div');
+    d.textContent = s;
+    return d.innerHTML;
+  }
 
-    dayEl.addEventListener('dragover', function(e) {
-      e.preventDefault();
-      dayEl.classList.add('drag-over');
-    });
-
-    dayEl.addEventListener('dragleave', function() {
-      dayEl.classList.remove('drag-over');
-    });
-
-    dayEl.addEventListener('drop', function(e) {
-      e.preventDefault();
-      dayEl.classList.remove('drag-over');
+  // ===== Drop zones =====
+  document.querySelectorAll('.pv2-day').forEach(function(el) {
+    var day = el.dataset.day;
+    el.addEventListener('dragover', function(e) { e.preventDefault(); el.classList.add('drag-over'); });
+    el.addEventListener('dragleave', function() { el.classList.remove('drag-over'); });
+    el.addEventListener('drop', function(e) {
+      e.preventDefault(); el.classList.remove('drag-over');
       try {
-        var data = JSON.parse(e.dataTransfer.getData('text/plain'));
-        if (data.fromDay && data.fromIndex !== undefined) {
-          plannerData[data.fromDay].splice(data.fromIndex, 1);
-        }
-        if (!plannerData[day]) plannerData[day] = [];
-        plannerData[day].push(data.pid);
-        savePlanner();
-        renderDays();
+        var d2 = JSON.parse(e.dataTransfer.getData('text/plain'));
+        if (d2.from && d2.idx !== undefined) data[d2.from].splice(d2.idx, 1);
+        if (!data[day]) data[day] = [];
+        data[day].push(d2.pid);
+        save(); renderDays();
       } catch(err) {}
     });
   });
 
-  searchInput.addEventListener('input', function() {
-    renderProductList(this.value);
-  });
+  // ===== Product List =====
+  function renderProducts() {
+    var list = document.getElementById('productList');
+    list.innerHTML = '';
+    var q = currentQuery.toLowerCase();
+    var filtered = products.filter(function(p) {
+      var matchCat = currentCat === 'all' || p.category === currentCat;
+      var matchQ = !q || p.name.toLowerCase().indexOf(q) !== -1;
+      return matchCat && matchQ;
+    });
 
-  document.getElementById('plannerClear').addEventListener('click', function() {
-    if (confirm('\uc77c\uc815\uc744 \ucd08\uae30\ud654\ud558\uc2dc\uaca0\uc2b5\ub2c8\uae4c?')) {
-      plannerData = {'1':[],'2':[],'3':[]};
-      savePlanner();
-      renderDays();
-    }
-  });
-
-  document.getElementById('plannerSave').addEventListener('click', function() {
-    savePlanner();
-    alert('\uc77c\uc815\uc774 \uc800\uc7a5\ub418\uc5c8\uc2b5\ub2c8\ub2e4!');
-  });
-
-  document.getElementById('plannerExport').addEventListener('click', function() {
-    var allIds = [].concat(plannerData['1'] || [], plannerData['2'] || [], plannerData['3'] || []);
-    var unique = allIds.filter(function(v, i, a) { return a.indexOf(v) === i; });
-    if (unique.length === 0) {
-      alert('\uc77c\uc815\uc5d0 \uc0c1\ud488\uc744 \ucd94\uac00\ud574\uc8fc\uc138\uc694.');
+    if (filtered.length === 0) {
+      list.innerHTML = '<div class="pv2-no-result">검색 결과가 없습니다</div>';
       return;
     }
-    unique.forEach(function(pid) {
-      var p = getProduct(pid);
-      if (p && p.affiliateUrl) {
-        window.open(p.affiliateUrl, '_blank', 'noopener');
-      }
+
+    filtered.forEach(function(p) {
+      var row = document.createElement('div');
+      row.className = 'pv2-pick-item';
+      row.innerHTML =
+        '<img src="' + p.image + '" alt="" loading="lazy">' +
+        '<div class="pv2-pick-info"><div class="pv2-pick-name">' + escHtml(p.name) + '</div><div class="pv2-pick-meta"><span class="pv2-pick-price">' + fmt(p.salePrice) + '</span><span class="pv2-pick-rating">★ ' + p.rating + '</span></div></div>' +
+        '<div class="pv2-pick-add"><select class="pv2-pick-day"><option value="1">D1</option><option value="2">D2</option><option value="3">D3</option></select><button class="pv2-pick-btn">추가</button></div>';
+
+      row.querySelector('.pv2-pick-btn').addEventListener('click', function() {
+        var day = row.querySelector('.pv2-pick-day').value;
+        if (!data[day]) data[day] = [];
+        data[day].push(p.id);
+        save(); renderDays();
+        // Flash feedback
+        row.classList.add('added');
+        setTimeout(function() { row.classList.remove('added'); }, 600);
+      });
+
+      list.appendChild(row);
+    });
+  }
+
+  // Search
+  document.getElementById('plannerSearch').addEventListener('input', function() {
+    currentQuery = this.value;
+    renderProducts();
+  });
+
+  // Category chips
+  document.querySelectorAll('.pv2-cat-chip').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      document.querySelectorAll('.pv2-cat-chip').forEach(function(b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+      currentCat = btn.dataset.cat;
+      renderProducts();
     });
   });
 
-  renderProductList('');
+  // Clear
+  document.getElementById('plannerClear').addEventListener('click', function() {
+    if (confirm('일정을 초기화하시겠습니까?')) {
+      data = {'1':[],'2':[],'3':[]};
+      save(); renderDays();
+    }
+  });
+
+  // Export
+  document.getElementById('plannerExport').addEventListener('click', function() {
+    var all = [].concat(data['1']||[], data['2']||[], data['3']||[]);
+    var unique = all.filter(function(v,i,a) { return a.indexOf(v)===i; });
+    unique.forEach(function(pid) {
+      var p = find(pid);
+      if (p && p.affiliateUrl) window.open(p.affiliateUrl, '_blank', 'noopener');
+    });
+  });
+
+  renderProducts();
   renderDays();
-});
+})();
 </script>
