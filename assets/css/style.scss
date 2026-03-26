@@ -1280,15 +1280,36 @@ ul, ol {
   }
 }
 
-// Export CTA
+// Export Links
 .planner-v2-export {
   margin-top: 1.5rem; padding: 1.25rem;
   background: $bg-card; border: 1px solid $border-color; border-radius: $radius-md;
 }
-.pv2-export-inner {
-  display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;
+.pv2-export-head {
+  margin-bottom: 1rem;
   strong { font-size: 0.95rem; display: block; }
   span { font-size: 0.8rem; color: $text-muted; }
+}
+.pv2-export-list { display: flex; flex-direction: column; gap: 0.5rem; }
+.pv2-export-item {
+  display: flex; align-items: center; gap: 0.75rem;
+  padding: 0.6rem 0.75rem; background: $bg-secondary; border: 1px solid $border-color;
+  border-radius: $radius-sm; text-decoration: none; color: $text-primary;
+  transition: all 0.15s;
+  &:hover { border-color: $accent; background: rgba($accent, 0.04); }
+  img { width: 48px; height: 36px; object-fit: cover; border-radius: 4px; flex-shrink: 0; }
+  .pv2-export-item-info { flex: 1; min-width: 0; }
+  .pv2-export-item-name {
+    font-size: 0.8rem; font-weight: 500;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .pv2-export-item-price { font-size: 0.75rem; color: $accent; font-weight: 600; margin-top: 0.1rem; }
+  .pv2-export-item-btn {
+    flex-shrink: 0; font-size: 0.75rem; font-weight: 600; color: $accent;
+    padding: 0.3rem 0.75rem; border: 1px solid $accent; border-radius: $radius-sm;
+    white-space: nowrap;
+  }
+  &:hover .pv2-export-item-btn { background: $accent; color: #fff; }
 }
 
 // Mobile

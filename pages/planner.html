@@ -75,18 +75,13 @@ permalink: /planner/
     </div>
   </div>
 
-  <!-- Export CTA -->
+  <!-- Export: 예약 링크 목록 -->
   <div class="planner-v2-export" id="plannerExportSection" style="display:none;">
-    <div class="pv2-export-inner">
-      <div>
-        <strong>일정이 완성되었나요?</strong>
-        <span>선택한 상품을 WAUG에서 바로 예약하세요.</span>
-      </div>
-      <button class="pv2-btn pv2-btn-primary" id="plannerExport">
-        예약하러 가기
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
-      </button>
+    <div class="pv2-export-head">
+      <strong>일정이 완성되었나요?</strong>
+      <span>아래 상품을 하나씩 클릭해서 예약하세요.</span>
     </div>
+    <div class="pv2-export-list" id="exportList"></div>
   </div>
 </div>
 
@@ -179,9 +174,35 @@ window.PRODUCTS = [
 
     document.getElementById('plannerTotal').textContent = fmt(total);
 
-    // Show/hide export
-    var hasItems = (data['1'].length + data['2'].length + data['3'].length) > 0;
-    document.getElementById('plannerExportSection').style.display = hasItems ? '' : 'none';
+    // Render export links
+    var allIds = [].concat(data['1']||[], data['2']||[], data['3']||[]);
+    var unique = allIds.filter(function(v,i,a) { return a.indexOf(v)===i; });
+    var exportSection = document.getElementById('plannerExportSection');
+    var exportList = document.getElementById('exportList');
+    exportList.innerHTML = '';
+
+    if (unique.length > 0) {
+      exportSection.style.display = '';
+      unique.forEach(function(pid) {
+        var p = find(pid);
+        if (!p) return;
+        var row = document.createElement('a');
+        row.className = 'pv2-export-item';
+        row.href = p.affiliateUrl;
+        row.target = '_blank';
+        row.rel = 'noopener';
+        row.innerHTML =
+          '<img src="' + p.image + '" alt="" loading="lazy">' +
+          '<div class="pv2-export-item-info">' +
+            '<div class="pv2-export-item-name">' + escHtml(p.name) + '</div>' +
+            '<div class="pv2-export-item-price">' + fmt(p.salePrice) + '</div>' +
+          '</div>' +
+          '<span class="pv2-export-item-btn">예약하기 →</span>';
+        exportList.appendChild(row);
+      });
+    } else {
+      exportSection.style.display = 'none';
+    }
   }
 
   function escHtml(s) {
@@ -267,16 +288,6 @@ window.PRODUCTS = [
       data = {'1':[],'2':[],'3':[]};
       save(); renderDays();
     }
-  });
-
-  // Export
-  document.getElementById('plannerExport').addEventListener('click', function() {
-    var all = [].concat(data['1']||[], data['2']||[], data['3']||[]);
-    var unique = all.filter(function(v,i,a) { return a.indexOf(v)===i; });
-    unique.forEach(function(pid) {
-      var p = find(pid);
-      if (p && p.affiliateUrl) window.open(p.affiliateUrl, '_blank', 'noopener');
-    });
   });
 
   renderProducts();
