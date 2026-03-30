@@ -2876,3 +2876,123 @@ ul, ol {
   line-height: 1.6;
   margin-bottom: 0.5rem;
 }
+
+// ===========================================
+// Editor Pick Section
+// ===========================================
+.editor-pick {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 3rem 1.5rem;
+}
+
+.editor-pick h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: $text-primary;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.editor-pick-card {
+  background: $bg-card;
+  border: 2px solid $accent;
+  border-radius: $radius-lg;
+  padding: 2rem;
+  position: relative;
+  box-shadow: 0 0 20px rgba($accent, 0.1);
+
+  &::before {
+    content: "\2B50";
+    position: absolute;
+    top: -14px;
+    left: 24px;
+    background: $bg-primary;
+    padding: 0 8px;
+    font-size: 1.2rem;
+  }
+
+  h3 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: $accent;
+    margin-bottom: 0.75rem;
+  }
+
+  p {
+    font-size: 0.95rem;
+    color: $text-secondary;
+    line-height: 1.7;
+  }
+}
+
+// ===========================================
+// Guide Conclusion Section
+// ===========================================
+.guide-conclusion {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 3rem 1.5rem;
+
+  h2 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: $text-primary;
+    margin-bottom: 1.5rem;
+    text-align: center;
+  }
+
+  p {
+    font-size: 0.95rem;
+    color: $text-secondary;
+    line-height: 1.8;
+    background: $bg-card;
+    border-radius: $radius-md;
+    padding: 1.5rem 2rem;
+    border-left: 4px solid $accent;
+  }
+}
+
+// ===========================================
+// Guide Warnings Section
+// ===========================================
+.guide-warnings {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem 3rem;
+
+  h2 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: $text-primary;
+    margin-bottom: 1.5rem;
+    text-align: center;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  li {
+    background: rgba($warning, 0.08);
+    border: 1px solid rgba($warning, 0.2);
+    border-radius: $radius-md;
+    padding: 1rem 1.25rem 1rem 3rem;
+    font-size: 0.9rem;
+    color: $text-secondary;
+    line-height: 1.6;
+    position: relative;
+
+    &::before {
+      content: "\26A0\FE0F";
+      position: absolute;
+      left: 1rem;
+      top: 1rem;
+      font-size: 1rem;
+    }
+  }
+}

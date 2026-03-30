@@ -58,6 +58,17 @@ layout: default
   </div>
 </section>
 
+<!-- Editor's Pick (after quiz, before comparison table) -->
+{% if guide.editorPick %}
+<section class="editor-pick">
+  <h2>에디터 추천</h2>
+  <div class="editor-pick-card">
+    <h3>{{ guide.editorPick.title }}</h3>
+    <p>{{ guide.editorPick.text }}</p>
+  </div>
+</section>
+{% endif %}
+
 <!-- Comparison Table -->
 <section class="comparison-section" id="compare">
   <h2 class="section-title">전체 상품 비교</h2>
@@ -395,6 +406,26 @@ layout: default
     <button class="btn-sticky-clear" id="stickyClearBtn">초기화</button>
   </div>
 </div>
+
+<!-- Conclusion -->
+{% if guide.conclusion %}
+<section class="guide-conclusion">
+  <h2>비교 결론</h2>
+  <p>{{ guide.conclusion }}</p>
+</section>
+{% endif %}
+
+<!-- Warnings -->
+{% if guide.warnings.size > 0 %}
+<section class="guide-warnings">
+  <h2>주의 사항</h2>
+  <ul>
+    {% for w in guide.warnings %}
+    <li>{{ w }}</li>
+    {% endfor %}
+  </ul>
+</section>
+{% endif %}
 
 <!-- Detailed Reviews -->
 <section class="reviews-section" id="reviews">
