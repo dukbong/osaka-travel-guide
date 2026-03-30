@@ -104,48 +104,86 @@
           {
             "id": "days",
             "text": "USJ에 며칠 방문할 예정인가요?",
-            "options": ["1일", "1.5일 이상"]
+            "options": [
+              "1일",
+              "1.5일 이상"
+            ]
           },
           {
             "id": "nintendo",
             "text": "슈퍼 닌텐도 월드는 꼭 가야 하나요?",
-            "options": ["필수!", "상관없음"]
+            "options": [
+              "필수!",
+              "상관없음"
+            ]
           },
           {
             "id": "budget",
             "text": "1인당 예산은 어느 정도인가요?",
-            "options": ["10만원 이하 (입장권만)", "10~20만원 (패스 4)", "20만원 이상 (패스 7+)"]
+            "options": [
+              "10만원 이하 (입장권만)",
+              "10~20만원 (패스 4)",
+              "20만원 이상 (패스 7+)"
+            ]
           },
           {
             "id": "harrypotter",
             "text": "해리포터 어트랙션을 반드시 타고 싶나요?",
-            "options": ["꼭 타야 함", "굳이 안 타도 됨"]
+            "options": [
+              "꼭 타야 함",
+              "굳이 안 타도 됨"
+            ]
           },
           {
             "id": "crowd",
             "text": "방문 시기가 성수기(봄방학/여름/연말)인가요?",
-            "options": ["성수기", "비수기"]
+            "options": [
+              "성수기",
+              "비수기"
+            ]
           }
         ],
         "recommendations": [
           {
-            "condition": {"days": "1일", "nintendo": "상관없음", "budget": "10만원 이하 (입장권만)"},
-            "productIds": [109041],
+            "condition": {
+              "days": "1일",
+              "nintendo": "상관없음",
+              "budget": "10만원 이하 (입장권만)"
+            },
+            "productIds": [
+              109041
+            ],
             "reason": "입장권만으로도 비수기엔 충분히 즐길 수 있어요. 다만 인기 어트랙션은 대기 각오."
           },
           {
-            "condition": {"days": "1일", "nintendo": "필수!"},
-            "productIds": [109041, 104085],
+            "condition": {
+              "days": "1일",
+              "nintendo": "필수!"
+            },
+            "productIds": [
+              109041,
+              104085
+            ],
             "reason": "1일 입장권 + 익스프레스 패스 4 조합. 닌텐도 확약으로 확실하게!"
           },
           {
-            "condition": {"days": "1일", "harrypotter": "꼭 타야 함"},
-            "productIds": [109041, 109433],
+            "condition": {
+              "days": "1일",
+              "harrypotter": "꼭 타야 함"
+            },
+            "productIds": [
+              109041,
+              109433
+            ],
             "reason": "해리포터까지 확약 받으려면 패스 7이 필요합니다."
           },
           {
-            "condition": {"days": "1.5일 이상"},
-            "productIds": [105055],
+            "condition": {
+              "days": "1.5일 이상"
+            },
+            "productIds": [
+              105055
+            ],
             "reason": "1.5일권으로 여유 있게! 첫날 오후부터 다음날 종일."
           }
         ]
@@ -266,43 +304,75 @@
           {
             "id": "purpose",
             "text": "오사카 관광의 주 목적은?",
-            "options": ["전망대/야경", "역사/문화", "온천/힐링", "여러 곳 다 가고 싶다"]
+            "options": [
+              "전망대/야경",
+              "역사/문화",
+              "온천/힐링",
+              "여러 곳 다 가고 싶다"
+            ]
           },
           {
             "id": "spots",
             "text": "하루에 몇 곳을 방문할 예정인가요?",
-            "options": ["1~2곳", "3곳 이상"]
+            "options": [
+              "1~2곳",
+              "3곳 이상"
+            ]
           },
           {
             "id": "area",
             "text": "주로 어느 지역을 돌 예정인가요?",
-            "options": ["텐노지/신세카이", "우메다/키타", "오사카성/미나미", "여러 지역"]
+            "options": [
+              "텐노지/신세카이",
+              "우메다/키타",
+              "오사카성/미나미",
+              "여러 지역"
+            ]
           },
           {
             "id": "budget_sense",
             "text": "가격 대비 효율을 중시하나요?",
-            "options": ["가성비 최우선", "편의성 우선"]
+            "options": [
+              "가성비 최우선",
+              "편의성 우선"
+            ]
           },
           {
             "id": "onsen",
             "text": "온천도 방문할 계획인가요?",
-            "options": ["온천 가고 싶다", "안 갈 예정"]
+            "options": [
+              "온천 가고 싶다",
+              "안 갈 예정"
+            ]
           }
         ],
         "recommendations": [
           {
-            "condition": {"spots": "3곳 이상"},
-            "productIds": [116971],
+            "condition": {
+              "spots": "3곳 이상"
+            },
+            "productIds": [
+              116971
+            ],
             "reason": "3곳 이상이면 e패스가 압도적으로 유리합니다."
           },
           {
-            "condition": {"purpose": "전망대/야경", "area": "텐노지/신세카이"},
-            "productIds": [104193],
+            "condition": {
+              "purpose": "전망대/야경",
+              "area": "텐노지/신세카이"
+            },
+            "productIds": [
+              104193
+            ],
             "reason": "하루카스 전망대는 오사카 최고 야경 스팟입니다."
           },
           {
-            "condition": {"onsen": "온천 가고 싶다"},
-            "productIds": [150407],
+            "condition": {
+              "onsen": "온천 가고 싶다"
+            },
+            "productIds": [
+              150407
+            ],
             "reason": "소라니와 온천 독점할인가로 도심 온천을 즐기세요."
           }
         ]
@@ -335,7 +405,7 @@
       "title": "간사이 공항 ↔ 시내 교통 가이드",
       "subtitle": "하루카, 라피트, 리무진 중 뭘 타야 할까?",
       "slug": "airport",
-      "heroImage": "https://d2mgzmtdeipcjp.cloudfront.net/files/good/2023/10/11/16970295501427.jpg",
+      "heroImage": "https://d2mgzmtdeipcjp.cloudfront.net/files/good/2020/03/14/15841177301835.jpg",
       "products": [
         {
           "id": 105023,
@@ -403,48 +473,83 @@
           {
             "id": "accommodation",
             "text": "숙소가 어디에 있나요?",
-            "options": ["난바/도톤보리", "우메다/신오사카", "텐노지/신세카이", "교토"]
+            "options": [
+              "난바/도톤보리",
+              "우메다/신오사카",
+              "텐노지/신세카이",
+              "교토"
+            ]
           },
           {
             "id": "luggage",
             "text": "큰 짐이 많나요?",
-            "options": ["캐리어 2개 이상", "캐리어 1개 이하"]
+            "options": [
+              "캐리어 2개 이상",
+              "캐리어 1개 이하"
+            ]
           },
           {
             "id": "time_priority",
             "text": "빠른 이동이 중요한가요?",
-            "options": ["시간이 제일 중요", "좀 느려도 편하면 됨"]
+            "options": [
+              "시간이 제일 중요",
+              "좀 느려도 편하면 됨"
+            ]
           },
           {
             "id": "direction",
             "text": "어느 방향 이동인가요?",
-            "options": ["공항 → 시내", "시내 → 공항", "왕복"]
+            "options": [
+              "공항 → 시내",
+              "시내 → 공항",
+              "왕복"
+            ]
           },
           {
             "id": "budget_air",
             "text": "교통비 예산은?",
-            "options": ["최대한 저렴하게", "적당히", "편하면 비싸도 OK"]
+            "options": [
+              "최대한 저렴하게",
+              "적당히",
+              "편하면 비싸도 OK"
+            ]
           }
         ],
         "recommendations": [
           {
-            "condition": {"accommodation": "난바/도톤보리"},
-            "productIds": [134902],
+            "condition": {
+              "accommodation": "난바/도톤보리"
+            },
+            "productIds": [
+              134902
+            ],
             "reason": "난바 숙소라면 라피트가 최고. 공항에서 34분 직행입니다."
           },
           {
-            "condition": {"accommodation": "우메다/신오사카"},
-            "productIds": [110837],
+            "condition": {
+              "accommodation": "우메다/신오사카"
+            },
+            "productIds": [
+              110837
+            ],
             "reason": "하루카가 신오사카까지 직행합니다. 가장 빠른 선택."
           },
           {
-            "condition": {"accommodation": "교토"},
-            "productIds": [110837],
+            "condition": {
+              "accommodation": "교토"
+            },
+            "productIds": [
+              110837
+            ],
             "reason": "하루카는 교토역까지 직행합니다. 유일한 직행 열차예요."
           },
           {
-            "condition": {"luggage": "캐리어 2개 이상"},
-            "productIds": [105023],
+            "condition": {
+              "luggage": "캐리어 2개 이상"
+            },
+            "productIds": [
+              105023
+            ],
             "reason": "짐이 많으면 리무진 버스가 편합니다. 큰 캐리어도 OK."
           }
         ]
@@ -477,7 +582,7 @@
       "title": "오사카 시내/광역 교통패스 비교",
       "subtitle": "메트로, 게이한, JR — 내 일정에 맞는 패스는?",
       "slug": "citypass",
-      "heroImage": "https://d2mgzmtdeipcjp.cloudfront.net/files/good/2024/04/17/17133637601834.jpg",
+      "heroImage": "https://d2mgzmtdeipcjp.cloudfront.net/files/good/2025/02/01/17384078988345.jpg",
       "products": [
         {
           "id": 104293,
@@ -600,48 +705,86 @@
           {
             "id": "travel_area",
             "text": "어디를 돌아다닐 예정인가요?",
-            "options": ["오사카 시내만", "오사카 + 교토", "오사카 + 교토 + 나라/고베"]
+            "options": [
+              "오사카 시내만",
+              "오사카 + 교토",
+              "오사카 + 교토 + 나라/고베"
+            ]
           },
           {
             "id": "travel_days",
             "text": "교통패스가 필요한 기간은?",
-            "options": ["1일", "2일", "3일 이상"]
+            "options": [
+              "1일",
+              "2일",
+              "3일 이상"
+            ]
           },
           {
             "id": "need_jr",
             "text": "JR 열차를 탈 예정인가요? (하루카 등)",
-            "options": ["JR 필요", "JR 안 탐"]
+            "options": [
+              "JR 필요",
+              "JR 안 탐"
+            ]
           },
           {
             "id": "sightseeing_pass",
             "text": "관광지 무료 입장도 필요한가요?",
-            "options": ["관광지 입장 포함이면 좋겠다", "교통만 필요"]
+            "options": [
+              "관광지 입장 포함이면 좋겠다",
+              "교통만 필요"
+            ]
           },
           {
             "id": "kyoto_line",
             "text": "교토를 간다면 어느 노선을 이용할 건가요?",
-            "options": ["게이한선 (후시미이나리, 기온)", "한큐선 (카와라마치, 아라시야마)", "JR선", "교토 안 감"]
+            "options": [
+              "게이한선 (후시미이나리, 기온)",
+              "한큐선 (카와라마치, 아라시야마)",
+              "JR선",
+              "교토 안 감"
+            ]
           }
         ],
         "recommendations": [
           {
-            "condition": {"travel_area": "오사카 시내만", "sightseeing_pass": "관광지 입장 포함이면 좋겠다"},
-            "productIds": [121608],
+            "condition": {
+              "travel_area": "오사카 시내만",
+              "sightseeing_pass": "관광지 입장 포함이면 좋겠다"
+            },
+            "productIds": [
+              121608
+            ],
             "reason": "오사카 주유패스가 교통+관광지를 한방에 해결합니다."
           },
           {
-            "condition": {"travel_area": "오사카 시내만", "sightseeing_pass": "교통만 필요"},
-            "productIds": [150763],
+            "condition": {
+              "travel_area": "오사카 시내만",
+              "sightseeing_pass": "교통만 필요"
+            },
+            "productIds": [
+              150763
+            ],
             "reason": "메트로 패스만으로 충분합니다. 가장 저렴해요."
           },
           {
-            "condition": {"travel_area": "오사카 + 교토", "kyoto_line": "게이한선 (후시미이나리, 기온)"},
-            "productIds": [145560],
+            "condition": {
+              "travel_area": "오사카 + 교토",
+              "kyoto_line": "게이한선 (후시미이나리, 기온)"
+            },
+            "productIds": [
+              145560
+            ],
             "reason": "게이한 패스 50% 할인! 오사카↔교토 왕복에 최적."
           },
           {
-            "condition": {"travel_area": "오사카 + 교토 + 나라/고베"},
-            "productIds": [115907],
+            "condition": {
+              "travel_area": "오사카 + 교토 + 나라/고베"
+            },
+            "productIds": [
+              115907
+            ],
             "reason": "JR 간사이 미니패스로 광역을 커버하세요."
           }
         ]
@@ -674,7 +817,7 @@
       "title": "교토/나라 투어 비교 가이드",
       "subtitle": "버스투어 vs 프라이빗, 어떤 투어가 나에게 맞을까?",
       "slug": "tours",
-      "heroImage": "https://d2mgzmtdeipcjp.cloudfront.net/files/good/2024/09/25/17272875800508.jpg",
+      "heroImage": "https://d2mgzmtdeipcjp.cloudfront.net/files/good/2024/11/26/17326041704096.jpg",
       "products": [
         {
           "id": 130041,
@@ -826,53 +969,99 @@
           {
             "id": "destination",
             "text": "어디를 방문하고 싶나요?",
-            "options": ["교토 (정통 코스)", "나라 (사슴공원)", "나라 + 고베", "북교토 (아마노하시다테)"]
+            "options": [
+              "교토 (정통 코스)",
+              "나라 (사슴공원)",
+              "나라 + 고베",
+              "북교토 (아마노하시다테)"
+            ]
           },
           {
             "id": "tour_style",
             "text": "어떤 투어 스타일을 선호하나요?",
-            "options": ["가성비 버스투어", "소규모/여유로운 투어", "프라이빗/단독 차량"]
+            "options": [
+              "가성비 버스투어",
+              "소규모/여유로운 투어",
+              "프라이빗/단독 차량"
+            ]
           },
           {
             "id": "photo",
             "text": "사진 촬영 서비스가 중요한가요?",
-            "options": ["사진 촬영 포함이면 좋겠다", "상관없음"]
+            "options": [
+              "사진 촬영 포함이면 좋겠다",
+              "상관없음"
+            ]
           },
           {
             "id": "first_kyoto",
             "text": "교토는 처음인가요?",
-            "options": ["처음이다", "가본 적 있다"]
+            "options": [
+              "처음이다",
+              "가본 적 있다"
+            ]
           },
           {
             "id": "tour_budget",
             "text": "1인당 투어 예산은?",
-            "options": ["4만원 이하", "4~6만원", "6만원 이상"]
+            "options": [
+              "4만원 이하",
+              "4~6만원",
+              "6만원 이상"
+            ]
           }
         ],
         "recommendations": [
           {
-            "condition": {"destination": "교토 (정통 코스)", "tour_style": "가성비 버스투어"},
-            "productIds": [148017, 127734],
+            "condition": {
+              "destination": "교토 (정통 코스)",
+              "tour_style": "가성비 버스투어"
+            },
+            "productIds": [
+              148017,
+              127734
+            ],
             "reason": "아이트립 또는 라쿠투어로 교토 핵심 명소를 가성비 있게!"
           },
           {
-            "condition": {"destination": "교토 (정통 코스)", "photo": "사진 촬영 포함이면 좋겠다"},
-            "productIds": [130041, 104876],
+            "condition": {
+              "destination": "교토 (정통 코스)",
+              "photo": "사진 촬영 포함이면 좋겠다"
+            },
+            "productIds": [
+              130041,
+              104876
+            ],
             "reason": "프로 사진작가가 동행하는 투어로 인생샷을 건지세요."
           },
           {
-            "condition": {"destination": "교토 (정통 코스)", "tour_style": "프라이빗/단독 차량"},
-            "productIds": [135196],
+            "condition": {
+              "destination": "교토 (정통 코스)",
+              "tour_style": "프라이빗/단독 차량"
+            },
+            "productIds": [
+              135196
+            ],
             "reason": "인투어 프라이빗 밴 투어로 자유롭게 교토를 돌아보세요."
           },
           {
-            "condition": {"destination": "나라 + 고베"},
-            "productIds": [129562, 136859],
+            "condition": {
+              "destination": "나라 + 고베"
+            },
+            "productIds": [
+              129562,
+              136859
+            ],
             "reason": "나라 사슴공원 + 아리마 온천 + 고베 하버랜드를 하루에!"
           },
           {
-            "condition": {"destination": "북교토 (아마노하시다테)"},
-            "productIds": [136108, 146456],
+            "condition": {
+              "destination": "북교토 (아마노하시다테)"
+            },
+            "productIds": [
+              136108,
+              146456
+            ],
             "reason": "일반 교토와는 차원이 다른 풍경. 이네후나야 강추."
           }
         ]
@@ -905,7 +1094,7 @@
       "title": "일본 WiFi/eSIM 비교 가이드",
       "subtitle": "eSIM, 포켓와이파이, 유심 — 뭘 써야 할까?",
       "slug": "connectivity",
-      "heroImage": "https://d2mgzmtdeipcjp.cloudfront.net/files/good/2024/04/02/17120142003367.jpg",
+      "heroImage": "https://d2mgzmtdeipcjp.cloudfront.net/files/good/2025/08/14/17551530380719.png",
       "products": [
         {
           "id": 120761,
@@ -1052,48 +1241,85 @@
           {
             "id": "travelers",
             "text": "여행 인원은 몇 명인가요?",
-            "options": ["1~2명", "3명 이상"]
+            "options": [
+              "1~2명",
+              "3명 이상"
+            ]
           },
           {
             "id": "device",
             "text": "eSIM을 지원하는 폰인가요?",
-            "options": ["eSIM 지원됨", "잘 모르겠다/안 됨"]
+            "options": [
+              "eSIM 지원됨",
+              "잘 모르겠다/안 됨"
+            ]
           },
           {
             "id": "pickup_pref",
             "text": "수령 방식은?",
-            "options": ["온라인으로 즉시 받고 싶다", "공항에서 수령 가능", "택배로 미리 받고 싶다"]
+            "options": [
+              "온라인으로 즉시 받고 싶다",
+              "공항에서 수령 가능",
+              "택배로 미리 받고 싶다"
+            ]
           },
           {
             "id": "data_usage",
             "text": "데이터 사용량은?",
-            "options": ["지도/메신저 정도", "영상 스트리밍도 할 예정", "업무용 (영상통화 등)"]
+            "options": [
+              "지도/메신저 정도",
+              "영상 스트리밍도 할 예정",
+              "업무용 (영상통화 등)"
+            ]
           },
           {
             "id": "speed_pref",
             "text": "속도가 중요한가요?",
-            "options": ["기본 LTE면 충분", "빠를수록 좋다 (5G)"]
+            "options": [
+              "기본 LTE면 충분",
+              "빠를수록 좋다 (5G)"
+            ]
           }
         ],
         "recommendations": [
           {
-            "condition": {"travelers": "1~2명", "device": "eSIM 지원됨"},
-            "productIds": [120761],
+            "condition": {
+              "travelers": "1~2명",
+              "device": "eSIM 지원됨"
+            },
+            "productIds": [
+              120761
+            ],
             "reason": "eSIM 무제한 770원! 가격과 편의성 모두 최고."
           },
           {
-            "condition": {"travelers": "3명 이상"},
-            "productIds": [104636, 122797],
+            "condition": {
+              "travelers": "3명 이상"
+            },
+            "productIds": [
+              104636,
+              122797
+            ],
             "reason": "포켓WiFi 하나로 여러 명이 공유. 가족 여행에 최적."
           },
           {
-            "condition": {"device": "잘 모르겠다/안 됨"},
-            "productIds": [123274, 123207],
+            "condition": {
+              "device": "잘 모르겠다/안 됨"
+            },
+            "productIds": [
+              123274,
+              123207
+            ],
             "reason": "유심이 안전한 선택. 택배 또는 공항 수령 가능."
           },
           {
-            "condition": {"data_usage": "업무용 (영상통화 등)"},
-            "productIds": [149052, 136837],
+            "condition": {
+              "data_usage": "업무용 (영상통화 등)"
+            },
+            "productIds": [
+              149052,
+              136837
+            ],
             "reason": "완전 무제한 또는 KDDI 5G로 속도 제한 없이!"
           }
         ]
