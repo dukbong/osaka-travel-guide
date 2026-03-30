@@ -108,14 +108,6 @@
           <h3>오사카 여행 가이드</h3>
           <p>오사카 여행에 필요한 상품들을 비교하고 나에게 맞는 상품을 찾아보세요.</p>
         </div>
-        <div class="footer-links">
-          <h4>가이드</h4>
-          <ul>
-            {% for guide in site.data.guides.guides %}
-            <li><a href="{{ '/guides/' | append: guide.slug | append: '/' | relative_url }}">{{ guide.title }}</a></li>
-            {% endfor %}
-          </ul>
-        </div>
       </div>
       <div class="footer-bottom">
         <div class="footer-disclosure">
