@@ -21,10 +21,6 @@
       <span class="card-review-count">({{ p.reviewCount | default: 0 }})</span>
     </div>
 
-    <div class="card-price">
-      <span class="card-sale-price" data-price-format="{{ p.salePrice }}">{{ p.salePrice }}원</span>
-    </div>
-
     {% if p.badges.size > 0 %}
     <div class="card-badges">
       {% for badge in p.badges %}

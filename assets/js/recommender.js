@@ -111,10 +111,6 @@
         info.appendChild(desc);
       }
 
-      var price = createEl('span', 'result-product-price');
-      price.textContent = product.salePrice.toLocaleString('ko-KR') + '\uC6D0';
-      info.appendChild(price);
-
       var buyBtn = createEl('a', 'btn-cta btn-cta-primary result-buy-btn', {
         href: product.affiliateUrl,
         target: '_blank',

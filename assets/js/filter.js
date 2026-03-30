@@ -159,8 +159,6 @@
           switch (sortType) {
             case 'popular':
               return (bData.purchaseCount || 0) - (aData.purchaseCount || 0);
-            case 'price':
-              return (aData.salePrice || 0) - (bData.salePrice || 0);
             case 'rating':
               return (bData.rating || 0) - (aData.rating || 0);
             default:

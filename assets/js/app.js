@@ -286,8 +286,6 @@
         { label: '\uc0c1\ud488', key: 'image' },
         { label: '\uc0c1\ud488\uba85', key: 'name' },
         { label: '\uce74\ud14c\uace0\ub9ac', key: 'category' },
-        { label: '\ud310\ub9e4\uac00', key: 'salePrice' },
-        { label: '\uc815\uc0c1\uac00', key: 'originalPrice' },
         { label: '\ud560\uc778\uc728', key: 'discountText' },
         { label: '\ud3c9\uc810', key: 'rating' },
         { label: '\ub9ac\ubdf0', key: 'reviewCount' },
@@ -307,9 +305,6 @@
             img.src = p.image;
             img.alt = p.name;
             td.appendChild(img);
-          } else if (row.key === 'salePrice' || row.key === 'originalPrice') {
-            td.textContent = p[row.key].toLocaleString() + '\uc6d0';
-            if (row.key === 'salePrice') td.className = 'compare-price';
           } else if (row.key === 'purchaseCount') {
             td.textContent = p[row.key].toLocaleString();
           } else {

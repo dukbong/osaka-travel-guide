@@ -121,7 +121,7 @@
         <div class="footer-disclosure">
           <p>본 사이트는 제휴 마케팅 파트너로서, 링크를 통한 구매 시 제휴 수수료를 받을 수 있습니다.</p>
           <p>이는 이용자에게 추가 비용을 발생시키지 않습니다.</p>
-          <p>표시된 가격과 상품 정보는 작성 시점 기준이며, 실제 가격 및 이용 조건은 각 공식 사이트에서 반드시 확인하시기 바랍니다.</p>
+          <p>상품 정보는 작성 시점 기준이며, 실제 가격 및 이용 조건은 각 공식 사이트에서 반드시 확인하시기 바랍니다.</p>
         </div>
         <p>&copy; {{ 'now' | date: '%Y' }} 오사카 트래블 가이드.</p>
       </div>
@@ -147,11 +147,5 @@
   </script>
   <script src="{{ '/assets/js/app.js' | relative_url }}"></script>
   <script src="{{ '/assets/js/gallery.js' | relative_url }}"></script>
-  <script>
-  document.querySelectorAll('[data-price-format]').forEach(function(el) {
-    var n = parseInt(el.dataset.priceFormat);
-    if (!isNaN(n)) el.textContent = n.toLocaleString('ko-KR') + '원';
-  });
-  </script>
 </body>
 </html>

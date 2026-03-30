@@ -84,7 +84,6 @@ layout: default
         <tr>
           <th class="sticky-col">상품</th>
           <th class="sortable" data-sort="tier">유형</th>
-          <th class="sortable" data-sort="price">가격</th>
           <th class="sortable" data-sort="attractions">어트랙션수</th>
           <th>닌텐도확약</th>
           <th class="sortable" data-sort="reviews">리뷰수</th>
@@ -109,7 +108,6 @@ layout: default
             </label>
           </td>
           <td><span class="badge badge-{{ gp.tier | slugify }}">{{ gp.tier }}</span></td>
-          <td data-value="{{ p.salePrice }}"><span data-price-format="{{ p.salePrice }}">{{ p.salePrice }}원</span></td>
           <td data-value="{{ gp.attractions }}">{% if gp.attractions > 0 %}{{ gp.attractions }}개{% else %}-{% endif %}</td>
           <td>{% if gp.includes_nintendo %}<span class="check-yes">O</span>{% else %}<span class="check-no">X</span>{% endif %}</td>
           <td data-value="{{ p.reviewCount }}">{{ p.reviewCount }}</td>
@@ -130,7 +128,6 @@ layout: default
           <th class="sticky-col">상품</th>
           <th class="sortable" data-sort="place_type">종류</th>
           <th class="sortable" data-sort="area">지역</th>
-          <th class="sortable" data-sort="price">가격</th>
           <th class="sortable" data-sort="reviews">리뷰수</th>
           <th>예약</th>
         </tr>
@@ -154,7 +151,6 @@ layout: default
           </td>
           <td><span class="badge badge-{{ gp.place_type | slugify }}">{{ gp.place_type }}</span></td>
           <td>{{ gp.area }}</td>
-          <td data-value="{{ p.salePrice }}"><span data-price-format="{{ p.salePrice }}">{{ p.salePrice }}원</span></td>
           <td data-value="{{ p.reviewCount }}">{{ p.reviewCount }}</td>
           <td><a href="{{ p.affiliateUrl }}" target="_blank" rel="noopener" class="btn-buy-sm">예약</a></td>
         </tr>
@@ -173,7 +169,6 @@ layout: default
           <th class="sticky-col">상품</th>
           <th class="sortable" data-sort="transport_type">교통편</th>
           <th class="sortable" data-sort="destination">목적지</th>
-          <th class="sortable" data-sort="price">가격</th>
           <th class="sortable" data-sort="reviews">리뷰수</th>
           <th>예약</th>
         </tr>
@@ -197,7 +192,6 @@ layout: default
           </td>
           <td><span class="badge badge-{{ gp.transport_type | slugify }}">{{ gp.transport_type }}</span></td>
           <td>{{ gp.destination }}</td>
-          <td data-value="{{ p.salePrice }}"><span data-price-format="{{ p.salePrice }}">{{ p.salePrice }}원</span></td>
           <td data-value="{{ p.reviewCount }}">{{ p.reviewCount }}</td>
           <td><a href="{{ p.affiliateUrl }}" target="_blank" rel="noopener" class="btn-buy-sm">예약</a></td>
         </tr>
@@ -217,7 +211,6 @@ layout: default
           <th class="sortable" data-sort="coverage">커버리지</th>
           <th class="sortable" data-sort="duration">기간</th>
           <th>JR포함</th>
-          <th class="sortable" data-sort="price">가격</th>
           <th class="sortable" data-sort="reviews">리뷰수</th>
           <th>예약</th>
         </tr>
@@ -242,7 +235,6 @@ layout: default
           <td>{{ gp.coverage }}</td>
           <td>{{ gp.duration }}</td>
           <td>{% if gp.includes_jr %}<span class="check-yes">O</span>{% else %}<span class="check-no">X</span>{% endif %}</td>
-          <td data-value="{{ p.salePrice }}"><span data-price-format="{{ p.salePrice }}">{{ p.salePrice }}원</span></td>
           <td data-value="{{ p.reviewCount }}">{{ p.reviewCount }}</td>
           <td><a href="{{ p.affiliateUrl }}" target="_blank" rel="noopener" class="btn-buy-sm">예약</a></td>
         </tr>
@@ -261,7 +253,6 @@ layout: default
           <th class="sticky-col">상품</th>
           <th class="sortable" data-sort="type">유형</th>
           <th class="sortable" data-sort="destination">방문지</th>
-          <th class="sortable" data-sort="price">가격</th>
           <th class="sortable" data-sort="reviews">리뷰수</th>
           <th>예약</th>
         </tr>
@@ -285,7 +276,6 @@ layout: default
           </td>
           <td><span class="badge badge-{{ gp.tour_type | slugify }}">{{ gp.tour_type }}</span></td>
           <td>{{ gp.destination }}</td>
-          <td data-value="{{ p.salePrice }}"><span data-price-format="{{ p.salePrice }}">{{ p.salePrice }}원</span></td>
           <td data-value="{{ p.reviewCount }}">{{ p.reviewCount }}</td>
           <td><a href="{{ p.affiliateUrl }}" target="_blank" rel="noopener" class="btn-buy-sm">예약</a></td>
         </tr>
@@ -305,7 +295,6 @@ layout: default
           <th class="sortable" data-sort="type">유형</th>
           <th>데이터</th>
           <th>수령방식</th>
-          <th class="sortable" data-sort="price">가격</th>
           <th class="sortable" data-sort="reviews">리뷰수</th>
           <th>예약</th>
         </tr>
@@ -330,7 +319,6 @@ layout: default
           <td><span class="badge badge-{{ gp.conn_type | slugify }}">{{ gp.conn_type }}</span></td>
           <td>{{ gp.data }}</td>
           <td>{{ gp.pickup }}</td>
-          <td data-value="{{ p.salePrice }}"><span data-price-format="{{ p.salePrice }}">{{ p.salePrice }}원</span></td>
           <td data-value="{{ p.reviewCount }}">{{ p.reviewCount }}</td>
           <td><a href="{{ p.affiliateUrl }}" target="_blank" rel="noopener" class="btn-buy-sm">예약</a></td>
         </tr>
@@ -403,7 +391,7 @@ window.ALL_PRODUCTS = {};
 {% for gp in guide.products %}
   {% for p in all_products %}
     {% if p.id == gp.id %}
-window.ALL_PRODUCTS[{{ p.id }}] = { id: {{ p.id }}, name: {{ p.name | jsonify }}, salePrice: {{ p.salePrice }}, image: {{ p.image | jsonify }}, affiliateUrl: {{ p.affiliateUrl | jsonify }}, rating: {{ p.rating }} };
+window.ALL_PRODUCTS[{{ p.id }}] = { id: {{ p.id }}, name: {{ p.name | jsonify }}, image: {{ p.image | jsonify }}, affiliateUrl: {{ p.affiliateUrl | jsonify }}, rating: {{ p.rating }} };
     {% endif %}
   {% endfor %}
 {% endfor %}

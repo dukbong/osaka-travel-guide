@@ -220,12 +220,6 @@
       dayTitle.textContent = 'Day ' + dayKey;
       header.appendChild(dayTitle);
 
-      var subtotal = document.createElement('span');
-      subtotal.className = 'planner-day-subtotal';
-      subtotal.style.cssText = 'font-size:0.85rem;color:#4a90d9;font-weight:600;';
-      var dayTotal = this.calculateDayTotal(dayKey);
-      subtotal.textContent = dayTotal > 0 ? dayTotal.toLocaleString() + '원' : '';
-      header.appendChild(subtotal);
 
       slot.appendChild(header);
 
@@ -359,11 +353,6 @@
         name.textContent = product.name;
         info.appendChild(name);
 
-        var price = document.createElement('div');
-        price.style.cssText = 'font-size:0.75rem;color:#e53e3e;font-weight:600;';
-        price.textContent = (product.salePrice || 0).toLocaleString() + '원';
-        info.appendChild(price);
-
         card.appendChild(info);
       } else {
         var unknown = document.createElement('span');
@@ -393,18 +382,6 @@
     createCostSummary: function() {
       var wrap = document.createElement('div');
       wrap.className = 'planner-cost-summary';
-      wrap.style.cssText = 'margin-top:20px;padding:16px;background:#f0f4ff;border-radius:10px;display:flex;justify-content:space-between;align-items:center;';
-
-      var label = document.createElement('span');
-      label.style.cssText = 'font-weight:600;font-size:1rem;';
-      label.textContent = '총 예상 비용';
-      wrap.appendChild(label);
-
-      var total = document.createElement('span');
-      total.style.cssText = 'font-size:1.25rem;font-weight:700;color:#e53e3e;';
-      total.textContent = this.calculateTotal().toLocaleString() + '원';
-      wrap.appendChild(total);
-
       return wrap;
     },
 
@@ -448,11 +425,6 @@
         name.style.cssText = 'font-size:0.85rem;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;';
         name.textContent = product.name;
         info.appendChild(name);
-
-        var price = document.createElement('div');
-        price.style.cssText = 'font-size:0.8rem;color:#e53e3e;font-weight:600;';
-        price.textContent = (product.salePrice || 0).toLocaleString() + '원';
-        info.appendChild(price);
 
         item.appendChild(info);
 
@@ -557,11 +529,6 @@
           name.style.cssText = 'font-size:0.8rem;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;';
           name.textContent = product.name;
           info.appendChild(name);
-
-          var price = document.createElement('div');
-          price.style.cssText = 'font-size:0.75rem;color:#e53e3e;font-weight:600;';
-          price.textContent = (product.salePrice || 0).toLocaleString() + '원';
-          info.appendChild(price);
 
           item.appendChild(info);
 
@@ -857,11 +824,6 @@
           name.style.cssText = 'font-size:0.85rem;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;';
           name.textContent = product.name;
           info.appendChild(name);
-
-          var price = document.createElement('div');
-          price.style.cssText = 'font-size:0.8rem;color:#e53e3e;font-weight:600;';
-          price.textContent = (product.salePrice || 0).toLocaleString() + '원';
-          info.appendChild(price);
 
           item.appendChild(info);
 

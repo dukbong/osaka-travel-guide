@@ -359,8 +359,6 @@
         { label: '상품', key: 'image' },
         { label: '상품명', key: 'name' },
         { label: '카테고리', key: 'category' },
-        { label: '판매가', key: 'salePrice' },
-        { label: '정상가', key: 'originalPrice' },
         { label: '할인율', key: 'discountText' },
         { label: '평점', key: 'rating' },
         { label: '리뷰', key: 'reviewCount' },
@@ -396,18 +394,6 @@
               nameText.textContent = p.name;
               nameText.style.fontSize = '0.85rem';
               td.appendChild(nameText);
-              break;
-
-            case 'salePrice':
-              td.style.color = '#e53e3e';
-              td.style.fontWeight = '700';
-              td.textContent = (p.salePrice || 0).toLocaleString() + '원';
-              break;
-
-            case 'originalPrice':
-              td.style.textDecoration = 'line-through';
-              td.style.color = '#999';
-              td.textContent = (p.originalPrice || 0).toLocaleString() + '원';
               break;
 
             case 'rating':

@@ -273,11 +273,6 @@
         name.textContent = product.name;
         info.appendChild(name);
 
-        var price = document.createElement('div');
-        price.style.cssText = 'color:#e53e3e;font-weight:700;font-size:0.9rem;';
-        price.textContent = (product.salePrice || 0).toLocaleString() + '원';
-        info.appendChild(price);
-
         card.appendChild(info);
 
         var removeBtn = document.createElement('button');

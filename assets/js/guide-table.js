@@ -33,10 +33,7 @@
 
       rows.sort(function(a, b) {
         var aVal, bVal;
-        if (sortKey === 'price') {
-          aVal = parseFloat(a.dataset.price) || 0;
-          bVal = parseFloat(b.dataset.price) || 0;
-        } else if (sortKey === 'duration') {
+        if (sortKey === 'duration') {
           aVal = parseFloat(a.dataset.duration) || 0;
           bVal = parseFloat(b.dataset.duration) || 0;
         } else if (sortKey === 'height') {
@@ -193,10 +190,6 @@
         desc.textContent = meta.summary;
         card.appendChild(desc);
       }
-
-      var priceDiv = createEl('div', 'compare-card-price');
-      priceDiv.textContent = product.salePrice.toLocaleString('ko-KR') + '\uC6D0';
-      card.appendChild(priceDiv);
 
       var ratingDiv = createEl('div', 'compare-card-rating');
       ratingDiv.textContent = '\uD3C9\uC810 ' + product.rating;
