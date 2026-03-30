@@ -45,11 +45,11 @@ layout: default
   "dateModified": "{{ page.last_modified_at | default: page.date | date_to_xmlschema }}",
   "author": {
     "@type": "Organization",
-    "name": "오사카 트래블 가이드"
+    "name": "오사카 가이드"
   },
   "publisher": {
     "@type": "Organization",
-    "name": "오사카 트래블 가이드",
+    "name": "오사카 가이드",
     "url": "{{ site.url }}{{ site.baseurl }}"
   },
   "description": "{{ page.description | default: page.excerpt | strip_html | escape | truncate: 160 }}",
