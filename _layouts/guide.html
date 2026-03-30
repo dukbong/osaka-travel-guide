@@ -312,17 +312,24 @@ layout: default
 </div>
 
 
-<!-- FAQ Section -->
+<!-- FAQ Section (collapsible) -->
 <section class="faq-section" id="faq">
-  <h2 class="section-title">자주 묻는 질문</h2>
-  {% for item in guide.faq %}
-  <details class="faq-item">
-    <summary class="faq-question">{{ item.q }}</summary>
-    <div class="faq-answer">
-      <p>{{ item.a }}</p>
+  <details class="comparison-toggle">
+    <summary class="comparison-toggle-header">
+      <h2 class="section-title">자주 묻는 질문</h2>
+      <span class="toggle-icon"></span>
+    </summary>
+    <div class="faq-items">
+      {% for item in guide.faq %}
+      <details class="faq-item">
+        <summary class="faq-question">{{ item.q }}</summary>
+        <div class="faq-answer">
+          <p>{{ item.a }}</p>
+        </div>
+      </details>
+      {% endfor %}
     </div>
   </details>
-  {% endfor %}
 </section>
 
 <!-- FAQ JSON-LD Schema -->
