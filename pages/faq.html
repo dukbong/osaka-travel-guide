@@ -1,0 +1,26 @@
+---
+layout: default
+title: "자주 묻는 질문 (FAQ)"
+description: "오사카 여행 가이드의 모든 FAQ를 한 곳에서 확인하세요. USJ, 입장권, 교통패스, 투어, WiFi/eSIM 관련 질문과 답변."
+permalink: /faq/
+---
+
+<section class="faq-hub">
+  <h1 class="faq-hub-title">자주 묻는 질문</h1>
+  <p class="faq-hub-desc">각 가이드의 FAQ를 한 곳에서 확인하세요.</p>
+
+  {% for guide in site.data.guides.guides %}
+  <div class="faq-hub-group">
+    <h2 class="faq-hub-group-title">
+      <a href="{{ '/guides/' | append: guide.slug | append: '/' | relative_url }}">{{ guide.title }}</a>
+    </h2>
+    <ul class="faq-hub-list">
+      {% for item in guide.faq %}
+      <li>
+        <a href="{{ '/guides/' | append: guide.slug | append: '/#faq' | relative_url }}">{{ item.q }}</a>
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+  {% endfor %}
+</section>

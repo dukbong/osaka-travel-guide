@@ -1,0 +1,25 @@
+---
+layout: default
+title: "페이지를 찾을 수 없습니다"
+permalink: /404.html
+---
+
+<section class="error-404">
+  <h1>404</h1>
+  <p class="error-message">찾으시는 페이지가 이동되었거나 삭제되었습니다.</p>
+  <div class="error-guides">
+    <h2>가이드 둘러보기</h2>
+    <div class="guide-grid">
+      {% for guide in site.data.guides.guides %}
+      <a href="{{ '/guides/' | append: guide.slug | append: '/' | relative_url }}" class="guide-card">
+        <img src="{{ guide.heroImage }}" alt="{{ guide.title }}" loading="lazy">
+        <div class="guide-card-body">
+          <h3>{{ guide.title }}</h3>
+          <p>{{ guide.subtitle }}</p>
+        </div>
+      </a>
+      {% endfor %}
+    </div>
+  </div>
+  <a href="{{ '/' | relative_url }}" class="btn-cta btn-cta-primary" style="margin-top:2rem;display:inline-block;">홈으로 돌아가기</a>
+</section>

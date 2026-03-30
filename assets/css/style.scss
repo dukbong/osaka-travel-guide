@@ -2954,6 +2954,119 @@ ul, ol {
 }
 
 // ===========================================
+// Product Cell Info (table thumbnail + summary)
+// ===========================================
+.product-cell-info {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.table-thumb {
+  width: 36px;
+  height: 28px;
+  object-fit: cover;
+  border-radius: 4px;
+  flex-shrink: 0;
+}
+.product-summary-cell {
+  display: block;
+  font-size: 0.65rem;
+  color: #a1a1aa;
+  margin-top: 0.1rem;
+}
+
+// ===========================================
+// 404 Page
+// ===========================================
+.error-404 {
+  text-align: center;
+  padding: 3rem 1rem;
+
+  h1 {
+    font-size: 5rem;
+    font-weight: 800;
+    color: $accent;
+    margin-bottom: 1rem;
+  }
+
+  .error-message {
+    font-size: 1.1rem;
+    color: $text-secondary;
+    margin-bottom: 2rem;
+  }
+
+  .error-guides {
+    max-width: 900px;
+    margin: 0 auto;
+
+    h2 {
+      font-size: 1.25rem;
+      margin-bottom: 1.5rem;
+    }
+  }
+}
+
+// ===========================================
+// FAQ Hub Page
+// ===========================================
+.faq-hub {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+.faq-hub-title {
+  font-size: 1.75rem;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 0.5rem;
+}
+
+.faq-hub-desc {
+  text-align: center;
+  color: $text-secondary;
+  margin-bottom: 2.5rem;
+}
+
+.faq-hub-group {
+  margin-bottom: 2rem;
+}
+
+.faq-hub-group-title {
+  font-size: 1.15rem;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid $border-color;
+
+  a {
+    color: $accent;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+.faq-hub-list {
+  list-style: none;
+  padding: 0;
+
+  li {
+    padding: 0.5rem 0;
+    border-bottom: 1px solid rgba($border-color, 0.5);
+
+    a {
+      color: $text-secondary;
+      font-size: 0.9rem;
+
+      &:hover {
+        color: $text-primary;
+      }
+    }
+  }
+}
+
+// ===========================================
 // Guide Warnings Section
 // ===========================================
 .guide-warnings {
