@@ -35,14 +35,6 @@
     updateProgress();
   }
 
-  function buildKey() {
-    var parts = [];
-    for (var i = 0; i < questions.length; i++) {
-      parts.push(answers[questions[i].id] || '');
-    }
-    return parts.join('_');
-  }
-
   function createEl(tag, className, attrs) {
     var el = document.createElement(tag);
     if (className) el.className = className;
@@ -52,34 +44,45 @@
     return el;
   }
 
-  function showResult() {
-    var key = buildKey();
-    var recIds = recommendations[key] || [];
+  // Find best matching recommendation based on answers
+  function findRecommendation() {
+    // recommendations is an array of {condition: {}, productIds: [], reason: ""}
+    if (!Array.isArray(recommendations) || recommendations.length === 0) return null;
 
-    if (recIds.length === 0) {
-      var keyParts = key.split('_');
-      var bestMatch = null;
-      var bestScore = 0;
-      Object.keys(recommendations).forEach(function(rk) {
-        var rkParts = rk.split('_');
-        var score = 0;
-        for (var i = 0; i < keyParts.length; i++) {
-          if (rkParts[i] === keyParts[i]) score++;
-        }
-        if (score > bestScore) {
-          bestScore = score;
-          bestMatch = rk;
+    var bestMatch = null;
+    var bestScore = -1;
+
+    recommendations.forEach(function(rec) {
+      var cond = rec.condition || {};
+      var score = 0;
+      var total = Object.keys(cond).length;
+
+      Object.keys(cond).forEach(function(key) {
+        if (answers[key] === cond[key]) {
+          score++;
         }
       });
-      if (bestMatch) recIds = recommendations[bestMatch];
-    }
+
+      if (score > bestScore) {
+        bestScore = score;
+        bestMatch = rec;
+      }
+    });
+
+    return bestMatch;
+  }
+
+  function showResult() {
+    var rec = findRecommendation();
+    var recIds = rec ? rec.productIds : [];
+    var reason = rec ? rec.reason : '';
 
     // Clear previous results
     while (resultSummary.firstChild) resultSummary.removeChild(resultSummary.firstChild);
     while (resultProducts.firstChild) resultProducts.removeChild(resultProducts.firstChild);
 
     var summaryP = createEl('p', 'result-summary-text');
-    summaryP.textContent = '\uC120\uD0DD\uD558\uC2E0 \uC870\uAC74\uC5D0 \uAC00\uC7A5 \uB9DE\uB294 \uC0C1\uD488\uC744 \uCD94\uCC9C\uD569\uB2C8\uB2E4.';
+    summaryP.textContent = reason || '\uC120\uD0DD\uD558\uC2E0 \uC870\uAC74\uC5D0 \uAC00\uC7A5 \uB9DE\uB294 \uC0C1\uD488\uC744 \uCD94\uCC9C\uD569\uB2C8\uB2E4.';
     resultSummary.appendChild(summaryP);
 
     recIds.forEach(function(pid) {
