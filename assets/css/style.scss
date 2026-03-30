@@ -3109,3 +3109,24 @@ ul, ol {
     }
   }
 }
+
+// Comparison table toggle
+.comparison-toggle {
+  &[open] .toggle-icon::after { content: '▲'; }
+}
+.comparison-toggle-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  padding: 0.75rem 0;
+  list-style: none;
+  &::-webkit-details-marker { display: none; }
+  &::marker { display: none; }
+  .section-title { margin: 0; }
+}
+.toggle-icon {
+  font-size: 0.8rem;
+  color: $text-muted;
+  &::after { content: '▼'; }
+}

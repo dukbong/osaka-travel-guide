@@ -69,9 +69,13 @@ layout: default
 </section>
 {% endif %}
 
-<!-- Comparison Table -->
+<!-- Comparison Table (collapsible) -->
 <section class="comparison-section" id="compare">
-  <h2 class="section-title">전체 상품 비교</h2>
+  <details class="comparison-toggle">
+    <summary class="comparison-toggle-header">
+      <h2 class="section-title">전체 상품 비교</h2>
+      <span class="toggle-icon"></span>
+    </summary>
 
   {% if guide.id == "usj" %}
   <div class="comparison-table-wrap">
@@ -294,6 +298,7 @@ layout: default
     </table>
   </div>
   {% endif %}
+  </details>
 </section>
 
 <!-- Sticky Compare Bar -->
@@ -306,17 +311,6 @@ layout: default
   </div>
 </div>
 
-<!-- Warnings -->
-{% if guide.warnings.size > 0 %}
-<section class="guide-warnings">
-  <h2>주의 사항</h2>
-  <ul>
-    {% for w in guide.warnings %}
-    <li>{{ w }}</li>
-    {% endfor %}
-  </ul>
-</section>
-{% endif %}
 
 <!-- FAQ Section -->
 <section class="faq-section" id="faq">
@@ -351,15 +345,6 @@ layout: default
 }
 </script>
 
-<!-- Final CTA -->
-<section class="guide-cta">
-  <h2>아직 고민되시나요?</h2>
-  <p>퀴즈를 다시 해보거나, 다른 가이드를 둘러보세요.</p>
-  <div class="guide-cta-buttons">
-    <a href="#quiz" class="btn-cta btn-cta-primary">퀴즈 다시 하기</a>
-    <a href="{{ '/' | relative_url }}" class="btn-cta btn-cta-secondary">다른 가이드 보기</a>
-  </div>
-</section>
 
 <!-- Product data for JS -->
 <script>
