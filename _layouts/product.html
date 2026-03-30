@@ -27,11 +27,11 @@ layout: default
     </div>
     <div class="gallery-thumbs" id="galleryThumbs">
       <button class="gallery-thumb active" data-img="{{ product.image }}">
-        <img src="{{ product.image }}" alt="" loading="lazy">
+        <img src="{{ product.image }}" alt="{{ product.name }}" loading="lazy">
       </button>
       {% for img in product.images %}
       <button class="gallery-thumb" data-img="{{ img }}">
-        <img src="{{ img }}" alt="" loading="lazy">
+        <img src="{{ img }}" alt="{{ product.name }}" loading="lazy">
       </button>
       {% endfor %}
     </div>
