@@ -268,13 +268,6 @@
           "summary": "1일 또는 2일 선택 가능한 e패스."
         },
         {
-          "id": 137086,
-          "place_type": "프리패스",
-          "area": "간사이 전역",
-          "label": "간사이 조이패스",
-          "summary": "간사이 광역 관광패스. 하루카 무료 탑승 포함."
-        },
-        {
           "id": 126704,
           "place_type": "온천",
           "area": "오사카 베이",
@@ -687,6 +680,14 @@
           "includes_jr": true,
           "label": "JR 간사이 에리어 패스",
           "summary": "JR 간사이 1/2/3/4일. 하루카 포함."
+        },
+        {
+          "id": 137086,
+          "label": "간사이 조이패스 + 하루카",
+          "summary": "하루카 무료 + 관광지 입장 포함. 교토 일정이면 가성비 최고.",
+          "coverage": "간사이 전역",
+          "duration": "2~3일",
+          "includes_jr": true
         }
       ],
       "editorPick": {
