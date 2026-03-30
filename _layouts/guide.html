@@ -122,15 +122,15 @@ layout: default
     </table>
   </div>
 
-  {% elsif guide.id == "tickets" %}
+  {% elsif guide.id == "sightseeing" %}
   <div class="comparison-table-wrap">
     <table class="comparison-table" id="comparisonTable">
       <thead>
         <tr>
           <th class="sticky-col">상품</th>
-          <th class="sortable" data-sort="place">장소/유형</th>
+          <th class="sortable" data-sort="place_type">종류</th>
+          <th class="sortable" data-sort="area">지역</th>
           <th class="sortable" data-sort="price">가격</th>
-          <th>취소정책</th>
           <th class="sortable" data-sort="reviews">리뷰수</th>
           <th>예약</th>
         </tr>
@@ -139,7 +139,7 @@ layout: default
         {% for gp in guide.products %}
           {% for p in all_products %}
             {% if p.id == gp.id %}
-        <tr data-product-id="{{ p.id }}" data-place="{{ gp.place }}" data-price="{{ p.salePrice }}" data-reviews="{{ p.reviewCount }}">
+        <tr data-product-id="{{ p.id }}" data-place_type="{{ gp.place_type }}" data-area="{{ gp.area }}" data-price="{{ p.salePrice }}" data-reviews="{{ p.reviewCount }}">
           <td class="sticky-col">
             <label class="compare-check-label">
               <input type="checkbox" class="sticky-compare-check" data-product-id="{{ p.id }}">
@@ -152,9 +152,9 @@ layout: default
               </div>
             </label>
           </td>
-          <td><span class="badge badge-{{ gp.place | slugify }}">{{ gp.place }}</span></td>
+          <td><span class="badge badge-{{ gp.place_type | slugify }}">{{ gp.place_type }}</span></td>
+          <td>{{ gp.area }}</td>
           <td data-value="{{ p.salePrice }}"><span data-price-format="{{ p.salePrice }}">{{ p.salePrice }}원</span></td>
-          <td>{{ gp.cancellation }}</td>
           <td data-value="{{ p.reviewCount }}">{{ p.reviewCount }}</td>
           <td><a href="{{ p.affiliateUrl }}" target="_blank" rel="noopener" class="btn-buy-sm">예약</a></td>
         </tr>
@@ -165,7 +165,50 @@ layout: default
     </table>
   </div>
 
-  {% elsif guide.id == "transport" %}
+  {% elsif guide.id == "airport" %}
+  <div class="comparison-table-wrap">
+    <table class="comparison-table" id="comparisonTable">
+      <thead>
+        <tr>
+          <th class="sticky-col">상품</th>
+          <th class="sortable" data-sort="transport_type">교통편</th>
+          <th class="sortable" data-sort="destination">목적지</th>
+          <th class="sortable" data-sort="price">가격</th>
+          <th class="sortable" data-sort="reviews">리뷰수</th>
+          <th>예약</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for gp in guide.products %}
+          {% for p in all_products %}
+            {% if p.id == gp.id %}
+        <tr data-product-id="{{ p.id }}" data-transport_type="{{ gp.transport_type }}" data-destination="{{ gp.destination }}" data-price="{{ p.salePrice }}" data-reviews="{{ p.reviewCount }}">
+          <td class="sticky-col">
+            <label class="compare-check-label">
+              <input type="checkbox" class="sticky-compare-check" data-product-id="{{ p.id }}">
+              <div class="product-cell-info">
+                <img src="{{ p.image }}" alt="{{ gp.label }}" class="table-thumb" loading="lazy">
+                <div>
+                  <span class="product-name-cell">{{ gp.label }}</span>
+                  {% if gp.summary %}<span class="product-summary-cell">{{ gp.summary }}</span>{% endif %}
+                </div>
+              </div>
+            </label>
+          </td>
+          <td><span class="badge badge-{{ gp.transport_type | slugify }}">{{ gp.transport_type }}</span></td>
+          <td>{{ gp.destination }}</td>
+          <td data-value="{{ p.salePrice }}"><span data-price-format="{{ p.salePrice }}">{{ p.salePrice }}원</span></td>
+          <td data-value="{{ p.reviewCount }}">{{ p.reviewCount }}</td>
+          <td><a href="{{ p.affiliateUrl }}" target="_blank" rel="noopener" class="btn-buy-sm">예약</a></td>
+        </tr>
+            {% endif %}
+          {% endfor %}
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  {% elsif guide.id == "citypass" %}
   <div class="comparison-table-wrap">
     <table class="comparison-table" id="comparisonTable">
       <thead>
@@ -183,7 +226,7 @@ layout: default
         {% for gp in guide.products %}
           {% for p in all_products %}
             {% if p.id == gp.id %}
-        <tr data-product-id="{{ p.id }}" data-coverage="{{ gp.coverage }}" data-price="{{ p.salePrice }}" data-reviews="{{ p.reviewCount }}">
+        <tr data-product-id="{{ p.id }}" data-coverage="{{ gp.coverage }}" data-duration="{{ gp.duration }}" data-price="{{ p.salePrice }}" data-reviews="{{ p.reviewCount }}">
           <td class="sticky-col">
             <label class="compare-check-label">
               <input type="checkbox" class="sticky-compare-check" data-product-id="{{ p.id }}">
@@ -217,7 +260,7 @@ layout: default
         <tr>
           <th class="sticky-col">상품</th>
           <th class="sortable" data-sort="type">유형</th>
-          <th>주요코스</th>
+          <th class="sortable" data-sort="destination">방문지</th>
           <th class="sortable" data-sort="price">가격</th>
           <th class="sortable" data-sort="reviews">리뷰수</th>
           <th>예약</th>
@@ -227,7 +270,7 @@ layout: default
         {% for gp in guide.products %}
           {% for p in all_products %}
             {% if p.id == gp.id %}
-        <tr data-product-id="{{ p.id }}" data-type="{{ gp.tour_type }}" data-price="{{ p.salePrice }}" data-reviews="{{ p.reviewCount }}">
+        <tr data-product-id="{{ p.id }}" data-type="{{ gp.tour_type }}" data-destination="{{ gp.destination }}" data-price="{{ p.salePrice }}" data-reviews="{{ p.reviewCount }}">
           <td class="sticky-col">
             <label class="compare-check-label">
               <input type="checkbox" class="sticky-compare-check" data-product-id="{{ p.id }}">
@@ -241,7 +284,7 @@ layout: default
             </label>
           </td>
           <td><span class="badge badge-{{ gp.tour_type | slugify }}">{{ gp.tour_type }}</span></td>
-          <td class="highlights-cell">{{ gp.highlights }}</td>
+          <td>{{ gp.destination }}</td>
           <td data-value="{{ p.salePrice }}"><span data-price-format="{{ p.salePrice }}">{{ p.salePrice }}원</span></td>
           <td data-value="{{ p.reviewCount }}">{{ p.reviewCount }}</td>
           <td><a href="{{ p.affiliateUrl }}" target="_blank" rel="noopener" class="btn-buy-sm">예약</a></td>
@@ -261,7 +304,7 @@ layout: default
           <th class="sticky-col">상품</th>
           <th class="sortable" data-sort="type">유형</th>
           <th>데이터</th>
-          <th>인원</th>
+          <th>수령방식</th>
           <th class="sortable" data-sort="price">가격</th>
           <th class="sortable" data-sort="reviews">리뷰수</th>
           <th>예약</th>
@@ -271,7 +314,7 @@ layout: default
         {% for gp in guide.products %}
           {% for p in all_products %}
             {% if p.id == gp.id %}
-        <tr data-product-id="{{ p.id }}" data-type="{{ gp.conn_type }}" data-price="{{ p.salePrice }}" data-reviews="{{ p.reviewCount }}">
+        <tr data-product-id="{{ p.id }}" data-type="{{ gp.conn_type }}" data-data="{{ gp.data }}" data-pickup="{{ gp.pickup }}" data-price="{{ p.salePrice }}" data-reviews="{{ p.reviewCount }}">
           <td class="sticky-col">
             <label class="compare-check-label">
               <input type="checkbox" class="sticky-compare-check" data-product-id="{{ p.id }}">
@@ -286,7 +329,7 @@ layout: default
           </td>
           <td><span class="badge badge-{{ gp.conn_type | slugify }}">{{ gp.conn_type }}</span></td>
           <td>{{ gp.data }}</td>
-          <td>{{ gp.people }}</td>
+          <td>{{ gp.pickup }}</td>
           <td data-value="{{ p.salePrice }}"><span data-price-format="{{ p.salePrice }}">{{ p.salePrice }}원</span></td>
           <td data-value="{{ p.reviewCount }}">{{ p.reviewCount }}</td>
           <td><a href="{{ p.affiliateUrl }}" target="_blank" rel="noopener" class="btn-buy-sm">예약</a></td>
